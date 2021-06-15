@@ -1,4 +1,4 @@
-name: RuleEngine Bundle
+name: PHPUnit
 
 on:
   push:
@@ -8,14 +8,12 @@ on:
 
 jobs:
   build:
-
+    name: "PHP ${{ matrix.php }} + Symfony ${{ matrix.symfony }}"
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         php: ['7.4', '8.0']
         symfony: ['5.0.*', '5.1.*', '5.2.*', '5.3.*']
-
     steps:
       - uses: actions/checkout@v2
 
@@ -36,6 +34,9 @@ jobs:
           key: ${{ runner.os }}-php-${{ matrix.php }}-sf-${{ matrix.symfony }}-${{ hashFiles('**/composer.lock') }}
           restore-keys: |
             ${{ runner.os }}-php-${{ matrix.php }}-sf-${{ matrix.symfony }}-
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
 
       - name: Require Symfony version
         run: |
