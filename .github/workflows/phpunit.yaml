@@ -35,13 +35,13 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-php-${{ matrix.php }}-sf-${{ matrix.symfony }}-
 
-      - name: Install dependencies
-        run: composer install --prefer-dist --no-progress
-
       - name: Require Symfony version
         run: |
           composer global require --no-interaction --no-progress symfony/flex:^1.11
           composer config extra.symfony.require ${{ matrix.symfony }}
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
 
       - name: Install PHPUnit
         run: vendor/bin/simple-phpunit install
