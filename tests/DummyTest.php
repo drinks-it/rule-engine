@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\DrinksIt\Bundle\RuleEngine;
+namespace Tests\DrinksIt\RuleEngineBundle;
 
 use PHPUnit\Framework\TestCase;
 
