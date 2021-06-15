@@ -1,0 +1,4 @@
+services:
+  _instanceof:
+    App\Security\CustomInterface:
+      tags: ['app.custom_tag']
