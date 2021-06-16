@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <!-- Interface Alias -->
+        <service id="DrinksIt\RuleEngineBundle\Metadata\Extractor\RuleEntityExtractorInterface" alias="rule_engine.metadata.annotation_extractor" />
+
+        <!-- Service -->
+        <service id="rule_engine.metadata.annotation_extractor" class="DrinksIt\RuleEngineBundle\Metadata\Extractor\RuleEntityAnnotationExtractor">
+            <argument type="service" id="annotations.cached_reader" />
+        </service>
+    </services>
+
+</container>
