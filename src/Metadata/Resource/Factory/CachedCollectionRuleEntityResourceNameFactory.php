@@ -18,12 +18,12 @@ final class CachedCollectionRuleEntityResourceNameFactory implements CollectionR
 
     public const CACHE_KEY_PREFIX = 'rule_entity_collection_names';
 
-    private CacheItemPoolInterface $cacheItemPool;
+    private ?CacheItemPoolInterface $cacheItemPool;
 
     private CollectionRuleEntityResourceNameFactoryInterface $decorated;
 
     public function __construct(
-        CacheItemPoolInterface $cacheItemPool,
+        ?CacheItemPoolInterface $cacheItemPool,
         CollectionRuleEntityResourceNameFactoryInterface $decorated
     ) {
         $this->cacheItemPool = $cacheItemPool;
@@ -38,7 +38,7 @@ final class CachedCollectionRuleEntityResourceNameFactory implements CollectionR
         return $this->getCached(self::CACHE_KEY_PREFIX, fn () => $this->decorated->create());
     }
 
-    protected function getCacheItemPool(): CacheItemPoolInterface
+    protected function getCacheItemPool(): ?CacheItemPoolInterface
     {
         return $this->cacheItemPool;
     }

@@ -20,7 +20,7 @@ final class ResourceRuleEntityNameCollection implements \IteratorAggregate, \Cou
     private array $classes;
 
     /**
-     * @param ResourceRuleEntity[] $classes
+     * @param string[] $classes
      */
     public function __construct(array $classes = [])
     {
