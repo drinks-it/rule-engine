@@ -111,8 +111,8 @@ final class MakeRuleEntity extends AbstractMaker
         $manipulation->addInterface(Rules\RuleEntityInterface::class);
         $manipulation->addUseStatementIfNecessary(Rules\ConditionsInterface::class);
         $manipulation->addUseStatementIfNecessary($this->collectionConditionClassPath);
-        $manipulation->addUseStatementIfNecessary(Rules\ActionInterface::class);
-        $manipulation->addUseStatementIfNecessary(Rules\TriggerEventInterface::class);
+        $manipulation->addUseStatementIfNecessary(Rules\ActionColumn::class);
+        $manipulation->addUseStatementIfNecessary(Rules\TriggerEventColumn::class);
         $manipulation->addUseStatementIfNecessary(Rules\Condition\Condition::class);
 
         $manipulation->addConstructor(
@@ -149,13 +149,18 @@ final class MakeRuleEntity extends AbstractMaker
 
         // action
         $manipulation->addProperty('action', ['@ORM\Column(type="'.ColumnType\ActionType::TYPE.'")']);
-        $manipulation->addGetter('action', 'ActionInterface', false);
-        $manipulation->addSetter('action', 'ActionInterface', false);
+        $manipulation->addGetter('action', 'ActionColumn', false);
+        $manipulation->addSetter('action', 'ActionColumn', false);
 
         // triggerEvent
         $manipulation->addProperty('triggerEvent', ['@ORM\Column(type="'.ColumnType\TriggerEventType::TYPE.'")']);
-        $manipulation->addGetter('triggerEvent', 'TriggerEventInterface', false);
-        $manipulation->addSetter('triggerEvent', 'TriggerEventInterface', false);
+        $manipulation->addGetter('triggerEvent', 'TriggerEventColumn', false);
+        $manipulation->addSetter('triggerEvent', 'TriggerEventColumn', false);
+
+        $manipulation->addEntityField('priority', [
+            'type' => Types::INTEGER,
+            'nullable' => false,
+        ]);
 
         $manipulation->addEntityField('stopRuleProcessing', [
             'type' => Types::BOOLEAN,

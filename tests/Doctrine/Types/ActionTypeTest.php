@@ -11,7 +11,7 @@ namespace Tests\DrinksIt\RuleEngineBundle\Doctrine\Types;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\ConversionException;
 use DrinksIt\RuleEngineBundle\Doctrine\Types\ActionType;
-use DrinksIt\RuleEngineBundle\Rule\ActionInterface;
+use DrinksIt\RuleEngineBundle\Rule\ActionColumn;
 use PHPUnit\Framework\TestCase;
 
 class ActionTypeTest extends TestCase
@@ -38,9 +38,7 @@ class ActionTypeTest extends TestCase
 
     public function testConvertToDatabaseValue(): void
     {
-        $actionInterface = $this->createMock(ActionInterface::class);
-        $actionInterface->expects($this->once())->method('toArray')
-            ->willReturn(['test' => ['olo'], 'can_json' => 'yes']);
+        $actionInterface = new ActionColumn(['test' => ['olo'], 'can_json' => 'yes']);
 
         $this->assertJson(
             $this->type->convertToDatabaseValue($actionInterface, $this->platform)

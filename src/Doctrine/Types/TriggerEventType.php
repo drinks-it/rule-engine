@@ -10,29 +10,39 @@ namespace DrinksIt\RuleEngineBundle\Doctrine\Types;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\ConversionException;
-use DrinksIt\RuleEngineBundle\Rule\TriggerEventInterface;
+use DrinksIt\RuleEngineBundle\Rule\TriggerEventColumn;
 
 final class TriggerEventType extends RuleEngineType
 {
     public const TYPE = 'rule_engine_event';
 
+    public function getSQLDeclaration(array $column, AbstractPlatform $platform)
+    {
+        return $platform->getVarcharTypeDeclarationSQL($column);
+    }
+
+    public function convertToPHPValue($value, AbstractPlatform $platform)
+    {
+        return new TriggerEventColumn($value);
+    }
+
     /**
-     * @param TriggerEventInterface $value
+     * @param TriggerEventColumn $value
      * @throws ConversionException
      */
     public function convertToDatabaseValue($value, AbstractPlatform $platform): string
     {
-        if (!$value instanceof TriggerEventInterface) {
+        if (!$value instanceof TriggerEventColumn) {
             throw ConversionException::conversionFailedInvalidType(
                 $value,
-                TriggerEventInterface::class,
+                TriggerEventColumn::class,
                 [
-                    TriggerEventInterface::class,
+                    TriggerEventColumn::class,
                 ]
             );
         }
 
-        return parent::convertToDatabaseValue($value, $platform);
+        return $value->getEntityClassName();
     }
 
     public function getName()

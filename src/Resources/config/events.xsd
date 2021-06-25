@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <!-- Event Factory -->
+        <instanceof id="DrinksIt\RuleEngineBundle\Event\RuleEventInterface" autowire="true" public="true">
+            <tag name="rule_engine.tag.event"/>
+        </instanceof>
+
+        <service id="DrinksIt\RuleEngineBundle\Event\Factory\RuleEventListenerFactoryInterface" alias="rule_engine.events_follow_factory" />
+
+        <service id="rule_engine.events_follow_factory" class="DrinksIt\RuleEngineBundle\Event\Factory\RuleEventListenerFactory">
+            <argument type="tagged_iterator" tag="rule_engine.tag.event"/>
+        </service>
+
+        <service id="DrinksIt\RuleEngineBundle\Event\RuleEvent">
+            <tag name="kernel.event_listener" event="rule_event"/>
+            <argument type="service" id="rule_engine.events_follow_factory"/>
+            <argument type="service" id="rule_engine.doctrine.rule_entity_finder" />
+            <argument type="service" id="logger" />
+        </service>
+    </services>
+</container>

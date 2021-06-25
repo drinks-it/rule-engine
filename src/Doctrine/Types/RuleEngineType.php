@@ -10,6 +10,7 @@ namespace DrinksIt\RuleEngineBundle\Doctrine\Types;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
+use Symfony\Component\Serializer\Encoder\JsonDecode;
 use Symfony\Component\Serializer\Encoder\JsonEncode;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 
@@ -28,5 +29,9 @@ abstract class RuleEngineType extends Type
     public function convertToDatabaseValue($value, AbstractPlatform $platform)
     {
         return (new JsonEncode())->encode($value->toArray(), JsonEncoder::FORMAT);
+    }
+    protected function decodeJson($value)
+    {
+        return (new JsonDecode())->decode($value, JsonEncoder::FORMAT);
     }
 }

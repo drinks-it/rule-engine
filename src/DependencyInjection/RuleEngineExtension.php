@@ -8,6 +8,8 @@ declare(strict_types=1);
 
 namespace DrinksIt\RuleEngineBundle\DependencyInjection;
 
+use DrinksIt\RuleEngineBundle\Doctrine\RuleEntityFinderExtensionInterface;
+use DrinksIt\RuleEngineBundle\Event\RuleEventInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
@@ -24,10 +26,18 @@ class RuleEngineExtension extends Extension
 
         $this->addAnnotatedClassesToCompile($container->getParameter('rule_engine.mapping'));
 
+        $container->registerForAutoconfiguration(RuleEventInterface::class)
+            ->addTag('rule_engine.tag.event');
+
+        $container->registerForAutoconfiguration(RuleEntityFinderExtensionInterface::class)
+            ->addTag('rule_engine.tag.doctrine.extension_finder');
+
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
 
         $loader->load('maker.xsd');
         $loader->load('extractor.xsd');
         $loader->load('metadata.xsd');
+        $loader->load('doctrine.xsd');
+        $loader->load('events.xsd');
     }
 }

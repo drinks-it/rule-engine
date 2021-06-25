@@ -32,13 +32,13 @@ interface RuleEntityInterface
 
     public function removedCondition(Condition $condition): self;
 
-    public function getAction(): ActionInterface;
+    public function getAction(): ActionColumn;
 
-    public function setAction(ActionInterface $action): self;
+    public function setAction(ActionColumn $action): self;
 
-    public function getTriggerEvent(): TriggerEventInterface;
+    public function getTriggerEvent(): TriggerEventColumn;
 
-    public function setTriggerEvent(TriggerEventInterface $triggerEvent): self;
+    public function setTriggerEvent(TriggerEventColumn $triggerEvent): self;
 
     public function getStopRuleProcessing(): ?bool;
 
@@ -47,4 +47,8 @@ interface RuleEntityInterface
     public function getCreatedAt(): ?\DateTimeInterface;
 
     public function getUpdatedAt(): ?\DateTimeInterface;
+
+    public function getPriority(): ?int;
+
+    public function setPriority(int $priority): self;
 }

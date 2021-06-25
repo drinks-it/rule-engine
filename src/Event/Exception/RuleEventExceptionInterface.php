@@ -6,9 +6,8 @@
 
 declare(strict_types=1);
 
-namespace DrinksIt\RuleEngineBundle\Rule;
+namespace DrinksIt\RuleEngineBundle\Event\Exception;
 
-interface ActionInterface
+interface RuleEventExceptionInterface
 {
-    public function toArray(): array;
 }

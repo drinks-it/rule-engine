@@ -10,6 +10,7 @@ namespace Tests\DrinksIt\RuleEngineBundle\DependencyInjection;
 
 use DrinksIt\RuleEngineBundle\DependencyInjection\RuleEngineExtension;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class RuleEngineExtensionTest extends TestCase
@@ -36,6 +37,16 @@ class RuleEngineExtensionTest extends TestCase
 
                 return null;
             });
+
+        $mockChildDefinition = $this->createMock(ChildDefinition::class);
+        $this->containerBuilder->expects($this->any())->method('registerForAutoconfiguration')
+            ->with($this->isType('string'))->willReturn($mockChildDefinition);
+
+        $mockChildDefinition->expects($this->any())->method('addTag')->with(
+            $this->stringStartsWith('rule_engine.tag'),
+            $this->isType('array')
+        );
+
         $this->extension->load($configs, $this->containerBuilder);
     }
 }

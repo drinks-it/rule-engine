@@ -11,7 +11,7 @@ namespace Tests\DrinksIt\RuleEngineBundle\Doctrine\Types;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\ConversionException;
 use DrinksIt\RuleEngineBundle\Doctrine\Types\TriggerEventType;
-use DrinksIt\RuleEngineBundle\Rule\TriggerEventInterface;
+use DrinksIt\RuleEngineBundle\Rule\TriggerEventColumn;
 use PHPUnit\Framework\TestCase;
 
 class TriggerEventTypeTest extends TestCase
@@ -38,11 +38,12 @@ class TriggerEventTypeTest extends TestCase
 
     public function testConvertToDatabaseValue(): void
     {
-        $actionInterface = $this->createMock(TriggerEventInterface::class);
-        $actionInterface->expects($this->once())->method('toArray')
-            ->willReturn(['test' => ['olo'], 'can_json' => 'yes']);
+        $actionInterface = $this->createMock(TriggerEventColumn::class);
+        $actionInterface->expects($this->once())->method('getEntityClassName')
+            ->willReturn(self::class);
 
-        $this->assertJson(
+        $this->assertEquals(
+            self::class,
             $this->type->convertToDatabaseValue($actionInterface, $this->platform)
         );
     }
@@ -55,7 +56,7 @@ class TriggerEventTypeTest extends TestCase
 
     public function testGetSQLDeclaration(): void
     {
-        $this->platform->expects($this->once())->method('getJsonTypeDeclarationSQL')
+        $this->platform->expects($this->once())->method('getVarcharTypeDeclarationSQL')
             ->with($this->equalTo(['foo', 'test']))
             ->willReturn('AnyTypeDoctrine');
 

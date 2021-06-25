@@ -10,11 +10,17 @@ namespace DrinksIt\RuleEngineBundle\Doctrine\Types;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\ConversionException;
+use DrinksIt\RuleEngineBundle\Rule\Condition\CollectionCondition;
 use DrinksIt\RuleEngineBundle\Rule\ConditionsInterface;
 
 final class ConditionsType extends RuleEngineType
 {
     public const TYPE = 'rule_engine_conditions';
+
+    public function convertToPHPValue($value, AbstractPlatform $platform)
+    {
+        return new CollectionCondition($this->decodeJson($value));
+    }
 
     /**
      * @param ConditionsInterface $value

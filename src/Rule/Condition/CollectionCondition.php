@@ -13,4 +13,8 @@ use DrinksIt\RuleEngineBundle\Rule\ConditionsInterface;
 
 class CollectionCondition extends ArrayCollection implements ConditionsInterface
 {
+    public function isMatched($objectEntity): bool
+    {
+        return true;
+    }
 }

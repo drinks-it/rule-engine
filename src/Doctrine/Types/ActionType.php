@@ -10,24 +10,29 @@ namespace DrinksIt\RuleEngineBundle\Doctrine\Types;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\ConversionException;
-use DrinksIt\RuleEngineBundle\Rule\ActionInterface;
+use DrinksIt\RuleEngineBundle\Rule\ActionColumn;
 
 final class ActionType extends RuleEngineType
 {
     public const TYPE = 'rule_engine_action';
 
+    public function convertToPHPValue($value, AbstractPlatform $platform)
+    {
+        return new ActionColumn($this->decodeJson($value));
+    }
+
     /**
-     * @param ActionInterface $value
+     * @param ActionColumn $value
      * @throws ConversionException
      */
     public function convertToDatabaseValue($value, AbstractPlatform $platform): string
     {
-        if (!$value instanceof ActionInterface) {
+        if (!$value instanceof ActionColumn) {
             throw ConversionException::conversionFailedInvalidType(
                 $value,
-                ActionInterface::class,
+                ActionColumn::class,
                 [
-                    ActionInterface::class,
+                    ActionColumn::class,
                 ]
             );
         }
