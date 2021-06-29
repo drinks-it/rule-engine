@@ -10,6 +10,8 @@ namespace DrinksIt\RuleEngineBundle\Doctrine\Types;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\ConversionException;
+use DrinksIt\RuleEngineBundle\Doctrine\Serializer\DenormalizeCondition;
+use DrinksIt\RuleEngineBundle\Doctrine\Serializer\NormalizeCondition;
 use DrinksIt\RuleEngineBundle\Rule\Condition\CollectionCondition;
 use DrinksIt\RuleEngineBundle\Rule\ConditionsInterface;
 
@@ -19,7 +21,15 @@ final class ConditionsType extends RuleEngineType
 
     public function convertToPHPValue($value, AbstractPlatform $platform)
     {
-        return new CollectionCondition($this->decodeJson($value));
+        $decodedConditions = $this->decodeJson($value);
+
+        if (!$decodedConditions) {
+            return new CollectionCondition();
+        }
+
+        $normalization = new NormalizeCondition($decodedConditions);
+
+        return $normalization->normalizeCollection();
     }
 
     /**
@@ -37,8 +47,9 @@ final class ConditionsType extends RuleEngineType
                 ]
             );
         }
+        $denormalize = new DenormalizeCondition($value);
 
-        return parent::convertToDatabaseValue($value, $platform);
+        return parent::convertToDatabaseValue($denormalize->denormalizeCollection(), $platform);
     }
 
     public function getName()

@@ -91,8 +91,8 @@ abstract class AttributeCondition implements AttributeConditionTypeInterface
     public function toArray(): array
     {
         return [
-            'classResource' => $this->getClassResource(),
-            'fieldName'     => $this->getFieldName(),
+            'class_resource' => $this->getClassResource(),
+            'field_name'     => $this->getFieldName(),
             'operator'      => $this->getOperator(),
             'type'          => $this->getType(),
             'value'         => $this->getValue(),
