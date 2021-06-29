@@ -10,4 +10,9 @@ namespace DrinksIt\RuleEngineBundle\Rule\Types;
 
 interface ArrayAttributeConditionTypeInterface extends AttributeConditionTypeInterface
 {
+    public const OPERATOR_EQ = 'EQ';
+
+    public const OPERATOR_CONTAINS = 'CONTAINS';
+
+    public const OPERATOR_KEY_EXISTS = 'KEY_EXISTS';
 }

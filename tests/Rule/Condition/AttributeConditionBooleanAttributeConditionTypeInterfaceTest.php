@@ -22,6 +22,11 @@ class AttributeConditionBooleanAttributeConditionTypeInterfaceTest extends Attri
         $this->assertNotEmpty($this->attributeCondition->getSupportOperators());
 
         $this->assertEquals($operatorsConstants, $this->attributeCondition->getSupportOperators());
+
+        $this->attributeCondition->setValue(false);
+
+        $this->assertTrue($this->attributeCondition->match(false));
+        $this->assertFalse($this->attributeCondition->match(true));
     }
 
     public function makeAttributeConditionObject(): AttributeCondition
@@ -30,6 +35,11 @@ class AttributeConditionBooleanAttributeConditionTypeInterfaceTest extends Attri
             public function getType(): string
             {
                 return 'boolean';
+            }
+
+            public function match($value): bool
+            {
+                return $this->getValue() === $value;
             }
         };
     }

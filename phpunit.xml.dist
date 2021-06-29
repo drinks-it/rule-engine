@@ -14,8 +14,30 @@
         <server name="TMP_ROOT_DIRECTORY" value="var" />
     </php>
     <testsuites>
-        <testsuite name="RuleEngineBundle Test Suite">
-            <directory>tests/</directory>
+        <testsuite name="Command">
+            <directory>tests/Command</directory>
+        </testsuite>
+        <testsuite name="Bundle">
+            <file>tests/RuleEngineBundleTest.php</file>
+        </testsuite>
+        <testsuite name="DI">
+            <directory>tests/DependencyInjection</directory>
+        </testsuite>
+        <testsuite name="Doctrine">
+            <directory>tests/Doctrine</directory>
+        </testsuite>
+        <testsuite name="Mapping">
+            <directory>tests/Mapping</directory>
+        </testsuite>
+        <testsuite name="Metadata">
+            <directory>tests/Metadata</directory>
+        </testsuite>
+        <testsuite name="Rule">
+            <directory>tests/Rule</directory>
+            <exclude>tests/Rule/Condition/Attribute</exclude>
+        </testsuite>
+        <testsuite name="Rule_Condition_Attributes">
+            <directory>tests/Rule/Condition/Attribute</directory>
         </testsuite>
     </testsuites>
 

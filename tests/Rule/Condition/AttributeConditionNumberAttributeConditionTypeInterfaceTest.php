@@ -54,6 +54,11 @@ class AttributeConditionNumberAttributeConditionTypeInterfaceTest extends Attrib
             {
                 return 'number';
             }
+
+            public function match($value): bool
+            {
+                return $value === $this->getValue();
+            }
         };
     }
 }

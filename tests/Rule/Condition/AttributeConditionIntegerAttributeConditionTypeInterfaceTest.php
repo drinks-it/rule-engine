@@ -22,6 +22,9 @@ class AttributeConditionIntegerAttributeConditionTypeInterfaceTest extends Attri
         $this->assertNotEmpty($this->attributeCondition->getSupportOperators());
 
         $this->assertEquals($operatorsConstants, $this->attributeCondition->getSupportOperators());
+
+        $this->assertTrue($this->attributeCondition->setValue(1)->match(1));
+        $this->assertFalse($this->attributeCondition->setValue(1)->match(0));
     }
 
     public function makeAttributeConditionObject(): AttributeCondition
@@ -30,6 +33,11 @@ class AttributeConditionIntegerAttributeConditionTypeInterfaceTest extends Attri
             public function getType(): string
             {
                 return 'integer';
+            }
+
+            public function match($value): bool
+            {
+                return $this->getValue() === $value;
             }
         };
     }

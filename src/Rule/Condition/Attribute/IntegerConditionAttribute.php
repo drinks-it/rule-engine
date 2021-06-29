@@ -12,4 +12,8 @@ use DrinksIt\RuleEngineBundle\Rule\Types\IntegerAttributeConditionTypeInterface;
 
 class IntegerConditionAttribute extends NumberConditionAttribute implements IntegerAttributeConditionTypeInterface
 {
+    public function convertValue($value): float
+    {
+        return (int) parent::convertValue($value);
+    }
 }

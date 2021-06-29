@@ -56,6 +56,11 @@ class AttributeConditionWithStringAttributeConditionTypeInterfaceTest extends At
             {
                 return 'string';
             }
+
+            public function match($value): bool
+            {
+                return $this->getValue() === $value;
+            }
         };
     }
 }

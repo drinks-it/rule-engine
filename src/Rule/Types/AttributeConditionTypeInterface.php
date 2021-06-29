@@ -43,4 +43,6 @@ interface AttributeConditionTypeInterface
      * @return array<string>
      */
     public function getSupportOperators(): array;
+
+    public function match($value): bool;
 }
