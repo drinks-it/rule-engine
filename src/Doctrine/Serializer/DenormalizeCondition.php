@@ -27,7 +27,7 @@ final class DenormalizeCondition
 
         return [
             'class_collection' => \get_class($conditions),
-            'elements' => array_map(fn (Condition $condition) => $condition, $conditions->getValues()),
+            'elements' => array_map(fn (Condition $condition) => $condition, $conditions->getValues() ?? []),
         ];
     }
 
