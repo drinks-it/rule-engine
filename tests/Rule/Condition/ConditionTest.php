@@ -9,8 +9,8 @@ declare(strict_types=1);
 namespace Tests\DrinksIt\RuleEngineBundle\Rule\Condition;
 
 use DrinksIt\RuleEngineBundle\Rule\Condition\Condition;
-use DrinksIt\RuleEngineBundle\Rule\ConditionsInterface;
 use DrinksIt\RuleEngineBundle\Rule\Condition\Types\AttributeConditionTypeInterface;
+use DrinksIt\RuleEngineBundle\Rule\ConditionsInterface;
 use PHPUnit\Framework\TestCase;
 
 class ConditionTest extends TestCase
