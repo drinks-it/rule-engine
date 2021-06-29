@@ -8,7 +8,7 @@ declare(strict_types=1);
 
 namespace DrinksIt\RuleEngineBundle\Rule\Condition;
 
-use DrinksIt\RuleEngineBundle\Rule\Types\AttributeConditionTypeInterface;
+use DrinksIt\RuleEngineBundle\Rule\Condition\Types\AttributeConditionTypeInterface;
 
 abstract class AttributeCondition implements AttributeConditionTypeInterface
 {
@@ -22,7 +22,7 @@ abstract class AttributeCondition implements AttributeConditionTypeInterface
 
     protected string $operator;
 
-    public function __construct(string $classResource, string $fieldName)
+    public function __construct(string $classResource, string $fieldName, string $operator = null, $value = null)
     {
         $this->classResource = $classResource;
         $this->fieldName = $fieldName;
@@ -33,6 +33,14 @@ abstract class AttributeCondition implements AttributeConditionTypeInterface
             fn ($constName) => strpos($constName, 'OPERATOR_') !== false,
             ARRAY_FILTER_USE_KEY
         );
+
+        if ($operator) {
+            $this->setOperator($operator);
+        }
+
+        if ($value) {
+            $this->setValue($value);
+        }
     }
 
     public function getOperator(): string

@@ -10,7 +10,7 @@ namespace Tests\DrinksIt\RuleEngineBundle\Rule\Condition\Attribute;
 
 use DrinksIt\RuleEngineBundle\Rule\Condition\Attribute\NumberConditionAttribute;
 use DrinksIt\RuleEngineBundle\Rule\Condition\Exception\TypeValueNotSupportedForConditionException;
-use DrinksIt\RuleEngineBundle\Rule\Types\NumberAttributeConditionTypeInterface;
+use DrinksIt\RuleEngineBundle\Rule\Condition\Types\NumberAttributeConditionTypeInterface;
 use PHPUnit\Framework\TestCase;
 
 class NumberConditionAttributeTest extends TestCase

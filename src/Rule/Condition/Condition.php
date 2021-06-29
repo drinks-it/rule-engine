@@ -8,8 +8,8 @@ declare(strict_types=1);
 
 namespace DrinksIt\RuleEngineBundle\Rule\Condition;
 
+use DrinksIt\RuleEngineBundle\Rule\Condition\Types\AttributeConditionTypeInterface;
 use DrinksIt\RuleEngineBundle\Rule\ConditionsInterface;
-use DrinksIt\RuleEngineBundle\Rule\Types\AttributeConditionTypeInterface;
 
 final class Condition
 {
@@ -83,7 +83,7 @@ final class Condition
         return self::TYPE_ATTRIBUTE === $this->getType();
     }
 
-    public function isResult(): bool
+    public function getResultBlock(): bool
     {
         return $this->result;
     }
@@ -123,7 +123,7 @@ final class Condition
         return [
             'priority' => $this->getPriority(),
             'type' => $this->getType(),
-            'result' => $this->isNotDefaultResult() ? null : $this->isResult(),
+            'result' => $this->isNotDefaultResult() ? null : $this->getResultBlock(),
             'attribute_condition' => $attributeCondition,
             'sub_conditions' => $subConditions,
         ];

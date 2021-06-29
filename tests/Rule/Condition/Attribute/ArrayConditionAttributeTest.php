@@ -10,7 +10,7 @@ namespace Tests\DrinksIt\RuleEngineBundle\Rule\Condition\Attribute;
 
 use DrinksIt\RuleEngineBundle\Rule\Condition\Attribute\ArrayConditionAttribute;
 use DrinksIt\RuleEngineBundle\Rule\Condition\Exception\NotSupportedOperatorConditionException;
-use DrinksIt\RuleEngineBundle\Rule\Types\ArrayAttributeConditionTypeInterface;
+use DrinksIt\RuleEngineBundle\Rule\Condition\Types\ArrayAttributeConditionTypeInterface;
 use PHPUnit\Framework\TestCase;
 
 class ArrayConditionAttributeTest extends TestCase

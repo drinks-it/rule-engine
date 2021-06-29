@@ -10,7 +10,7 @@ namespace Tests\DrinksIt\RuleEngineBundle\Rule\Condition;
 
 use DrinksIt\RuleEngineBundle\Rule\Condition\Condition;
 use DrinksIt\RuleEngineBundle\Rule\ConditionsInterface;
-use DrinksIt\RuleEngineBundle\Rule\Types\AttributeConditionTypeInterface;
+use DrinksIt\RuleEngineBundle\Rule\Condition\Types\AttributeConditionTypeInterface;
 use PHPUnit\Framework\TestCase;
 
 class ConditionTest extends TestCase
@@ -33,7 +33,7 @@ class ConditionTest extends TestCase
 
         $this->assertInstanceOf(Condition::class, $condition);
 
-        $this->assertIsBool($condition->isResult());
+        $this->assertIsBool($condition->getResultBlock());
         $this->assertIsString($condition->getType());
 
         $this->assertIsInt($condition->getPriority());

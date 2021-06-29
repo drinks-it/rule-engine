@@ -11,7 +11,7 @@ namespace DrinksIt\RuleEngineBundle\Rule\Condition\Attribute;
 use DrinksIt\RuleEngineBundle\Rule\Condition\AttributeCondition;
 use DrinksIt\RuleEngineBundle\Rule\Condition\Exception\NotSupportedOperatorConditionException;
 use DrinksIt\RuleEngineBundle\Rule\Condition\Exception\TypeValueNotSupportedForConditionException;
-use DrinksIt\RuleEngineBundle\Rule\Types\ArrayAttributeConditionTypeInterface;
+use DrinksIt\RuleEngineBundle\Rule\Condition\Types\ArrayAttributeConditionTypeInterface;
 
 class ArrayConditionAttribute extends AttributeCondition implements ArrayAttributeConditionTypeInterface
 {

@@ -12,5 +12,5 @@ use Doctrine\Common\Collections\Collection;
 
 interface ConditionsInterface extends Collection
 {
-    public function isMatched($objectEntity): bool;
+    public function isMatched($objectEntity, array $context = []): bool;
 }

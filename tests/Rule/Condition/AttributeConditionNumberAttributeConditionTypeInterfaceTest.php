@@ -10,8 +10,8 @@ namespace Tests\DrinksIt\RuleEngineBundle\Rule\Condition;
 
 use DrinksIt\RuleEngineBundle\Rule\Condition\Attribute\NumberConditionAttribute;
 use DrinksIt\RuleEngineBundle\Rule\Condition\AttributeCondition;
-use DrinksIt\RuleEngineBundle\Rule\Types\AttributeConditionTypeInterface;
-use DrinksIt\RuleEngineBundle\Rule\Types\NumberAttributeConditionTypeInterface;
+use DrinksIt\RuleEngineBundle\Rule\Condition\Types\AttributeConditionTypeInterface;
+use DrinksIt\RuleEngineBundle\Rule\Condition\Types\NumberAttributeConditionTypeInterface;
 
 class AttributeConditionNumberAttributeConditionTypeInterfaceTest extends AttributeConditionTestCase
 {

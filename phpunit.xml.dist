@@ -32,12 +32,12 @@
         <testsuite name="Metadata">
             <directory>tests/Metadata</directory>
         </testsuite>
+        <testsuite name="Rule_Condition_Attributes">
+            <directory>tests/Rule/Condition/Attribute</directory>
+        </testsuite>
         <testsuite name="Rule">
             <directory>tests/Rule</directory>
             <exclude>tests/Rule/Condition/Attribute</exclude>
-        </testsuite>
-        <testsuite name="Rule_Condition_Attributes">
-            <directory>tests/Rule/Condition/Attribute</directory>
         </testsuite>
     </testsuites>
 

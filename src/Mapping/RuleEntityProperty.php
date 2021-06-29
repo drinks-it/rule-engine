@@ -10,7 +10,7 @@ namespace DrinksIt\RuleEngineBundle\Mapping;
 
 use Doctrine\Common\Annotations\Annotation\Required;
 use Doctrine\Common\Annotations\Annotation\Target;
-use DrinksIt\RuleEngineBundle\Rule\Types\AttributeConditionTypeInterface;
+use DrinksIt\RuleEngineBundle\Rule\Condition\Types\AttributeConditionTypeInterface;
 
 /**
  * @Annotation

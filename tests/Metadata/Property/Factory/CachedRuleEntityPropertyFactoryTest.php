@@ -12,7 +12,7 @@ use DrinksIt\RuleEngineBundle\Mapping\RuleEntityProperty;
 use DrinksIt\RuleEngineBundle\Metadata\Property\Factory\CachedRuleEntityPropertyFactory;
 use DrinksIt\RuleEngineBundle\Metadata\Property\Factory\RuleEntityPropertyFactoryInterface;
 use DrinksIt\RuleEngineBundle\Metadata\Property\PropertyRuleEntity;
-use DrinksIt\RuleEngineBundle\Rule\Types\AttributeConditionTypeInterface;
+use DrinksIt\RuleEngineBundle\Rule\Condition\Types\AttributeConditionTypeInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Cache\CacheItemInterface;

@@ -9,7 +9,7 @@ declare(strict_types=1);
 namespace Tests\DrinksIt\RuleEngineBundle\Rule\Condition;
 
 use DrinksIt\RuleEngineBundle\Rule\Condition\AttributeCondition;
-use DrinksIt\RuleEngineBundle\Rule\Types\IntegerAttributeConditionTypeInterface;
+use DrinksIt\RuleEngineBundle\Rule\Condition\Types\IntegerAttributeConditionTypeInterface;
 
 class AttributeConditionIntegerAttributeConditionTypeInterfaceTest extends AttributeConditionTestCase
 {

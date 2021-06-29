@@ -13,7 +13,7 @@ use DrinksIt\RuleEngineBundle\Mapping\RuleEntityProperty;
 use DrinksIt\RuleEngineBundle\Mapping\RuleEntityResource;
 use DrinksIt\RuleEngineBundle\Metadata\Extractor\RuleEntityAnnotationExtractor;
 use DrinksIt\RuleEngineBundle\Metadata\Extractor\RuleEntityExtractorInterface;
-use DrinksIt\RuleEngineBundle\Rule\Types\AttributeConditionTypeInterface;
+use DrinksIt\RuleEngineBundle\Rule\Condition\Types\AttributeConditionTypeInterface;
 use PHPUnit\Framework\TestCase;
 use Tests\DrinksIt\RuleEngineBundle\Mapping\AnnotationFixtures;
 

@@ -6,9 +6,8 @@
 
 declare(strict_types=1);
 
-namespace DrinksIt\RuleEngineBundle\Rule\Types;
+namespace DrinksIt\RuleEngineBundle\Rule\Action;
 
-interface ConditionValueInterface
+interface ActionFieldInterface
 {
-    public function getValue();
 }

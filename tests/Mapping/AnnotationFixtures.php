@@ -56,7 +56,7 @@ trait AnnotationFixtures
         $entityResource = sprintf(<<<'CODE'
             <?php
             use DrinksIt\RuleEngineBundle\Mapping as RuleEngine;
-            use DrinksIt\RuleEngineBundle\Rule\Types\AttributeConditionTypeInterface;
+            use DrinksIt\RuleEngineBundle\Rule\Condition\Types\AttributeConditionTypeInterface;
             /**
              * @RuleEngine\RuleEntityResource()
              */

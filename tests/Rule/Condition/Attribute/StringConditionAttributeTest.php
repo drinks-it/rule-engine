@@ -10,7 +10,7 @@ namespace Tests\DrinksIt\RuleEngineBundle\Rule\Condition\Attribute;
 
 use DrinksIt\RuleEngineBundle\Rule\Condition\Attribute\StringConditionAttribute;
 use DrinksIt\RuleEngineBundle\Rule\Condition\Exception\TypeValueNotSupportedForConditionException;
-use DrinksIt\RuleEngineBundle\Rule\Types\StringAttributeConditionTypeInterface;
+use DrinksIt\RuleEngineBundle\Rule\Condition\Types\StringAttributeConditionTypeInterface;
 use PHPUnit\Framework\TestCase;
 
 class StringConditionAttributeTest extends TestCase

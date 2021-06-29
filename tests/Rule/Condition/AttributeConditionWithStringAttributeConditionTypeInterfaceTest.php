@@ -10,7 +10,7 @@ namespace Tests\DrinksIt\RuleEngineBundle\Rule\Condition;
 
 use DrinksIt\RuleEngineBundle\Rule\Condition\Attribute\StringConditionAttribute;
 use DrinksIt\RuleEngineBundle\Rule\Condition\AttributeCondition;
-use DrinksIt\RuleEngineBundle\Rule\Types\StringAttributeConditionTypeInterface;
+use DrinksIt\RuleEngineBundle\Rule\Condition\Types\StringAttributeConditionTypeInterface;
 
 class AttributeConditionWithStringAttributeConditionTypeInterfaceTest extends AttributeConditionTestCase
 {

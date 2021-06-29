@@ -8,7 +8,7 @@ declare(strict_types=1);
 
 namespace DrinksIt\RuleEngineBundle\Rule\Condition\Attribute;
 
-use DrinksIt\RuleEngineBundle\Rule\Types\IntegerAttributeConditionTypeInterface;
+use DrinksIt\RuleEngineBundle\Rule\Condition\Types\IntegerAttributeConditionTypeInterface;
 
 class IntegerConditionAttribute extends NumberConditionAttribute implements IntegerAttributeConditionTypeInterface
 {

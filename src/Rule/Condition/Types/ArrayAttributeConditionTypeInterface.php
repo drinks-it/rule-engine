@@ -6,7 +6,7 @@
 
 declare(strict_types=1);
 
-namespace DrinksIt\RuleEngineBundle\Rule\Types;
+namespace DrinksIt\RuleEngineBundle\Rule\Condition\Types;
 
 interface ArrayAttributeConditionTypeInterface extends AttributeConditionTypeInterface
 {

@@ -10,7 +10,7 @@ namespace Tests\DrinksIt\RuleEngineBundle\Mapping;
 
 use Doctrine\Common\Annotations\AnnotationReader;
 use DrinksIt\RuleEngineBundle\Mapping\RuleEntityProperty;
-use DrinksIt\RuleEngineBundle\Rule\Types\AttributeConditionTypeInterface;
+use DrinksIt\RuleEngineBundle\Rule\Condition\Types\AttributeConditionTypeInterface;
 use PHPUnit\Framework\TestCase;
 
 class RuleEntityPropertyTest extends TestCase

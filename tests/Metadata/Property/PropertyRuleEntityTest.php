@@ -9,7 +9,7 @@ declare(strict_types=1);
 namespace Tests\DrinksIt\RuleEngineBundle\Metadata\Property;
 
 use DrinksIt\RuleEngineBundle\Metadata\Property\PropertyRuleEntity;
-use DrinksIt\RuleEngineBundle\Rule\Types\AttributeConditionTypeInterface;
+use DrinksIt\RuleEngineBundle\Rule\Condition\Types\AttributeConditionTypeInterface;
 use PHPUnit\Framework\TestCase;
 
 class PropertyRuleEntityTest extends TestCase

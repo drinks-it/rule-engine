@@ -14,7 +14,7 @@ use DrinksIt\RuleEngineBundle\Metadata\Property\Factory\RuleEntityPropertyFactor
 use DrinksIt\RuleEngineBundle\Metadata\Property\PropertyRuleEntity;
 use DrinksIt\RuleEngineBundle\Metadata\Resource\Factory\RuleEntityResourceFactory;
 use DrinksIt\RuleEngineBundle\Metadata\Resource\ResourceRuleEntity;
-use DrinksIt\RuleEngineBundle\Rule\Types\AttributeConditionTypeInterface;
+use DrinksIt\RuleEngineBundle\Rule\Condition\Types\AttributeConditionTypeInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
