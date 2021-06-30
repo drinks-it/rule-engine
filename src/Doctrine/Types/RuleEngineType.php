@@ -28,7 +28,7 @@ abstract class RuleEngineType extends Type
 
     public function convertToDatabaseValue($value, AbstractPlatform $platform)
     {
-        return (new JsonEncode())->encode($value->toArray(), JsonEncoder::FORMAT);
+        return (new JsonEncode())->encode($value, JsonEncoder::FORMAT);
     }
     protected function decodeJson($value)
     {

@@ -46,9 +46,9 @@ final class Condition
     /**
      * If ifType == IF_ATTRIBUTE.
      */
-    private AttributeConditionTypeInterface $attributeCondition;
+    private ?AttributeConditionTypeInterface $attributeCondition = null;
 
-    private ConditionsInterface $subConditions;
+    private ?ConditionsInterface $subConditions = null;
 
     public function __construct(
         string $type,

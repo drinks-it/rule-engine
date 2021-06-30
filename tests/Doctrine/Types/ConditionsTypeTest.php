@@ -39,8 +39,6 @@ class ConditionsTypeTest extends TestCase
     public function testConvertToDatabaseValue(): void
     {
         $actionInterface = $this->createMock(ConditionsInterface::class);
-        $actionInterface->expects($this->once())->method('toArray')
-            ->willReturn(['test' => ['olo'], 'can_json' => 'yes']);
 
         $this->assertJson(
             $this->type->convertToDatabaseValue($actionInterface, $this->platform)

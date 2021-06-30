@@ -21,13 +21,19 @@ final class DenormalizeCondition
         $this->conditions = $conditions;
     }
 
-    public function denormalizeCollection(?ConditionsInterface $conditions = null): array
+    public function denormalizeCollection(?ConditionsInterface $conditions = null, bool $internal = false): ?array
     {
-        $conditions = $conditions ?: $this->conditions;
+        if ($internal) {
+            if (!$conditions) {
+                return null;
+            }
+        } else {
+            $conditions = $this->conditions;
+        }
 
         return [
             'class_collection' => \get_class($conditions),
-            'elements' => array_map(fn (Condition $condition) => $condition, $conditions->getValues() ?? []),
+            'elements' => array_map(fn (Condition $condition) => $this->denormalizeElement($condition), $conditions->getValues() ?? []),
         ];
     }
 
@@ -44,7 +50,7 @@ final class DenormalizeCondition
             'type' => $condition->getType(),
             'result' => $condition->getResultBlock(),
             'attribute_condition' => $attributeCondition,
-            'sub_conditions' => $this->denormalizeCollection($condition->getSubConditions()),
+            'sub_conditions' => $this->denormalizeCollection($condition->getSubConditions(), true),
         ];
     }
 

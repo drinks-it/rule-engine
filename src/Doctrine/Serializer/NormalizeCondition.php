@@ -23,9 +23,17 @@ final class NormalizeCondition
         $this->conditions = $conditions;
     }
 
-    public function normalizeCollection(?array $conditions = []): ConditionsInterface
+    public function normalizeCollection(?array $conditions = [], bool $internal = false): ?ConditionsInterface
     {
-        $classCollection = $conditions ? $conditions['class_collection'] : $this->conditions['class_collection'];
+        if ($internal) {
+            if (!$conditions) {
+                return null;
+            }
+        } else {
+            $conditions = $this->conditions;
+        }
+
+        $classCollection =  $conditions['class_collection'];
 
         if (!class_exists($classCollection)) {
             throw new ClassNotExistRuleEngineDoctrineException($classCollection);
@@ -34,7 +42,7 @@ final class NormalizeCondition
         return new $classCollection(
             array_map(
                 fn ($element) => $this->normalizeElement($element),
-                $this->conditions['elements'] ?? []
+                $conditions['elements'] ?? []
             )
         );
     }
@@ -44,12 +52,12 @@ final class NormalizeCondition
         $attributeType = null;
         $subConditions = null;
 
-        if ($element['attribute_condition']) {
+        if (isset($element['attribute_condition'])) {
             $attributeType = $this->normalizeAttributeType($element['attribute_condition']);
         }
 
-        if ($element['sub_conditions']) {
-            $subConditions = $this->normalizeCollection($element['sub_conditions']);
+        if (isset($element['sub_conditions'])) {
+            $subConditions = $this->normalizeCollection($element['sub_conditions'], true);
         }
 
         return new Condition($element['type'], $element['priority'], $attributeType, $subConditions, $element['result']);
@@ -58,22 +66,22 @@ final class NormalizeCondition
     public function normalizeAttributeType(array $attributeCondition): AttributeConditionTypeInterface
     {
         $classConditionAttributeType = $attributeCondition['class_condition'];
+        $properties = $attributeCondition['properties'];
 
         if (!class_exists($classConditionAttributeType)) {
             throw new ClassNotExistRuleEngineDoctrineException($classConditionAttributeType);
         }
 
         $objectConditionAttribute = new $classConditionAttributeType(
-            $attributeCondition['class_resource'],
-            $attributeCondition['field_name']
+            $properties['class_resource'],
+            $properties['field_name'],
+            $properties['operator'],
+            $properties['value']
         );
 
         if (!$objectConditionAttribute instanceof AttributeConditionTypeInterface) {
             throw new ClassDoesNotImplementInterfaceException($classConditionAttributeType, AttributeConditionTypeInterface::class);
         }
-
-        $objectConditionAttribute->setOperator($attributeCondition['operator']);
-        $objectConditionAttribute->setValue($attributeCondition['value']);
 
         return $objectConditionAttribute;
     }
