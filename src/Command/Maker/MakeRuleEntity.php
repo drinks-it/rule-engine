@@ -11,9 +11,12 @@ namespace DrinksIt\RuleEngineBundle\Command\Maker;
 use Doctrine\DBAL\Types\Types;
 use DrinksIt\RuleEngineBundle\Doctrine\Types as ColumnType;
 use DrinksIt\RuleEngineBundle\Rule as Rules;
+use Exception;
+use PhpParser\Builder\Method;
 use PhpParser\Builder\Param;
 use PhpParser\Node\Expr as NodeExpr;
 use PhpParser\Node\Stmt as Stmt;
+use ReflectionClass;
 use Symfony\Bundle\MakerBundle\ConsoleStyle;
 use Symfony\Bundle\MakerBundle\DependencyBuilder;
 use Symfony\Bundle\MakerBundle\Doctrine\EntityClassGenerator;
@@ -42,22 +45,37 @@ final class MakeRuleEntity extends AbstractMaker
 
     private string $collectionConditionClassName;
 
+    private string $collectionActionClassPath;
+
+    private string $collectionActionClassName;
+
     public function __construct(FileManager $fileManager, EntityClassGenerator $entityClassGenerator, ContainerInterface $container)
     {
         $this->fileManager = $fileManager;
         $this->entityClassGenerator = $entityClassGenerator;
 
-        if ($container->hasParameter('rule_engine.collection_condition_class')) {
-            $this->collectionConditionClassPath = (string) $container->getParameter('rule_engine.collection_condition_class');
-
-            if (!class_exists($this->collectionConditionClassPath)) {
-                throw new RuntimeException(sprintf('Class `%s` not found. Please check configuration `rule_engine.collection_condition_class`', $this->collectionConditionClassPath));
-            }
-        } else {
-            $this->collectionConditionClassPath = Rules\ConditionsInterface::class;
+        if (!$container->hasParameter('rule_engine.collection_condition_class')) {
+            throw new RuntimeException('Parameter `rule_engine.collection_condition_class` not found');
         }
 
-        $this->collectionConditionClassName = (new \ReflectionClass($this->collectionConditionClassPath))->getShortName();
+        $this->collectionConditionClassPath = (string) $container->getParameter('rule_engine.collection_condition_class');
+
+        if (!class_exists($this->collectionConditionClassPath)) {
+            throw new RuntimeException(sprintf('Class `%s` not found. Please check configuration `rule_engine.collection_condition_class`', $this->collectionConditionClassPath));
+        }
+
+        if (!$container->hasParameter('rule_engine.collection_actions_class')) {
+            throw new RuntimeException('Parameter `rule_engine.collection_actions_class` not found');
+        }
+
+        $this->collectionActionClassPath = (string) $container->getParameter('rule_engine.collection_actions_class');
+
+        if (!class_exists($this->collectionActionClassPath)) {
+            throw new RuntimeException(sprintf('Class `%s` not found. Please check configuration `rule_engine.collection_actions_class`', $this->collectionActionClassPath));
+        }
+
+        $this->collectionConditionClassName = (new ReflectionClass($this->collectionConditionClassPath))->getShortName();
+        $this->collectionActionClassName = (new ReflectionClass($this->collectionActionClassPath))->getShortName();
     }
 
     public static function getCommandName(): string
@@ -89,7 +107,7 @@ final class MakeRuleEntity extends AbstractMaker
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function generate(InputInterface $input, ConsoleStyle $io, Generator $generator): void
     {
@@ -109,9 +127,11 @@ final class MakeRuleEntity extends AbstractMaker
         $manipulation = new ClassSourceManipulator($this->fileManager->getFileContents($entityPath), $classExists);
 
         $manipulation->addInterface(Rules\RuleEntityInterface::class);
-        $manipulation->addUseStatementIfNecessary(Rules\ConditionsInterface::class);
+        $manipulation->addUseStatementIfNecessary(Rules\CollectionConditionInterface::class);
+        $manipulation->addUseStatementIfNecessary(Rules\CollectionActionsInterface::class);
+        $manipulation->addUseStatementIfNecessary(Rules\Action\ActionInterface::class);
         $manipulation->addUseStatementIfNecessary($this->collectionConditionClassPath);
-        $manipulation->addUseStatementIfNecessary(Rules\ActionColumn::class);
+        $manipulation->addUseStatementIfNecessary($this->collectionActionClassPath);
         $manipulation->addUseStatementIfNecessary(Rules\TriggerEventColumn::class);
         $manipulation->addUseStatementIfNecessary(Rules\Condition\Condition::class);
 
@@ -142,15 +162,18 @@ final class MakeRuleEntity extends AbstractMaker
         // conditions
         $manipulation->addProperty('conditions', ['@ORM\Column(type="'.ColumnType\ConditionsType::TYPE.'")']);
         $manipulation->addGetter('conditions', $this->collectionConditionClassName, false);
-        $manipulation->addSetter('conditions', 'ConditionsInterface', false);
+        $manipulation->addSetter('conditions', 'CollectionConditionInterface', false);
 
-        $manipulation->addMethodBuilder($this->addElementToCollection());
-        $manipulation->addMethodBuilder($this->removeElementFromCollection());
+        $manipulation->addMethodBuilder($this->addElementToCollection('condition', 'Condition'));
+        $manipulation->addMethodBuilder($this->removeElementFromCollection('condition', 'Condition'));
 
         // action
         $manipulation->addProperty('action', ['@ORM\Column(type="'.ColumnType\ActionType::TYPE.'")']);
-        $manipulation->addGetter('action', 'ActionColumn', false);
-        $manipulation->addSetter('action', 'ActionColumn', false);
+        $manipulation->addGetter('action', $this->collectionActionClassName, false);
+        $manipulation->addSetter('action', 'CollectionActionsInterface', false);
+
+        $manipulation->addMethodBuilder($this->addElementToCollection('action', 'ActionInterface'));
+        $manipulation->addMethodBuilder($this->removeElementFromCollection('action', 'ActionInterface'));
 
         // triggerEvent
         $manipulation->addProperty('triggerEvent', ['@ORM\Column(type="'.ColumnType\TriggerEventType::TYPE.'")']);
@@ -178,18 +201,19 @@ final class MakeRuleEntity extends AbstractMaker
         $this->fileManager->dumpFile($entityPath, $manipulation->getSourceCode());
     }
 
-    private function addElementToCollection()
+    private function addElementToCollection($propertyName, $typeClassName)
     {
-        $methodAddCondition = (new \PhpParser\Builder\Method('addCondition'))->makePublic();
+        $propertyNameUc = ucwords($propertyName);
+        $methodAddCondition = (new Method('add'.$propertyNameUc))->makePublic();
         $methodAddCondition->setReturnType('self');
-        $paramBuilder = new Param('condition');
-        $paramBuilder->setType('Condition');
+        $paramBuilder = new Param($propertyName);
+        $paramBuilder->setType($typeClassName);
         $methodAddCondition->addParam($paramBuilder->getNode());
 
         $conteinerMethodCallNode = new NodeExpr\MethodCall(
-            new NodeExpr\PropertyFetch(new NodeExpr\Variable('this'), 'conditions'),
+            new NodeExpr\PropertyFetch(new NodeExpr\Variable('this'), $propertyName .'s'),
             'contains',
-            [new NodeExpr\Variable('condition')]
+            [new NodeExpr\Variable($propertyName)]
         );
 
         $ifNotContaint = new Stmt\If_(new NodeExpr\BooleanNot($conteinerMethodCallNode));
@@ -198,9 +222,9 @@ final class MakeRuleEntity extends AbstractMaker
         $ifNotContaint->stmts[] = new Stmt\Expression(
             new NodeExpr\Assign(
                 new NodeExpr\ArrayDimFetch(
-                    new NodeExpr\PropertyFetch(new NodeExpr\Variable('this'), 'conditions')
+                    new NodeExpr\PropertyFetch(new NodeExpr\Variable('this'), $propertyName.'s')
                 ),
-                new NodeExpr\Variable('condition')
+                new NodeExpr\Variable($propertyName)
             ),
         )
         ;
@@ -212,18 +236,19 @@ final class MakeRuleEntity extends AbstractMaker
         return $methodAddCondition;
     }
 
-    private function removeElementFromCollection()
+    private function removeElementFromCollection($propertyName, $typeClassName)
     {
-        $methodAddCondition = (new \PhpParser\Builder\Method('removedCondition'))->makePublic();
+        $propertyNameUc = ucwords($propertyName);
+        $methodAddCondition = (new Method('removed'.$propertyNameUc))->makePublic();
         $methodAddCondition->setReturnType('self');
-        $paramBuilder = new Param('condition');
-        $paramBuilder->setType('Condition');
+        $paramBuilder = new Param($propertyName);
+        $paramBuilder->setType($typeClassName);
         $methodAddCondition->addParam($paramBuilder->getNode());
 
         $conteinerMethodCallNode = new NodeExpr\MethodCall(
-            new NodeExpr\PropertyFetch(new NodeExpr\Variable('this'), 'conditions'),
+            new NodeExpr\PropertyFetch(new NodeExpr\Variable('this'), $propertyName. 's'),
             'contains',
-            [new NodeExpr\Variable('condition')]
+            [new NodeExpr\Variable($propertyName)]
         );
 
         $ifContaint = new Stmt\If_($conteinerMethodCallNode);
@@ -231,9 +256,9 @@ final class MakeRuleEntity extends AbstractMaker
         // append the item
         $ifContaint->stmts[] = new Stmt\Expression(
             new NodeExpr\MethodCall(
-                new NodeExpr\PropertyFetch(new NodeExpr\Variable('this'), 'conditions'),
+                new NodeExpr\PropertyFetch(new NodeExpr\Variable('this'), $propertyName.'s'),
                 'removeElement',
-                [new NodeExpr\Variable('condition')]
+                [new NodeExpr\Variable($propertyName)]
             ),
         )
         ;

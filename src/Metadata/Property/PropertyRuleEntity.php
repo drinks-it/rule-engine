@@ -12,12 +12,15 @@ final class PropertyRuleEntity
 {
     private string $name;
 
-    private string $classNameAttributeConditionType;
+    private ?string $classNameAttributeConditionType;
 
-    public function __construct(string $name, string $classNameAttributeConditionType)
+    private ?string $classNameActionFieldType;
+
+    public function __construct(string $name, string $classNameAttributeConditionType = null, string $classNameActionFieldType = null)
     {
         $this->name = $name;
         $this->classNameAttributeConditionType = $classNameAttributeConditionType;
+        $this->classNameActionFieldType = $classNameActionFieldType;
     }
 
     /**
@@ -29,10 +32,18 @@ final class PropertyRuleEntity
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getClassNameAttributeConditionType(): string
+    public function getClassNameAttributeConditionType(): ?string
     {
         return $this->classNameAttributeConditionType;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getClassNameActionFieldType(): ?string
+    {
+        return $this->classNameActionFieldType;
     }
 }

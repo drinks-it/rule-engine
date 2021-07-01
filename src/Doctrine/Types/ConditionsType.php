@@ -13,7 +13,7 @@ use Doctrine\DBAL\Types\ConversionException;
 use DrinksIt\RuleEngineBundle\Doctrine\Serializer\DenormalizeCondition;
 use DrinksIt\RuleEngineBundle\Doctrine\Serializer\NormalizeCondition;
 use DrinksIt\RuleEngineBundle\Rule\Condition\CollectionCondition;
-use DrinksIt\RuleEngineBundle\Rule\ConditionsInterface;
+use DrinksIt\RuleEngineBundle\Rule\CollectionConditionInterface;
 
 final class ConditionsType extends RuleEngineType
 {
@@ -33,17 +33,17 @@ final class ConditionsType extends RuleEngineType
     }
 
     /**
-     * @param ConditionsInterface $value
+     * @param CollectionConditionInterface $value
      * @throws ConversionException
      */
     public function convertToDatabaseValue($value, AbstractPlatform $platform)
     {
-        if (!$value instanceof ConditionsInterface) {
+        if (!$value instanceof CollectionConditionInterface) {
             throw ConversionException::conversionFailedInvalidType(
                 $value,
-                ConditionsInterface::class,
+                CollectionConditionInterface::class,
                 [
-                    ConditionsInterface::class,
+                    CollectionConditionInterface::class,
                 ]
             );
         }

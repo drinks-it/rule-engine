@@ -10,7 +10,9 @@ namespace DrinksIt\RuleEngineBundle\Doctrine\Types;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\ConversionException;
-use DrinksIt\RuleEngineBundle\Rule\ActionColumn;
+use DrinksIt\RuleEngineBundle\Doctrine\Serializer\DenormalizeAction;
+use DrinksIt\RuleEngineBundle\Doctrine\Serializer\NormalizeAction;
+use DrinksIt\RuleEngineBundle\Rule\CollectionActionsInterface;
 
 final class ActionType extends RuleEngineType
 {
@@ -18,26 +20,32 @@ final class ActionType extends RuleEngineType
 
     public function convertToPHPValue($value, AbstractPlatform $platform)
     {
-        return new ActionColumn($this->decodeJson($value));
+        $actionCollectionProperties = $this->decodeJson($value);
+
+        $normalize = new NormalizeAction($actionCollectionProperties);
+
+        return $normalize->normalizeCollection();
     }
 
     /**
-     * @param ActionColumn $value
+     * @param CollectionActionsInterface $value
      * @throws ConversionException
      */
     public function convertToDatabaseValue($value, AbstractPlatform $platform): string
     {
-        if (!$value instanceof ActionColumn) {
+        if (!$value instanceof CollectionActionsInterface) {
             throw ConversionException::conversionFailedInvalidType(
                 $value,
-                ActionColumn::class,
+                CollectionActionsInterface::class,
                 [
-                    ActionColumn::class,
+                    CollectionActionsInterface::class,
                 ]
             );
         }
 
-        return parent::convertToDatabaseValue($value, $platform);
+        $denormalize = new DenormalizeAction($value);
+
+        return parent::convertToDatabaseValue($denormalize->denormalizeCollection(), $platform);
     }
 
     public function getName()

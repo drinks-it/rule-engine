@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 namespace DrinksIt\RuleEngineBundle\Rule;
 
+use DrinksIt\RuleEngineBundle\Rule\Action\ActionInterface;
 use DrinksIt\RuleEngineBundle\Rule\Condition\Condition;
 
 interface RuleEntityInterface
@@ -24,17 +25,21 @@ interface RuleEntityInterface
 
     public function getActive(): ?bool;
 
-    public function getConditions(): ConditionsInterface;
+    public function getConditions(): CollectionConditionInterface;
 
-    public function setConditions(ConditionsInterface $conditions): self;
+    public function setConditions(CollectionConditionInterface $conditions): self;
 
     public function addCondition(Condition $condition): self;
 
     public function removedCondition(Condition $condition): self;
 
-    public function getAction(): ActionColumn;
+    public function getAction(): CollectionActionsInterface;
 
-    public function setAction(ActionColumn $action): self;
+    public function setAction(CollectionActionsInterface $actions): self;
+
+    public function addAction(ActionInterface $action): self;
+
+    public function removedAction(ActionInterface $action): self;
 
     public function getTriggerEvent(): TriggerEventColumn;
 

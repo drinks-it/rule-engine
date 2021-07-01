@@ -10,18 +10,18 @@ namespace DrinksIt\RuleEngineBundle\Doctrine\Serializer;
 
 use DrinksIt\RuleEngineBundle\Rule\Condition\Condition;
 use DrinksIt\RuleEngineBundle\Rule\Condition\Types\AttributeConditionTypeInterface;
-use DrinksIt\RuleEngineBundle\Rule\ConditionsInterface;
+use DrinksIt\RuleEngineBundle\Rule\CollectionConditionInterface;
 
 final class DenormalizeCondition
 {
-    private ConditionsInterface $conditions;
+    private CollectionConditionInterface $conditions;
 
-    public function __construct(ConditionsInterface $conditions)
+    public function __construct(CollectionConditionInterface $conditions)
     {
         $this->conditions = $conditions;
     }
 
-    public function denormalizeCollection(?ConditionsInterface $conditions = null, bool $internal = false): ?array
+    public function denormalizeCollection(?CollectionConditionInterface $conditions = null, bool $internal = false): ?array
     {
         if ($internal) {
             if (!$conditions) {

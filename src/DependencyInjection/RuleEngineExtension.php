@@ -22,6 +22,7 @@ class RuleEngineExtension extends Extension
         $config = $this->processConfiguration(new Configuration(), $configs);
 
         $container->setParameter('rule_engine.collection_condition_class', $config['collection_condition_class']);
+        $container->setParameter('rule_engine.collection_actions_class', $config['collection_actions_class']);
         $container->setParameter('rule_engine.mapping', $config['mapping'] ?? []);
 
         $this->addAnnotatedClassesToCompile($container->getParameter('rule_engine.mapping'));

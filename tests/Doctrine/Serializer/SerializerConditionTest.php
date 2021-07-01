@@ -15,7 +15,7 @@ use DrinksIt\RuleEngineBundle\Doctrine\Serializer\NormalizeCondition;
 use DrinksIt\RuleEngineBundle\Rule\Condition\Attribute\NumberConditionAttribute;
 use DrinksIt\RuleEngineBundle\Rule\Condition\CollectionCondition;
 use DrinksIt\RuleEngineBundle\Rule\Condition\Condition;
-use DrinksIt\RuleEngineBundle\Rule\ConditionsInterface;
+use DrinksIt\RuleEngineBundle\Rule\CollectionConditionInterface;
 use PHPUnit\Framework\TestCase;
 
 class SerializerConditionTest extends TestCase
@@ -25,7 +25,7 @@ class SerializerConditionTest extends TestCase
      * @dataProvider dataConditionsExceptions
      */
     public function testSerialize(
-        ConditionsInterface $conditions,
+        CollectionConditionInterface $conditions,
         string $exceptExceptionClass = null,
         callable $modifyArrayDecoded = null
     ): void {

@@ -36,7 +36,7 @@ class RuleEntityPropertyTest extends TestCase
                 continue;
             }
             $this->assertInstanceOf(RuleEntityProperty::class, $ruleEntityProperty);
-            $this->assertEquals(AttributeConditionTypeInterface::class, $ruleEntityProperty->interfaceType);
+            $this->assertEquals(AttributeConditionTypeInterface::class, $ruleEntityProperty->condition);
             $isExistOnProperty = true;
         }
 

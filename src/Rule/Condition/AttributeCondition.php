@@ -9,6 +9,7 @@ declare(strict_types=1);
 namespace DrinksIt\RuleEngineBundle\Rule\Condition;
 
 use DrinksIt\RuleEngineBundle\Rule\Condition\Types\AttributeConditionTypeInterface;
+use DrinksIt\RuleEngineBundle\Rule\Helper\DecodeRuleProperty;
 
 abstract class AttributeCondition implements AttributeConditionTypeInterface
 {
@@ -26,13 +27,7 @@ abstract class AttributeCondition implements AttributeConditionTypeInterface
     {
         $this->classResource = $classResource;
         $this->fieldName = $fieldName;
-
-        $reflection = new \ReflectionClass(static::class);
-        $this->supportsOperators = array_filter(
-            $reflection->getConstants() ?: [],
-            fn ($constName) => strpos($constName, 'OPERATOR_') !== false,
-            ARRAY_FILTER_USE_KEY
-        );
+        $this->supportsOperators = DecodeRuleProperty::getConstByKey('OPERATOR_', static::class);
 
         if ($operator) {
             $this->setOperator($operator);

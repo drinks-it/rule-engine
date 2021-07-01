@@ -12,7 +12,7 @@ use DrinksIt\RuleEngineBundle\Doctrine\Exception\ClassDoesNotImplementInterfaceE
 use DrinksIt\RuleEngineBundle\Doctrine\Exception\ClassNotExistRuleEngineDoctrineException;
 use DrinksIt\RuleEngineBundle\Rule\Condition\Condition;
 use DrinksIt\RuleEngineBundle\Rule\Condition\Types\AttributeConditionTypeInterface;
-use DrinksIt\RuleEngineBundle\Rule\ConditionsInterface;
+use DrinksIt\RuleEngineBundle\Rule\CollectionConditionInterface;
 
 final class NormalizeCondition
 {
@@ -23,7 +23,7 @@ final class NormalizeCondition
         $this->conditions = $conditions;
     }
 
-    public function normalizeCollection(?array $conditions = [], bool $internal = false): ?ConditionsInterface
+    public function normalizeCollection(?array $conditions = [], bool $internal = false): ?CollectionConditionInterface
     {
         if ($internal) {
             if (!$conditions) {

@@ -63,7 +63,7 @@ final class RuleEvent
                     continue;
                 }
 
-                $ruleEntity->getAction()->run($observedEntity);
+                $ruleEntity->getAction()->execute($observedEntity);
                 $this->logger->debug(sprintf('Complete Rule (%d, %s)', $ruleEntity->getId(), $ruleEntity->getName()));
 
                 if ($ruleEntity->getStopRuleProcessing()) {

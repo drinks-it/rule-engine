@@ -10,7 +10,7 @@ namespace DrinksIt\RuleEngineBundle\Rule;
 
 use Doctrine\Common\Collections\Collection;
 
-interface ConditionsInterface extends Collection
+interface CollectionConditionInterface extends Collection
 {
     public function isMatched($objectEntity, array $context = []): bool;
 }

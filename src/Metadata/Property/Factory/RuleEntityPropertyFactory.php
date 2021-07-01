@@ -31,7 +31,7 @@ final class RuleEntityPropertyFactory implements RuleEntityPropertyFactoryInterf
                 continue;
             }
 
-            $rulePropertiesReturn[] = new PropertyRuleEntity($propertiesName, $annotationProperty->interfaceType);
+            $rulePropertiesReturn[] = new PropertyRuleEntity($propertiesName, $annotationProperty->condition, $annotationProperty->action);
         }
 
         return $rulePropertiesReturn;

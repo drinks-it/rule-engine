@@ -11,7 +11,7 @@ namespace Tests\DrinksIt\RuleEngineBundle\Doctrine\Types;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\ConversionException;
 use DrinksIt\RuleEngineBundle\Doctrine\Types\ConditionsType;
-use DrinksIt\RuleEngineBundle\Rule\ConditionsInterface;
+use DrinksIt\RuleEngineBundle\Rule\CollectionConditionInterface;
 use PHPUnit\Framework\TestCase;
 
 class ConditionsTypeTest extends TestCase
@@ -38,7 +38,7 @@ class ConditionsTypeTest extends TestCase
 
     public function testConvertToDatabaseValue(): void
     {
-        $actionInterface = $this->createMock(ConditionsInterface::class);
+        $actionInterface = $this->createMock(CollectionConditionInterface::class);
 
         $this->assertJson(
             $this->type->convertToDatabaseValue($actionInterface, $this->platform)

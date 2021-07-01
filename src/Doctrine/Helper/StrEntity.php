@@ -8,6 +8,12 @@ declare(strict_types=1);
 
 namespace DrinksIt\RuleEngineBundle\Doctrine\Helper;
 
+/**
+ * Class StrEntity
+ * @package DrinksIt\RuleEngineBundle\Doctrine\Helper
+ *
+ * @internal
+ */
 final class StrEntity
 {
     private function __construct()

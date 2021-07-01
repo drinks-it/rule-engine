@@ -8,8 +8,8 @@ declare(strict_types=1);
 
 namespace DrinksIt\RuleEngineBundle\Mapping;
 
-use Doctrine\Common\Annotations\Annotation\Required;
 use Doctrine\Common\Annotations\Annotation\Target;
+use DrinksIt\RuleEngineBundle\Rule\Action\ActionInterface;
 use DrinksIt\RuleEngineBundle\Rule\Condition\Types\AttributeConditionTypeInterface;
 
 /**
@@ -20,8 +20,13 @@ class RuleEntityProperty
 {
     /**
      * @var string
-     * @Required
      * @see AttributeConditionTypeInterface
      */
-    public string $interfaceType;
+    public ?string $condition = null;
+
+    /**
+     * @var string
+     * @see ActionInterface
+     */
+    public ?string $action = null;
 }

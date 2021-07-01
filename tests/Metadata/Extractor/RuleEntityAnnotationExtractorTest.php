@@ -83,7 +83,7 @@ class RuleEntityAnnotationExtractorTest extends TestCase
             }
 
             $rule = new RuleEntityProperty();
-            $rule->interfaceType = AttributeConditionTypeInterface::class;
+            $rule->condition = AttributeConditionTypeInterface::class;
 
             return $rule;
         });

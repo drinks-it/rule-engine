@@ -50,7 +50,7 @@ class CachedRuleEntityPropertyFactoryTest extends TestCase
     public function providerDataFactory(): array
     {
         $rule = new RuleEntityProperty();
-        $rule->interfaceType = AttributeConditionTypeInterface::class;
+        $rule->condition = AttributeConditionTypeInterface::class;
 
         return [
             'Empty result. By Check in Cache with empty storage' => [

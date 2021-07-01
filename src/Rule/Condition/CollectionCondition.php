@@ -10,12 +10,12 @@ namespace DrinksIt\RuleEngineBundle\Rule\Condition;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use DrinksIt\RuleEngineBundle\Doctrine\Helper\StrEntity;
+use DrinksIt\RuleEngineBundle\Rule\CollectionConditionInterface;
 use DrinksIt\RuleEngineBundle\Rule\Condition\Exception\KeyNotFoundInArrayConditionException;
 use DrinksIt\RuleEngineBundle\Rule\Condition\Exception\MethodDoesNotExistException;
 use DrinksIt\RuleEngineBundle\Rule\Condition\Types\AttributeConditionTypeInterface;
-use DrinksIt\RuleEngineBundle\Rule\ConditionsInterface;
 
-class CollectionCondition extends ArrayCollection implements ConditionsInterface
+class CollectionCondition extends ArrayCollection implements CollectionConditionInterface
 {
     public function isMatched($objectEntity, array $context = []): bool
     {

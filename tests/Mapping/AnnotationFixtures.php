@@ -57,13 +57,15 @@ trait AnnotationFixtures
             <?php
             use DrinksIt\RuleEngineBundle\Mapping as RuleEngine;
             use DrinksIt\RuleEngineBundle\Rule\Condition\Types\AttributeConditionTypeInterface;
+            use DrinksIt\RuleEngineBundle\Rule\Action\ActionFiledInterface;
             /**
              * @RuleEngine\RuleEntityResource()
              */
             class %s {
                /**
                 *  @RuleEngine\RuleEntityProperty(
-                *        interfaceType=AttributeConditionTypeInterface::class
+                *        condition=AttributeConditionTypeInterface::class,
+                *        action=ActionFiledInterface::class
                 *    )
                 * @var string
                 */

@@ -9,7 +9,7 @@ declare(strict_types=1);
 namespace DrinksIt\RuleEngineBundle\Rule\Condition;
 
 use DrinksIt\RuleEngineBundle\Rule\Condition\Types\AttributeConditionTypeInterface;
-use DrinksIt\RuleEngineBundle\Rule\ConditionsInterface;
+use DrinksIt\RuleEngineBundle\Rule\CollectionConditionInterface;
 
 final class Condition
 {
@@ -48,13 +48,13 @@ final class Condition
      */
     private ?AttributeConditionTypeInterface $attributeCondition = null;
 
-    private ?ConditionsInterface $subConditions = null;
+    private ?CollectionConditionInterface $subConditions = null;
 
     public function __construct(
         string $type,
         int $priority,
         AttributeConditionTypeInterface $attributeCondition = null,
-        ConditionsInterface $subConditions = null,
+        CollectionConditionInterface $subConditions = null,
         bool $result = null
     ) {
         $this->type = $type;
@@ -98,7 +98,7 @@ final class Condition
         return $this->attributeCondition;
     }
 
-    public function getSubConditions(): ?ConditionsInterface
+    public function getSubConditions(): ?CollectionConditionInterface
     {
         return $this->subConditions;
     }
@@ -116,7 +116,7 @@ final class Condition
 
         $subConditions = $this->getSubConditions();
 
-        if ($subConditions instanceof ConditionsInterface) {
+        if ($subConditions instanceof CollectionConditionInterface) {
             $subConditions = $subConditions->toArray();
         }
 

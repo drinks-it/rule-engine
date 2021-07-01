@@ -10,7 +10,7 @@ namespace Tests\DrinksIt\RuleEngineBundle\Rule\Condition;
 
 use DrinksIt\RuleEngineBundle\Rule\Condition\Condition;
 use DrinksIt\RuleEngineBundle\Rule\Condition\Types\AttributeConditionTypeInterface;
-use DrinksIt\RuleEngineBundle\Rule\ConditionsInterface;
+use DrinksIt\RuleEngineBundle\Rule\CollectionConditionInterface;
 use PHPUnit\Framework\TestCase;
 
 class ConditionTest extends TestCase
@@ -20,7 +20,7 @@ class ConditionTest extends TestCase
         $mockAttribute = $this->createMock(AttributeConditionTypeInterface::class);
         $mockAttribute->expects($this->once())->method('toArray')->willReturn([]);
 
-        $collectionMock = $this->createMock(ConditionsInterface::class);
+        $collectionMock = $this->createMock(CollectionConditionInterface::class);
         $collectionMock->expects($this->once())->method('toArray')->willReturn([]);
 
         $condition = new Condition(
@@ -43,7 +43,7 @@ class ConditionTest extends TestCase
         $this->assertIsBool($condition->isNotDefaultResult());
 
         $this->assertInstanceOf(AttributeConditionTypeInterface::class, $condition->getAttributeCondition());
-        $this->assertInstanceOf(ConditionsInterface::class, $condition->getSubConditions());
+        $this->assertInstanceOf(CollectionConditionInterface::class, $condition->getSubConditions());
 
         $arrayData = $condition->toArray();
         $this->assertIsArray($arrayData);

@@ -16,6 +16,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\DefaultNamingStrategy;
 use Doctrine\Persistence\ManagerRegistry;
 use DrinksIt\RuleEngineBundle\Command\Maker\MakeRuleEntity;
+use DrinksIt\RuleEngineBundle\Rule\Action\CollectionActions;
 use DrinksIt\RuleEngineBundle\Rule\Condition\CollectionCondition;
 use DrinksIt\RuleEngineBundle\Rule\RuleEntityInterface;
 use PHPUnit\Framework\TestCase;
@@ -31,6 +32,7 @@ use Symfony\Bundle\MakerBundle\Util\ComposerAutoloaderFinder;
 use Symfony\Bundle\MakerBundle\Util\MakerFileLinkFormatter;
 use Symfony\Bundle\MakerBundle\Util\PhpCompatUtil;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Exception\RuntimeException;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -99,13 +101,23 @@ class MakeRuleEntityTest extends TestCase
 
         $container = $this->createMock(ContainerInterface::class);
 
-        $container->expects($this->once())->method('hasParameter')
-            ->with($this->equalTo('rule_engine.collection_condition_class'))
+        $container->expects($this->any())->method('hasParameter')
+            ->with($this->callback(fn ($param) => preg_match('/rule_engine\.collection_(condition|actions)_class/', $param) !== false))
             ->willReturn(true);
 
-        $container->expects($this->once())->method('getParameter')
-            ->with($this->equalTo('rule_engine.collection_condition_class'))
-            ->willReturn(CollectionCondition::class);
+        $container->expects($this->any())->method('getParameter')
+            ->with($this->callback(fn ($param) => preg_match('/rule_engine\.collection_(condition|actions)_class/', $param) !== false))
+            ->willReturnCallback(function ($param) {
+                if ($param === 'rule_engine.collection_condition_class') {
+                    return CollectionCondition::class;
+                }
+
+                if ($param === 'rule_engine.collection_actions_class') {
+                    return CollectionActions::class;
+                }
+
+                return null;
+            });
 
         $generator = new Generator($fileManager, self::TEST_NAMESPACE, new PhpCompatUtil($fileManager));
 
@@ -143,6 +155,7 @@ class MakeRuleEntityTest extends TestCase
 
     public function testInitMakeRuleEntityEmptyParameter(): void
     {
+        $this->expectException(RuntimeException::class);
         $classAutoLoaderFinder = $this->createMock(ComposerAutoloaderFinder::class);
         $classLoader = $this->createMock(ClassLoader::class);
 
@@ -168,7 +181,7 @@ class MakeRuleEntityTest extends TestCase
         $container = $this->createMock(ContainerInterface::class);
 
         $container->expects($this->once())->method('hasParameter')
-            ->with($this->equalTo('rule_engine.collection_condition_class'))
+            ->with($this->callback(fn ($param) => preg_match('/rule_engine\.collection_(condition|actions)_class/', $param) !== false))
             ->willReturn(false);
 
         $container->expects($this->never())->method('getParameter');

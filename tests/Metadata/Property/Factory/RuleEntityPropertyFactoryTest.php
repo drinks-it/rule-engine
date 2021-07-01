@@ -12,6 +12,7 @@ use DrinksIt\RuleEngineBundle\Mapping\RuleEntityProperty;
 use DrinksIt\RuleEngineBundle\Metadata\Extractor\RuleEntityExtractorInterface;
 use DrinksIt\RuleEngineBundle\Metadata\Property\Factory\RuleEntityPropertyFactory;
 use DrinksIt\RuleEngineBundle\Metadata\Property\PropertyRuleEntity;
+use DrinksIt\RuleEngineBundle\Rule\Action\ActionInterface;
 use DrinksIt\RuleEngineBundle\Rule\Condition\Types\AttributeConditionTypeInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -40,7 +41,8 @@ class RuleEntityPropertyFactoryTest extends TestCase
     public function providerDataFactory(): array
     {
         $rule = new RuleEntityProperty();
-        $rule->interfaceType = AttributeConditionTypeInterface::class;
+        $rule->condition = AttributeConditionTypeInterface::class;
+        $rule->action = ActionInterface::class;
 
         return [
             'Empty result' => [
@@ -84,8 +86,8 @@ class RuleEntityPropertyFactoryTest extends TestCase
                         )->willReturnCallback(fn ($className, $property) => $rule);
                 },
                 [
-                    new PropertyRuleEntity('firstProperty', $rule->interfaceType),
-                    new PropertyRuleEntity('secondProperty', $rule->interfaceType),
+                    new PropertyRuleEntity('firstProperty', $rule->condition, $rule->action),
+                    new PropertyRuleEntity('secondProperty', $rule->condition, $rule->action),
                 ],
             ],
         ];
