@@ -17,7 +17,9 @@ jobs:
         symfony: ['5.0.*', '5.1.*', '5.2.*', '5.3.*']
     steps:
       - uses: actions/checkout@v2
-
+        with:
+          php-version: ${{matrix.php}}
+          
       - name: Display versions
         run: |
           php -r 'foreach (get_loaded_extensions() as $extension) echo $extension . " " . phpversion($extension) . PHP_EOL;'
