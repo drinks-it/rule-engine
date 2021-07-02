@@ -9,6 +9,7 @@ declare(strict_types=1);
 namespace DrinksIt\RuleEngineBundle\Metadata\Extractor;
 
 use Doctrine\Common\Annotations\Reader;
+use DrinksIt\RuleEngineBundle\Helper\ClassHelper;
 use DrinksIt\RuleEngineBundle\Mapping\RuleEntityProperty;
 use DrinksIt\RuleEngineBundle\Mapping\RuleEntityResource;
 
@@ -27,7 +28,7 @@ final class RuleEntityAnnotationExtractor implements RuleEntityExtractorInterfac
             return null;
         }
 
-        if (!class_exists($classResource)) {
+        if (!ClassHelper::exist($classResource)) {
             return null;
         }
 
@@ -56,7 +57,7 @@ final class RuleEntityAnnotationExtractor implements RuleEntityExtractorInterfac
             return null;
         }
 
-        if (!class_exists($classResource)) {
+        if (!ClassHelper::exist($classResource)) {
             return null;
         }
 
@@ -74,7 +75,7 @@ final class RuleEntityAnnotationExtractor implements RuleEntityExtractorInterfac
 
     public function getRuleEntityPropertiesNames(string $classResource): array
     {
-        if (!class_exists($classResource)) {
+        if (!ClassHelper::exist($classResource)) {
             return [];
         }
 

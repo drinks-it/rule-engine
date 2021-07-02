@@ -10,6 +10,7 @@ namespace DrinksIt\RuleEngineBundle\Command\Maker;
 
 use Doctrine\DBAL\Types\Types;
 use DrinksIt\RuleEngineBundle\Doctrine\Types as ColumnType;
+use DrinksIt\RuleEngineBundle\Helper\ClassHelper;
 use DrinksIt\RuleEngineBundle\Rule as Rules;
 use Exception;
 use PhpParser\Builder\Method;
@@ -60,7 +61,7 @@ final class MakeRuleEntity extends AbstractMaker
 
         $this->collectionConditionClassPath = (string) $container->getParameter('rule_engine.collection_condition_class');
 
-        if (!class_exists($this->collectionConditionClassPath)) {
+        if (!ClassHelper::exist($this->collectionConditionClassPath)) {
             throw new RuntimeException(sprintf('Class `%s` not found. Please check configuration `rule_engine.collection_condition_class`', $this->collectionConditionClassPath));
         }
 
@@ -70,7 +71,7 @@ final class MakeRuleEntity extends AbstractMaker
 
         $this->collectionActionClassPath = (string) $container->getParameter('rule_engine.collection_actions_class');
 
-        if (!class_exists($this->collectionActionClassPath)) {
+        if (!ClassHelper::exist($this->collectionActionClassPath)) {
             throw new RuntimeException(sprintf('Class `%s` not found. Please check configuration `rule_engine.collection_actions_class`', $this->collectionActionClassPath));
         }
 
@@ -113,9 +114,7 @@ final class MakeRuleEntity extends AbstractMaker
     {
         $ruleEntity = $generator->createClassNameDetails($input->getArgument('name'), 'Entity');
 
-        $classExists = class_exists($ruleEntity->getFullName());
-
-        if ($classExists) {
+        if (ClassHelper::exist($ruleEntity->getFullName())) {
             $io->error("Class is exists. Please use ./bin/console make:entity " . $input->getArgument('name'));
 
             return;
@@ -124,7 +123,7 @@ final class MakeRuleEntity extends AbstractMaker
         $entityPath = $this->entityClassGenerator->generateEntityClass($ruleEntity, !empty($input->getOption('api-resource')));
         $generator->writeChanges();
 
-        $manipulation = new ClassSourceManipulator($this->fileManager->getFileContents($entityPath), $classExists);
+        $manipulation = new ClassSourceManipulator($this->fileManager->getFileContents($entityPath));
 
         $manipulation->addInterface(Rules\RuleEntityInterface::class);
         $manipulation->addUseStatementIfNecessary(Rules\CollectionConditionInterface::class);
@@ -168,9 +167,9 @@ final class MakeRuleEntity extends AbstractMaker
         $manipulation->addMethodBuilder($this->removeElementFromCollection('condition', 'Condition'));
 
         // action
-        $manipulation->addProperty('action', ['@ORM\Column(type="'.ColumnType\ActionType::TYPE.'")']);
-        $manipulation->addGetter('action', $this->collectionActionClassName, false);
-        $manipulation->addSetter('action', 'CollectionActionsInterface', false);
+        $manipulation->addProperty('actions', ['@ORM\Column(type="'.ColumnType\ActionType::TYPE.'")']);
+        $manipulation->addGetter('actions', $this->collectionActionClassName, false);
+        $manipulation->addSetter('actions', 'CollectionActionsInterface', false);
 
         $manipulation->addMethodBuilder($this->addElementToCollection('action', 'ActionInterface'));
         $manipulation->addMethodBuilder($this->removeElementFromCollection('action', 'ActionInterface'));

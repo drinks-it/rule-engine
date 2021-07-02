@@ -8,13 +8,15 @@ declare(strict_types=1);
 
 namespace Tests\DrinksIt\RuleEngineBundle\Mapping;
 
+use DrinksIt\RuleEngineBundle\Helper\ClassHelper;
+
 trait AnnotationFixtures
 {
     private string $tmpPathTmpEntityClass = '';
 
     public function loadResourceWithBrokeProperty(string $className): void
     {
-        if (class_exists($className)) {
+        if (ClassHelper::exist($className)) {
             return;
         }
         $this->tmpPathTmpEntityClass = $_SERVER['TMP_ROOT_DIRECTORY'].DIRECTORY_SEPARATOR.$className.'.php';
@@ -44,7 +46,7 @@ trait AnnotationFixtures
 
     public function loadResourceWithValidProperty(string $className, $propertyName = 'test'): void
     {
-        if (class_exists($className)) {
+        if (ClassHelper::exist($className)) {
             return;
         }
         $tmpPathTmpEntityClass = $_SERVER['TMP_ROOT_DIRECTORY'].DIRECTORY_SEPARATOR.$className.'.php';

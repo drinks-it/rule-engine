@@ -33,9 +33,9 @@ interface RuleEntityInterface
 
     public function removedCondition(Condition $condition): self;
 
-    public function getAction(): CollectionActionsInterface;
+    public function getActions(): CollectionActionsInterface;
 
-    public function setAction(CollectionActionsInterface $actions): self;
+    public function setActions(CollectionActionsInterface $actions): self;
 
     public function addAction(ActionInterface $action): self;
 

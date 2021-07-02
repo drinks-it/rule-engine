@@ -63,7 +63,7 @@ class RuleEventTest extends TestCase
         $ruleEntityInterface = $this->createMock(RuleEntityInterface::class);
         $ruleEntityInterface->method('getConditions')->willReturn($conditions);
 
-        $ruleEntityInterface->method('getAction')->willReturn($actions);
+        $ruleEntityInterface->method('getActions')->willReturn($actions);
         $ruleEntityInterface->expects($this->once())->method('getStopRuleProcessing')
             ->willReturn(true);
 
@@ -157,7 +157,7 @@ class RuleEventTest extends TestCase
         $ruleEntityInterface = $this->createMock(RuleEntityInterface::class);
         $ruleEntityInterface->expects($this->never())->method('getConditions');
 
-        $ruleEntityInterface->method('getAction')->willReturn($actions);
+        $ruleEntityInterface->method('getActions')->willReturn($actions);
         $ruleEntityInterface->expects($this->never())->method('getStopRuleProcessing');
 
         $ruleEntityInterface->expects($this->never())->method('getName')->willReturn('NameRule');
@@ -232,7 +232,7 @@ class RuleEventTest extends TestCase
         $ruleEntityInterface = $this->createMock(RuleEntityInterface::class);
         $ruleEntityInterface->expects($this->once())->method('getConditions')->willReturn($conditions);
 
-        $ruleEntityInterface->method('getAction')->willReturn($actions);
+        $ruleEntityInterface->method('getActions')->willReturn($actions);
         $ruleEntityInterface->expects($this->never())->method('getStopRuleProcessing');
 
         $ruleEntityInterface->expects($this->never())->method('getName')->willReturn('NameRule');

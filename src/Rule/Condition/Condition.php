@@ -104,6 +104,37 @@ final class Condition
     }
 
     /**
+     * @param AttributeConditionTypeInterface $attributeCondition
+     */
+    public function setAttributeCondition(AttributeConditionTypeInterface $attributeCondition): self
+    {
+        $this->attributeCondition = $attributeCondition;
+
+        return $this;
+    }
+
+    /**
+     * @param CollectionConditionInterface|null $subConditions
+     */
+    public function setSubConditions(CollectionConditionInterface $subConditions): self
+    {
+        $this->subConditions = $subConditions;
+
+        return $this;
+    }
+
+    /**
+     * @param bool $result
+     * @return Condition
+     */
+    public function setResult(bool $result): Condition
+    {
+        $this->result = $result;
+
+        return $this;
+    }
+
+    /**
      * For serialization.
      */
     public function toArray(): array

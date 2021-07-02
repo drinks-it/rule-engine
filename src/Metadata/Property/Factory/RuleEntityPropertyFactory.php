@@ -24,14 +24,14 @@ final class RuleEntityPropertyFactory implements RuleEntityPropertyFactoryInterf
     public function create(string $entityClass): array
     {
         $rulePropertiesReturn = [];
-        foreach ($this->entityExtractor->getRuleEntityPropertiesNames($entityClass) as $propertiesName) {
-            $annotationProperty = $this->entityExtractor->getRuleEntityPropertyAnnotation($entityClass, $propertiesName);
+        foreach ($this->entityExtractor->getRuleEntityPropertiesNames($entityClass) as $propertyName) {
+            $annotationProperty = $this->entityExtractor->getRuleEntityPropertyAnnotation($entityClass, $propertyName);
 
             if (!$annotationProperty) {
                 continue;
             }
 
-            $rulePropertiesReturn[] = new PropertyRuleEntity($propertiesName, $annotationProperty->condition, $annotationProperty->action);
+            $rulePropertiesReturn[$propertyName] = new PropertyRuleEntity($propertyName, $annotationProperty->condition, $annotationProperty->action);
         }
 
         return $rulePropertiesReturn;

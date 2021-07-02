@@ -10,6 +10,7 @@ namespace DrinksIt\RuleEngineBundle\Doctrine\Serializer;
 
 use DrinksIt\RuleEngineBundle\Doctrine\Exception\ClassDoesNotImplementInterfaceException;
 use DrinksIt\RuleEngineBundle\Doctrine\Exception\ClassNotExistRuleEngineDoctrineException;
+use DrinksIt\RuleEngineBundle\Helper\ClassHelper;
 use DrinksIt\RuleEngineBundle\Rule\CollectionConditionInterface;
 use DrinksIt\RuleEngineBundle\Rule\Condition\Condition;
 use DrinksIt\RuleEngineBundle\Rule\Condition\Types\AttributeConditionTypeInterface;
@@ -35,7 +36,7 @@ final class NormalizeCondition
 
         $classCollection =  $conditions['class_collection'];
 
-        if (!class_exists($classCollection)) {
+        if (!ClassHelper::exist($classCollection)) {
             throw new ClassNotExistRuleEngineDoctrineException($classCollection);
         }
 
@@ -68,7 +69,7 @@ final class NormalizeCondition
         $classConditionAttributeType = $attributeCondition['class_condition'];
         $properties = $attributeCondition['properties'];
 
-        if (!class_exists($classConditionAttributeType)) {
+        if (!ClassHelper::exist($classConditionAttributeType)) {
             throw new ClassNotExistRuleEngineDoctrineException($classConditionAttributeType);
         }
 

@@ -9,6 +9,7 @@ declare(strict_types=1);
 namespace Tests\DrinksIt\RuleEngineBundle\Mapping;
 
 use Doctrine\Common\Annotations\AnnotationReader;
+use DrinksIt\RuleEngineBundle\Helper\ClassHelper;
 use DrinksIt\RuleEngineBundle\Mapping\RuleEntityProperty;
 use DrinksIt\RuleEngineBundle\Rule\Condition\Types\AttributeConditionTypeInterface;
 use PHPUnit\Framework\TestCase;
@@ -22,7 +23,7 @@ class RuleEntityPropertyTest extends TestCase
     public function testParseAnnotation(): void
     {
         $this->loadResourceWithValidProperty(self::CLASS_NAME_ENTITY);
-        $this->assertTrue(class_exists(self::CLASS_NAME_ENTITY));
+        $this->assertTrue(ClassHelper::exist(self::CLASS_NAME_ENTITY));
 
         $reflectionEntityClass = new \ReflectionClass(self::CLASS_NAME_ENTITY);
         $reader = new AnnotationReader();

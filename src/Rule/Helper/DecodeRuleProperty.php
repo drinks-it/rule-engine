@@ -8,6 +8,8 @@ declare(strict_types=1);
 
 namespace DrinksIt\RuleEngineBundle\Rule\Helper;
 
+use DrinksIt\RuleEngineBundle\Helper\ClassHelper;
+
 /**
  * Class DecodeRuleProperty
  * @package DrinksIt\RuleEngineBundle\Rule\Helper
@@ -25,7 +27,7 @@ final class DecodeRuleProperty
 
     public static function getConstByKey(string $key, string $classParse): array
     {
-        if (!class_exists($classParse)) {
+        if (!ClassHelper::exist($classParse)) {
             return [];
         }
 

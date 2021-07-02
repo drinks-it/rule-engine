@@ -86,8 +86,8 @@ class RuleEntityPropertyFactoryTest extends TestCase
                         )->willReturnCallback(fn ($className, $property) => $rule);
                 },
                 [
-                    new PropertyRuleEntity('firstProperty', $rule->condition, $rule->action),
-                    new PropertyRuleEntity('secondProperty', $rule->condition, $rule->action),
+                    'firstProperty' => new PropertyRuleEntity('firstProperty', $rule->condition, $rule->action),
+                    'secondProperty' => new PropertyRuleEntity('secondProperty', $rule->condition, $rule->action),
                 ],
             ],
         ];

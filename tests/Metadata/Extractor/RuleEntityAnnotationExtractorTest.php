@@ -9,6 +9,7 @@ declare(strict_types=1);
 namespace Tests\DrinksIt\RuleEngineBundle\Metadata\Extractor;
 
 use Doctrine\Common\Annotations\Reader;
+use DrinksIt\RuleEngineBundle\Helper\ClassHelper;
 use DrinksIt\RuleEngineBundle\Mapping\RuleEntityProperty;
 use DrinksIt\RuleEngineBundle\Mapping\RuleEntityResource;
 use DrinksIt\RuleEngineBundle\Metadata\Extractor\RuleEntityAnnotationExtractor;
@@ -66,7 +67,7 @@ class RuleEntityAnnotationExtractorTest extends TestCase
         $this->loadResourceWithValidProperty($className);
 
         // check with annotation
-        $this->assertTrue(class_exists($className));
+        $this->assertTrue(ClassHelper::exist($className));
         $this->assertInstanceOf(RuleEntityResource::class, $rule->getRuleEntityResourceAnnotation($className));
     }
 
@@ -92,7 +93,7 @@ class RuleEntityAnnotationExtractorTest extends TestCase
         $this->assertNull($rule->getRuleEntityPropertyAnnotation(self::class, 'test_self_property_not_use'));
 
         $this->loadResourceWithValidProperty($className, 'check_valid_property');
-        $this->assertTrue(class_exists($className));
+        $this->assertTrue(ClassHelper::exist($className));
 
         $this->assertInstanceOf(
             RuleEntityProperty::class,

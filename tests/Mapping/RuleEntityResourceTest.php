@@ -10,6 +10,7 @@ namespace Tests\DrinksIt\RuleEngineBundle\Mapping;
 
 use Doctrine\Common\Annotations\AnnotationException;
 use Doctrine\Common\Annotations\AnnotationReader;
+use DrinksIt\RuleEngineBundle\Helper\ClassHelper;
 use DrinksIt\RuleEngineBundle\Mapping\RuleEntityResource;
 use PHPUnit\Framework\TestCase;
 
@@ -28,7 +29,7 @@ class RuleEntityResourceTest extends TestCase
     public function testParseFromEntity(): void
     {
         $this->load(self::CLASS_NAME_ENTITY);
-        $this->assertTrue(class_exists(self::CLASS_NAME_ENTITY));
+        $this->assertTrue(ClassHelper::exist(self::CLASS_NAME_ENTITY));
 
         $reflection = new \ReflectionClass(self::CLASS_NAME_ENTITY);
         $reader = new AnnotationReader();
@@ -42,7 +43,7 @@ class RuleEntityResourceTest extends TestCase
         $this->load(self::CLASS_NAME_ENTITY);
 
         $this->expectException(AnnotationException::class);
-        $this->assertTrue(class_exists(self::CLASS_NAME_ENTITY));
+        $this->assertTrue(ClassHelper::exist(self::CLASS_NAME_ENTITY));
 
         $reflection = new \ReflectionClass(self::CLASS_NAME_ENTITY);
         $propertyReflection = $reflection->getProperty('test');

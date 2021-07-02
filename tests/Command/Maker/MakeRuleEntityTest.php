@@ -16,6 +16,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\DefaultNamingStrategy;
 use Doctrine\Persistence\ManagerRegistry;
 use DrinksIt\RuleEngineBundle\Command\Maker\MakeRuleEntity;
+use DrinksIt\RuleEngineBundle\Helper\ClassHelper;
 use DrinksIt\RuleEngineBundle\Rule\Action\CollectionActions;
 use DrinksIt\RuleEngineBundle\Rule\Condition\CollectionCondition;
 use DrinksIt\RuleEngineBundle\Rule\RuleEntityInterface;
@@ -392,7 +393,7 @@ class MakeRuleEntityTest extends TestCase
 
         require_once $GeneratedFilePath;
 
-        $this->assertTrue(class_exists($fullNameSpace));
+        $this->assertTrue(ClassHelper::exist($fullNameSpace));
 
         $entity = new $fullNameSpace();
         $this->assertInstanceOf(RuleEntityInterface::class, $entity);
@@ -406,8 +407,8 @@ class MakeRuleEntityTest extends TestCase
 
         unlink($GeneratedFilePath);
         unlink($GeneratedFileRepositoryPath);
-        $this->assertFalse(class_exists($GeneratedFilePath));
-        $this->assertFalse(class_exists($GeneratedFileRepositoryPath));
+        $this->assertFalse(ClassHelper::exist($GeneratedFilePath));
+        $this->assertFalse(ClassHelper::exist($GeneratedFileRepositoryPath));
     }
 
     /**

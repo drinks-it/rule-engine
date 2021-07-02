@@ -14,7 +14,7 @@ interface RuleEntityPropertyFactoryInterface
 {
     /**
      * @param string $entityClass
-     * @return PropertyRuleEntity[]
+     * @return PropertyRuleEntity[]|array<string, PropertyRuleEntity>
      */
     public function create(string $entityClass): array;
 }

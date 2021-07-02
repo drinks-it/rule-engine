@@ -10,6 +10,7 @@ namespace DrinksIt\RuleEngineBundle\Doctrine\Serializer;
 
 use DrinksIt\RuleEngineBundle\Doctrine\Exception\ClassDoesNotImplementInterfaceException;
 use DrinksIt\RuleEngineBundle\Doctrine\Exception\ClassNotExistRuleEngineDoctrineException;
+use DrinksIt\RuleEngineBundle\Helper\ClassHelper;
 use DrinksIt\RuleEngineBundle\Rule\Action\ActionInterface;
 use DrinksIt\RuleEngineBundle\Rule\CollectionActionsInterface;
 
@@ -26,7 +27,7 @@ final class NormalizeAction
     {
         $classCollection = $this->actions['class_collection_action'];
 
-        if (!class_exists($classCollection)) {
+        if (!ClassHelper::exist($classCollection)) {
             throw new ClassNotExistRuleEngineDoctrineException($classCollection);
         }
 
@@ -44,7 +45,7 @@ final class NormalizeAction
         $classNameAction = $action['class_action'];
         $properties = $action['properties'];
 
-        if (!class_exists($classNameAction)) {
+        if (!ClassHelper::exist($classNameAction)) {
             throw new ClassNotExistRuleEngineDoctrineException($classNameAction);
         }
         /** @var ActionInterface $actionObject */
