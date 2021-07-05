@@ -89,7 +89,7 @@ final class RuleEntityAnnotationExtractor implements RuleEntityExtractorInterfac
         $class = new \ReflectionClass($classResource);
         $properties = array_filter(
             $class->getProperties(),
-            fn (\ReflectionProperty $property) => $property->getDocComment() === false
+            fn (\ReflectionProperty $property) => $property->getDocComment() !== false
         );
 
         if (!$properties) {
