@@ -50,5 +50,8 @@
         "php-cs": [
             "./vendor/bin/php-cs-fixer fix --diff --dry-run --config=.php-cs-fixer.dist.php --using-cache no"
         ]
+    },
+    "archive": {
+        "exclude": ["tests/", ".run/", ".github/", "phpunit.xml.dist"]
     }
 }
