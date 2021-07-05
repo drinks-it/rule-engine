@@ -16,7 +16,7 @@ namespace DrinksIt\RuleEngineBundle\Helper;
  */
 final class ClassHelper
 {
-    public static function exist($class_or_object, bool $autoload = false): bool
+    public static function exist($class_or_object, bool $autoload = true): bool
     {
         return class_exists($class_or_object, $autoload);
     }
