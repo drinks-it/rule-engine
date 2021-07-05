@@ -37,7 +37,7 @@ final class RuleEntityPropertyFactory implements RuleEntityPropertyFactoryInterf
                 continue;
             }
 
-            foreach ($this->create($decoded) as $relationProperty) {
+            foreach ($this->entityExtractor->getRuleEntityPropertiesNames($decoded) as $relationProperty) {
                 $decodedRelation = $this->decodeAnnotationProperty($decoded, $relationProperty);
 
                 if ($decodedRelation instanceof PropertyRuleEntity) {
