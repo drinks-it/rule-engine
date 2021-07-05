@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="DrinksIt\RuleEngineBundle\Doctrine\RuleEntityFinderInterface" alias="rule_engine.doctrine.rule_entity_finder" />
+
+        <service class="DrinksIt\RuleEngineBundle\Doctrine\RuleEntityFinder" id="rule_engine.doctrine.rule_entity_finder" public="false">
+            <argument type="service" id="doctrine" />
+            <argument type="tagged_iterator" tag="rule_engine.doctrine.extension_finder" />
+        </service>
+
+        <instanceof id="DrinksIt\RuleEngineBundle\Doctrine\RuleEntityFinderExtensionInterface" autowire="true">
+            <tag name="rule_engine.tag.doctrine_extension_finder" />
+        </instanceof>
+    </services>
+</container>

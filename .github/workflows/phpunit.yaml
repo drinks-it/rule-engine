@@ -11,11 +11,17 @@ jobs:
     name: "PHP ${{ matrix.php }} + Symfony ${{ matrix.symfony }}"
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         php: ['7.4', '8.0']
         symfony: ['5.0.*', '5.1.*', '5.2.*', '5.3.*']
     steps:
       - uses: actions/checkout@v2
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          # this is the only place we have to use PHP to avoid the lock to bash scripting
+          php-version: ${{matrix.php}}
 
       - name: Display versions
         run: |

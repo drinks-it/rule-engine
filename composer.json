@@ -4,11 +4,18 @@
     "type": "symfony-bundle",
     "require": {
         "php": "^7.4 || ^8.0",
+        "langleyfoxall/math_eval": "^2.0",
         "symfony/config": "^5.0",
         "symfony/dependency-injection": "^5.0",
-        "symfony/http-kernel": "^5.0"
+        "symfony/http-kernel": "^5.0",
+        "symfony/serializer": "^5.0"
     },
     "require-dev": {
+        "doctrine/doctrine-bundle": "^2.3",
+        "doctrine/orm": "^2.3",
+        "friendsofphp/php-cs-fixer": "^2.19 || ^3.0",
+        "phpunit/php-code-coverage": "^9.2",
+        "symfony/maker-bundle": "^1.31",
         "symfony/phpunit-bridge": "^5.0"
     },
     "license": "MIT",
@@ -34,5 +41,14 @@
     ],
     "config": {
         "sort-packages": true
+    },
+    "scripts": {
+        "test-unit": [
+            "@putenv XDEBUG_MODE=coverage",
+            "./vendor/bin/simple-phpunit --configuration phpunit.xml.dist --coverage-text"
+        ],
+        "php-cs": [
+            "./vendor/bin/php-cs-fixer fix --diff --dry-run --config=.php-cs-fixer.dist.php --using-cache no"
+        ]
     }
 }

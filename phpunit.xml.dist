@@ -3,15 +3,58 @@
          xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/6.1/phpunit.xsd"
          backupGlobals="false"
          colors="true"
-         bootstrap="vendor/autoload.php">
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         bootstrap="tests/bootstrap.php">
     <php>
         <ini name="error_reporting" value="-1" />
         <env name="SHELL_VERBOSITY" value="-1" />
         <env name="SYMFONY_DEPRECATIONS_HELPER" value="9999" />
+        <server name="TMP_ROOT_DIRECTORY" value="var" />
     </php>
     <testsuites>
-        <testsuite name="RuleEngineBundle Test Suite">
-            <directory>tests/</directory>
+        <testsuite name="Command">
+            <directory>tests/Command</directory>
+        </testsuite>
+        <testsuite name="Bundle">
+            <file>tests/RuleEngineBundleTest.php</file>
+        </testsuite>
+        <testsuite name="DI">
+            <directory>tests/DependencyInjection</directory>
+        </testsuite>
+        <testsuite name="Doctrine">
+            <directory>tests/Doctrine</directory>
+        </testsuite>
+        <testsuite name="Mapping">
+            <directory>tests/Mapping</directory>
+        </testsuite>
+        <testsuite name="Metadata">
+            <directory>tests/Metadata</directory>
+        </testsuite>
+        <testsuite name="Rule_Condition_Attributes">
+            <directory>tests/Rule/Condition/Attribute</directory>
+        </testsuite>
+        <testsuite name="Rule_Action_Attributes">
+            <directory>tests/Rule/Action/Attribute</directory>
+        </testsuite>
+        <testsuite name="Rule">
+            <directory>tests/Rule</directory>
+            <exclude>tests/Rule/Condition/Attribute</exclude>
+            <exclude>tests/Rule/Action/Attribute</exclude>
+        </testsuite>
+        <testsuite name="Event">
+            <directory>tests/Event</directory>
         </testsuite>
     </testsuites>
+
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">src</directory>
+            <exclude>
+                <directory>src/Resources</directory>
+            </exclude>
+        </whitelist>
+    </filter>
+
 </phpunit>

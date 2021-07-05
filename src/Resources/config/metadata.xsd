@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <!-- Collection Name Factory -->
+        <service id="DrinksIt\RuleEngineBundle\Metadata\Resource\Factory\CollectionRuleEntityResourceNameFactoryInterface" alias="rule_engine.metadata.name_collection_factory" />
+
+        <service id="rule_engine.metadata.name_collection_factory" class="DrinksIt\RuleEngineBundle\Metadata\Resource\Factory\CollectionRuleEntityResourceNameFactory" public="false">
+            <argument type="service" id="doctrine" />
+            <argument type="service" id="rule_engine.metadata.annotation_extractor" />
+        </service>
+
+        <service id="rule_engine.metadata.name_collection_factory.cached" class="DrinksIt\RuleEngineBundle\Metadata\Resource\Factory\CachedCollectionRuleEntityResourceNameFactory" decorates="rule_engine.metadata.name_collection_factory" decoration-priority="-10" public="false">
+            <argument type="service" id="cache.annotations" />
+            <argument type="service" id="rule_engine.metadata.name_collection_factory.cached.inner" />
+        </service>
+
+        <!-- Property Class Factory -->
+        <service id="DrinksIt\RuleEngineBundle\Metadata\Property\Factory\RuleEntityPropertyFactoryInterface" alias="rule_engine.metadata.property_factory" />
+
+        <service id="rule_engine.metadata.property_factory" class="DrinksIt\RuleEngineBundle\Metadata\Property\Factory\RuleEntityPropertyFactory" public="false">
+            <argument type="service" id="rule_engine.metadata.annotation_extractor"/>
+        </service>
+
+        <service id="rule_engine.metadata.property_factory.cached" decorates="rule_engine.metadata.property_factory" decoration-priority="-10" public="false" class="DrinksIt\RuleEngineBundle\Metadata\Property\Factory\CachedRuleEntityPropertyFactory">
+            <argument type="service" id="cache.annotations" />
+            <argument type="service" id="rule_engine.metadata.property_factory.cached.inner"/>
+        </service>
+
+        <!-- Resource Factory -->
+        <service id="DrinksIt\RuleEngineBundle\Metadata\Resource\Factory\RuleEntityResourceFactoryInterface" alias="rule_engine.metadata.resource_factory" />
+
+        <service class="DrinksIt\RuleEngineBundle\Metadata\Resource\Factory\RuleEntityResourceFactory" id="rule_engine.metadata.resource_factory" public="false">
+            <argument type="service" id="rule_engine.metadata.annotation_extractor" />
+            <argument type="service" id="rule_engine.metadata.property_factory" />
+        </service>
+
+        <service id="rule_engine.metadata.resource_factory.cached" decorates="rule_engine.metadata.resource_factory" decoration-priority="-10" public="false" class="DrinksIt\RuleEngineBundle\Metadata\Resource\Factory\CachedRuleEntityResourceFactory">
+            <argument type="service" id="cache.annotations" />
+            <argument type="service" id="rule_engine.metadata.resource_factory.cached.inner"/>
+        </service>
+
+        <!-- Combine Factory -->
+        <service id="DrinksIt\RuleEngineBundle\Metadata\Property\Resource\RuleEngineFactoryInterface" alias="rule_engine.metadata.factory" />
+
+        <service class="DrinksIt\RuleEngineBundle\Metadata\Resource\Factory\RuleEngineFactory" id="rule_engine.metadata.factory">
+            <argument type="service" id="rule_engine.metadata.name_collection_factory.cached" />
+            <argument type="service" id="rule_engine.metadata.resource_factory.cached" />
+        </service>
+    </services>
+</container>
