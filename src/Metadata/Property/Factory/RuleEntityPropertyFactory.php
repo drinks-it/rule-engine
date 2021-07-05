@@ -38,10 +38,14 @@ final class RuleEntityPropertyFactory implements RuleEntityPropertyFactoryInterf
             }
 
             foreach ($this->entityExtractor->getRuleEntityPropertiesNames($decoded) as $relationProperty) {
-                $decodedRelation = $this->decodeAnnotationProperty($decoded, $relationProperty);
+                $decodedRelation = $this->decodeAnnotationProperty(
+                    $decoded,
+                    $relationProperty,
+                    $propertyName.'.'.$relationProperty
+                );
 
                 if ($decodedRelation instanceof PropertyRuleEntity) {
-                    $rulePropertiesReturn[$propertyName.'.'.$relationProperty] = $this->decodeAnnotationProperty($decoded, $relationProperty);
+                    $rulePropertiesReturn[$propertyName.'.'.$relationProperty] = $decodedRelation;
                 }
             }
         }
@@ -49,7 +53,7 @@ final class RuleEntityPropertyFactory implements RuleEntityPropertyFactoryInterf
         return $rulePropertiesReturn;
     }
 
-    private function decodeAnnotationProperty(string $className, string $propertyName)
+    private function decodeAnnotationProperty(string $className, string $propertyName, string $setPropertyName = null)
     {
         $annotationProperty = $this->entityExtractor->getRuleEntityPropertyAnnotation($className, $propertyName);
 
@@ -61,6 +65,6 @@ final class RuleEntityPropertyFactory implements RuleEntityPropertyFactoryInterf
             return $this->entityExtractor->getRuleEntityClassNameFromRelationField($className, $propertyName);
         }
 
-        return new PropertyRuleEntity($propertyName, $annotationProperty->condition, $annotationProperty->action);
+        return new PropertyRuleEntity($setPropertyName ?: $propertyName, $annotationProperty->condition, $annotationProperty->action);
     }
 }
