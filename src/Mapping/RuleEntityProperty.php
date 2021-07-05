@@ -29,4 +29,6 @@ class RuleEntityProperty
      * @see ActionInterface
      */
     public ?string $action = null;
+
+    public bool $relationObject = false;
 }

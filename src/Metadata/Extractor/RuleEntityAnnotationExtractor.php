@@ -17,6 +17,13 @@ final class RuleEntityAnnotationExtractor implements RuleEntityExtractorInterfac
 {
     private ?Reader $annotationReader;
 
+    private const RELATION_CLASS_NAMES = [
+        'Doctrine\ORM\Mapping\ManyToOne',
+        'Doctrine\ORM\Mapping\OneToOne',
+        'Doctrine\ORM\Mapping\OneToMany',
+        'Doctrine\ORM\Mapping\ManyToMany',
+    ];
+
     public function __construct(Reader $annotationReader = null)
     {
         $this->annotationReader = $annotationReader;
@@ -80,20 +87,60 @@ final class RuleEntityAnnotationExtractor implements RuleEntityExtractorInterfac
         }
 
         $class = new \ReflectionClass($classResource);
-        $properties = $class->getProperties();
+        $properties = array_filter(
+            $class->getProperties(),
+            fn (\ReflectionProperty $property) => $property->getDocComment() === false
+        );
 
         if (!$properties) {
             return [];
         }
 
-        $returnProperties = [];
-        foreach ($properties as $property) {
-            if ($property->getDocComment() === false) {
-                continue;
-            }
-            $returnProperties[] = $property->getName();
+        return array_map(fn (\ReflectionProperty $property) => $property->getName(), $properties);
+    }
+
+    public function getRuleEntityClassNameFromRelationField(string $classResource, string $propertyRelationName): ?string
+    {
+        if (!ClassHelper::exist($classResource)) {
+            return null;
         }
 
-        return $returnProperties;
+        $class = new \ReflectionClass($classResource);
+        $properties = $class->getProperties(
+            fn (\ReflectionProperty $reflectionProperty) => $reflectionProperty->getName() === $propertyRelationName
+        );
+
+        if (!$properties) {
+            return null;
+        }
+
+        $propertyRelationReflection = $properties[0];
+
+        if (!$propertyRelationReflection instanceof \ReflectionProperty) {
+            return null;
+        }
+
+        $mappingRelation = null;
+        foreach (self::RELATION_CLASS_NAMES as $mappingRelationClassName) {
+            $mappingRelation = $this->annotationReader->getPropertyAnnotation($propertyRelationReflection, $mappingRelationClassName);
+
+            if ($mappingRelation instanceof $mappingRelationClassName) {
+                break;
+            }
+        }
+
+        if (!$mappingRelation) {
+            return null;
+        }
+
+        if (!property_exists($mappingRelation, 'targetEntity')) {
+            return null;
+        }
+
+        if (!class_exists($mappingRelation->targetEntity)) {
+            return null;
+        }
+
+        return $mappingRelation->targetEntity;
     }
 }

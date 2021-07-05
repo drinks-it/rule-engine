@@ -8,6 +8,8 @@ declare(strict_types=1);
 
 namespace DrinksIt\RuleEngineBundle\Metadata\Property;
 
+use DrinksIt\RuleEngineBundle\Mapping\RuleEntityResource;
+
 final class PropertyRuleEntity
 {
     private string $name;
@@ -16,11 +18,18 @@ final class PropertyRuleEntity
 
     private ?string $classNameActionFieldType;
 
-    public function __construct(string $name, string $classNameAttributeConditionType = null, string $classNameActionFieldType = null)
-    {
+    private ?RuleEntityResource $ruleEntityResource;
+
+    public function __construct(
+        string $name,
+        string $classNameAttributeConditionType = null,
+        string $classNameActionFieldType = null,
+        RuleEntityResource $entityResource = null
+    ) {
         $this->name = $name;
         $this->classNameAttributeConditionType = $classNameAttributeConditionType;
         $this->classNameActionFieldType = $classNameActionFieldType;
+        $this->ruleEntityResource = $entityResource;
     }
 
     /**
@@ -71,5 +80,13 @@ final class PropertyRuleEntity
         }
 
         return $this->classNameActionFieldType::getType();
+    }
+
+    /**
+     * @return RuleEntityResource|null
+     */
+    public function getRuleEntityResource(): ?RuleEntityResource
+    {
+        return $this->ruleEntityResource;
     }
 }
