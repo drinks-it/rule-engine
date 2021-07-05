@@ -39,11 +39,37 @@ final class PropertyRuleEntity
         return $this->classNameAttributeConditionType;
     }
 
+    public function getConditionType(): ?string
+    {
+        if (!$this->classNameAttributeConditionType) {
+            return null;
+        }
+
+        if (!method_exists($this->classNameAttributeConditionType, 'getType')) {
+            return null;
+        }
+
+        return $this->classNameAttributeConditionType::getType();
+    }
+
     /**
      * @return string|null
      */
     public function getClassNameActionFieldType(): ?string
     {
         return $this->classNameActionFieldType;
+    }
+
+    public function getActionType(): ?string
+    {
+        if (!$this->classNameActionFieldType) {
+            return null;
+        }
+
+        if (!method_exists($this->classNameActionFieldType, 'getType')) {
+            return null;
+        }
+
+        return $this->classNameActionFieldType::getType();
     }
 }
