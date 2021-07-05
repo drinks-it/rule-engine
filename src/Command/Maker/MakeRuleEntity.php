@@ -81,7 +81,7 @@ final class MakeRuleEntity extends AbstractMaker
 
     public static function getCommandName(): string
     {
-        return 'make:rule-entity';
+        return 'make:rule-engine-entity';
     }
 
     public function configureCommand(Command $command, InputConfiguration $inputConfig): void
