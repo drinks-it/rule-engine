@@ -18,4 +18,6 @@ interface RuleEntityExtractorInterface
     public function getRuleEntityPropertiesNames(string $classResource): array;
 
     public function getRuleEntityPropertyAnnotation(string $classResource, string $propertyName): ?RuleEntityProperty;
+
+    public function getRuleEntityClassNameFromRelationField(string $classResource, string $propertyRelationName): ?string;
 }
