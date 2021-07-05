@@ -106,7 +106,8 @@ final class RuleEntityAnnotationExtractor implements RuleEntityExtractorInterfac
         }
 
         $class = new \ReflectionClass($classResource);
-        $properties = $class->getProperties(
+        $properties = array_filter(
+            $class->getProperties(),
             fn (\ReflectionProperty $reflectionProperty) => $reflectionProperty->getName() === $propertyRelationName
         );
 
@@ -114,7 +115,7 @@ final class RuleEntityAnnotationExtractor implements RuleEntityExtractorInterfac
             return null;
         }
 
-        $propertyRelationReflection = $properties[0];
+        $propertyRelationReflection = array_pop($properties);
 
         if (!$propertyRelationReflection instanceof \ReflectionProperty) {
             return null;
