@@ -1,54 +1,81 @@
 # Call event rule
 
-1. First need create event object
+### Workflow
+
+![Image of Yaktocat](RuleEngine.png)
+
+Call use `EventDispatcherInterface` Symfony [Events and Event Listeners symfony.com](https://symfony.com/doc/current/event_dispatcher.html)
 
 ```php
-<?php
 
-namespace App\Event;
+use Doctrine\ORM\EntityManagerInterface;
+use DrinksIt\RuleEngineBundle\Event\ObserverEntityEventInterface;
+use DrinksIt\RuleEngineBundle\Event\RuleEvent;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-use DrinksIt\RuleEngineBundle\Event\RuleEventInterface;
-use DrinksIt\RuleEngineBundle\Rule\RuleEntityInterface;
+class MyRuleEvent implements \DrinksIt\RuleEngineBundle\Event\RuleEventInterface 
+{
+    private EntityManagerInterface $entityManager; 
+    
+    public function __construct(EntityManagerInterface $entityManager) 
+    {
+        $this->entityManager = $entityManager;
+    }
+    
+    public function onEvent(iterable $data)
+    {
+        // income data after rules actions
+        foreach ($data as $datum) {
+            $this->entityManager->persist($datum);
+        }
+        $this->entityManager->flush();
+    }
+    
+    public function getName() : string
+    {
+        return  'Name Event';
+    }
+}
 
-class MyCustomRuleEvent implements RuleEventInterface 
+
+class ObserverEntityEvent implements ObserverEntityEventInterface 
 {
     
-    public function run(iterable $data, RuleEntityInterface $ruleEntity): void
+    private EntityManagerInterface $entityManager; 
+    
+    public function __construct( EntityManagerInterface  $entityManager) 
     {
-     // TODO: Implement run() method.
+       $this->entityManager = $entityManager;
+    }
+    
+    public function getObservedEntities() : iterable
+    {
+        return $this->entityManager->getRepository('ModelName')->findAll();
     }
 
-    public static function getName() : string
+    public function getClassNameRuleEventInterface() : string
     {
-     // TODO: Implement getName() method.
+        return MyRuleEvent::class;
     }
 
 }
-
-```
-
-
-2. Call use `EventDispatcherInterface` Symfony [Events and Event Listeners symfony.com](https://symfony.com/doc/current/event_dispatcher.html)
-
-```php
-
-use DrinksIt\RuleEngineBundle\Event\ObserverEntityEvent;
-use DrinksIt\RuleEngineBundle\Event\RuleEvent;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class AnotherService {
     
     protected $dispatcher;
     
-    public function __construct(EventDispatcherInterface $dispatcher) {
+    private EntityManagerInterface $entityManager;
+    
+    public function __construct(
+        EventDispatcherInterface $dispatcher,
+        EntityManagerInterface  $entityManager
+    ) {
         $this->dispatcher = $dispatcher;
+        $this->entityManager = $entityManager;
     }
     
     public function runService() {
-        $this->dispatcher->dispatch(new ObserverEntityEvent([
-            new Entity(),
-            // ... 
-        ], 'App\Event\MyCustomRuleEvent'), RuleEvent::EVENT);
+        $this->dispatcher->dispatch(new ObserverEntityEvent($this->entityManager), RuleEvent::EVENT);
     }
 }
 

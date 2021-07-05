@@ -32,7 +32,14 @@ Content-Type: application/json; charset=utf-8
   ],
   "actions": [
     {
+      "entityShortName": "Product",
+      "fieldName": "description",
       "execute": "%field% + %fieldAnother%"
+    },
+    {
+      "entityShortName": "Product",
+      "fieldName": "price",
+      "execute": "%price% + 12"
     }
   ],
   "triggerEvent": "App\\Event\\Rule\\EventNameRule"
@@ -45,7 +52,10 @@ Content-Type: application/json; charset=utf-8
 <?php
 
 use Doctrine\ORM\EntityManagerInterface;
-use DrinksIt\RuleEngineBundle\Metadata\Property\Factory\RuleEntityPropertyFactoryInterface;use DrinksIt\RuleEngineBundle\Rule\CollectionActionsInterface;use DrinksIt\RuleEngineBundle\Rule\CollectionConditionInterface;
+use DrinksIt\RuleEngineBundle\Metadata\Property\Factory\RuleEntityPropertyFactoryInterface;
+use DrinksIt\RuleEngineBundle\Rule\Action\ActionInterface;use DrinksIt\RuleEngineBundle\Rule\Action\CollectionActions;
+use DrinksIt\RuleEngineBundle\Rule\CollectionActionsInterface;
+use DrinksIt\RuleEngineBundle\Rule\CollectionConditionInterface;
 use DrinksIt\RuleEngineBundle\Rule\Condition\CollectionCondition;
 use DrinksIt\RuleEngineBundle\Rule\Condition\Condition;
 use DrinksIt\RuleEngineBundle\Rule\Condition\Types\AttributeConditionTypeInterface;
@@ -77,8 +87,7 @@ class Service
         $ruleEntity->setPriority($data['priority']);
         $ruleEntity->setTriggerEvent(new TriggerEventColumn($data['triggerEvent']));
         $ruleEntity->setConditions($this->decodeConditions($data['conditions'] ?? []));
-        
-        // todo action
+        $ruleEntity->setActions($this->decodeActions($data['actions'] ?? []));
         
         $this->entityManager->persist($ruleEntity);
         $this->entityManager->flush();
@@ -124,9 +133,28 @@ class Service
         return $collectionReturn;
     }
     
-    public function decodeActions() : CollectionActionsInterface
+    public function decodeActions(array $actions = []) : CollectionActionsInterface
     {
-        // todo
+        $collectionActions =  new CollectionActions();
+        if(!$actions) {
+            return $collectionActions;
+        }
+        
+        foreach ($actions as $action) {
+           // decode short name, to real class name path
+           $classProperties = $this->propertyFactory->create($action['entityShortName']);
+            if (!array_key_exists($action['fieldName'], $classProperties)) {
+                throw new RuntimeException('Property not found');
+            }
+            $propertyMetadata = $classProperties[$action['fieldName']];
+            $actionClassName = $propertyMetadata->getClassNameActionFieldType();
+            
+            /** @var ActionInterface $actionObject */
+            $actionObject = new $actionClassName($action['fieldName'], $propertyMetadata->getName(), $action['execute']);
+            $collectionActions->add($actionObject);
+        }
+        
+        return $collectionActions;
     }
     
 }

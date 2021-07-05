@@ -45,5 +45,4 @@ php bin/console doctrine:migrations:migrate
 * [Mark Entity Resource](docs/mark_entity_resources.md)
 * [How get marked rules entity?](docs/how_get_marked_rule_entity.md)
 * [How create new rule?](docs/how_create_new_rule.md)
-
-[Event](docs/Event.md)
+* [How call event?](docs/Event.md)
