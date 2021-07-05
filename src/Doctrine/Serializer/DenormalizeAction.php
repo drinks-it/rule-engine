@@ -40,7 +40,7 @@ final class DenormalizeAction
         return [
             'class_action' => \get_class($action),
             'properties' => [
-                'type' => $action->getActionType(),
+                'type' => $action->getType(),
                 'object_resource' => $action->getResourceClass(),
                 'field' => $action->getFieldName(),
                 'action' => $action->getAction(),

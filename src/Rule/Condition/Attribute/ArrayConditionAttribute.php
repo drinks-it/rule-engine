@@ -20,7 +20,7 @@ class ArrayConditionAttribute extends AttributeCondition implements ArrayAttribu
         return $this->convertValue(parent::getValue());
     }
 
-    public function getType(): string
+    public static function getType(): string
     {
         return 'array';
     }

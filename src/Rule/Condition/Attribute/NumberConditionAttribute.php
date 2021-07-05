@@ -22,7 +22,7 @@ class NumberConditionAttribute extends AttributeCondition implements NumberAttri
     /**
      * @inheritDoc
      */
-    public function getType(): string
+    public static function getType(): string
     {
         return 'number';
     }
