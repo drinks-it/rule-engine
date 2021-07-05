@@ -10,8 +10,6 @@ namespace DrinksIt\RuleEngineBundle\Rule;
 
 class TriggerEventColumn
 {
-    private string $type;
-
     private string $entityClassName;
 
     public function __construct(string $entityClassName)
@@ -22,5 +20,10 @@ class TriggerEventColumn
     public function getEntityClassName(): string
     {
         return $this->entityClassName;
+    }
+
+    public function __toString(): string
+    {
+        return $this->getEntityClassName();
     }
 }

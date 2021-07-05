@@ -37,7 +37,7 @@ interface AttributeConditionTypeInterface
      * If type is class. Need Implement Interface ConditionValueInterface
      * @see ConditionValueInterface
      */
-    public function getType(): string;
+    public static function getType(): string;
 
     /**
      * @return array<string>

@@ -20,7 +20,7 @@ class StringActionType extends Action implements StringActionTypeInterface
         'macros' => [],
     ];
 
-    public function getActionType(): string
+    public static function getType(): string
     {
         return 'string';
     }

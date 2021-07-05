@@ -22,7 +22,7 @@ class NumberActionType extends Action implements NumberActionTypeInterface
         'macros' => [],
     ];
 
-    public function getActionType(): string
+    public static function getType(): string
     {
         return 'number';
     }

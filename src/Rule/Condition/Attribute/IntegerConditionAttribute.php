@@ -16,4 +16,9 @@ class IntegerConditionAttribute extends NumberConditionAttribute implements Inte
     {
         return (int) parent::convertValue($value);
     }
+
+    public static function getType(): string
+    {
+        return 'integer';
+    }
 }

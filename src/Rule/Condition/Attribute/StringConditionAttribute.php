@@ -19,7 +19,7 @@ class StringConditionAttribute extends AttributeCondition implements StringAttri
         return $this->convertToString($this->value);
     }
 
-    public function getType(): string
+    public static function getType(): string
     {
         return 'string';
     }

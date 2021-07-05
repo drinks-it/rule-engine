@@ -16,7 +16,7 @@ interface ActionInterface
 
     public function getResourceClass(): string;
 
-    public function getActionType(): string;
+    public static function getType(): string;
     /**
      * @param mixed $action
      */
