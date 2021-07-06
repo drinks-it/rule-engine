@@ -91,4 +91,9 @@ class NumberActionType extends Action implements NumberActionTypeInterface
 
         return $this;
     }
+
+    public function getPatternExecute(): string
+    {
+        return $this->actionsFields['math'];
+    }
 }

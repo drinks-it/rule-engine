@@ -46,6 +46,12 @@
         <testsuite name="Event">
             <directory>tests/Event</directory>
         </testsuite>
+        <testsuite name="Serializer">
+            <directory>tests/Serializer</directory>
+        </testsuite>
+        <testsuite name="Api Platform">
+            <directory>tests/ApiPlatform</directory>
+        </testsuite>
     </testsuites>
 
     <filter>
@@ -53,6 +59,8 @@
             <directory suffix=".php">src</directory>
             <exclude>
                 <directory>src/Resources</directory>
+                <directory>src/ApiPlatform/Schema</directory>
+                <file>src/ApiPlatform/SchemaFactory.php</file>
             </exclude>
         </whitelist>
     </filter>
