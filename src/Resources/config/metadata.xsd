@@ -44,11 +44,12 @@
         </service>
 
         <!-- Combine Factory -->
-        <service id="DrinksIt\RuleEngineBundle\Metadata\Property\Resource\RuleEngineFactoryInterface" alias="rule_engine.metadata.factory" />
 
-        <service class="DrinksIt\RuleEngineBundle\Metadata\Resource\Factory\RuleEngineFactory" id="rule_engine.metadata.factory">
-            <argument type="service" id="rule_engine.metadata.name_collection_factory.cached" />
-            <argument type="service" id="rule_engine.metadata.resource_factory.cached" />
+        <service id="DrinksIt\RuleEngineBundle\Metadata\Resource\Factory\RuleEngineFactory" autowire="true">
+            <argument type="service" id="rule_engine.metadata.name_collection_factory" />
+            <argument type="service" id="rule_engine.metadata.resource_factory" />
         </service>
+        <service id="rule_engine.metadata.factory" alias="DrinksIt\RuleEngineBundle\Metadata\Resource\Factory\RuleEngineFactory"/>
+        <service id="DrinksIt\RuleEngineBundle\Metadata\Resource\Factory\RuleEngineFactoryInterface"  alias="DrinksIt\RuleEngineBundle\Metadata\Resource\Factory\RuleEngineFactory" />
     </services>
 </container>
