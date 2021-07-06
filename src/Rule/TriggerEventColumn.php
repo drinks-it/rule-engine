@@ -10,20 +10,20 @@ namespace DrinksIt\RuleEngineBundle\Rule;
 
 class TriggerEventColumn
 {
-    private string $entityClassName;
+    private ?string $entityClassName;
 
-    public function __construct(string $entityClassName)
+    public function __construct(string $entityClassName = null)
     {
         $this->entityClassName = $entityClassName;
     }
 
-    public function getEntityClassName(): string
+    public function getEntityClassName(): ?string
     {
         return $this->entityClassName;
     }
 
     public function __toString(): string
     {
-        return $this->getEntityClassName();
+        return $this->getEntityClassName() ?: '';
     }
 }
