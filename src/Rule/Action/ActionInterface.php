@@ -8,6 +8,11 @@ declare(strict_types=1);
 
 namespace DrinksIt\RuleEngineBundle\Rule\Action;
 
+/**
+ * Interface ActionInterface
+ * @package DrinksIt\RuleEngineBundle\Rule\Action
+
+ */
 interface ActionInterface
 {
     public function __construct(string $fieldName, string $resourceClass, $action = null);
@@ -27,4 +32,6 @@ interface ActionInterface
     public function setAction($action): self;
 
     public function executeAction($objectEntity);
+
+    public function getPatternExecute(): string;
 }

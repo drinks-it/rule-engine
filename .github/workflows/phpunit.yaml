@@ -1,4 +1,4 @@
-name: PHPUnit
+name: PHPUnit (Symfony + Api Platform)
 
 on:
   push:

@@ -76,4 +76,9 @@ class StringActionType extends Action implements StringActionTypeInterface
 
         return $this;
     }
+
+    public function getPatternExecute(): string
+    {
+        return $this->actionsFields['pattern'];
+    }
 }
