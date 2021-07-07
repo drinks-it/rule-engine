@@ -6,9 +6,7 @@
 
 declare(strict_types=1);
 
-namespace DrinksIt\RuleEngineBundle\ApiPlatform;
-
-use DrinksIt\RuleEngineBundle\Rule\RuleEntityInterface;
+namespace DrinksIt\RuleEngineBundle\Rule;
 
 interface PlainFieldRuleEntityInterface extends RuleEntityInterface
 {

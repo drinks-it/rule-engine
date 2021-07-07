@@ -13,4 +13,6 @@ use DrinksIt\RuleEngineBundle\Rule\CollectionActionsInterface;
 interface SerializerActionsFieldInterface
 {
     public function decodeToActionCollection(array $actions): CollectionActionsInterface;
+
+    public function encodeActionCollectionToArray(CollectionActionsInterface $collectionActions): array;
 }

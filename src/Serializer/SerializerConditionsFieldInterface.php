@@ -14,5 +14,5 @@ interface SerializerConditionsFieldInterface
 {
     public function decodeToConditionCollection(array $conditions): CollectionConditionInterface;
 
-    public function encodeToConditionArray(CollectionConditionInterface $collectionCondition): array;
+    public function encodeToConditionToArray(CollectionConditionInterface $collectionCondition): array;
 }

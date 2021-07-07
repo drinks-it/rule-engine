@@ -40,5 +40,6 @@ class RuleEngineExtension extends Extension
         $loader->load('metadata.xsd');
         $loader->load('doctrine.xsd');
         $loader->load('events.xsd');
+        $loader->load('serializer.xsd');
     }
 }
