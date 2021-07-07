@@ -24,7 +24,7 @@ final class SchemaFactory implements SchemaFactoryInterface
 
     private ActionSchemaFactoryInterface $actionSchemaFactory;
 
-    private const SCHAMES_BUILDS = [
+    private const SCHEMAS_BUILDS = [
         Condition::class,
         ActionInterface::class,
         TriggerEventColumn::class,
@@ -47,7 +47,7 @@ final class SchemaFactory implements SchemaFactoryInterface
     {
         $schemaBuild = $this->decoder->buildSchema($className, $format, $type, $operationType, $operationName, $schema, $serializerContext);
 
-        if (!\in_array($className, self::SCHAMES_BUILDS)) {
+        if (!\in_array($className, self::SCHEMAS_BUILDS)) {
             return $schemaBuild;
         }
 
