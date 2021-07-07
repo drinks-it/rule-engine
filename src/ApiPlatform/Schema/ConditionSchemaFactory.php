@@ -61,7 +61,7 @@ final class ConditionSchemaFactory implements ConditionSchemaFactoryInterface
         $subAttributeCondition = $this->buildSchemaForCondition(
             $schemaFactory,
             $schemaFactory->buildSchema(
-                $schemaContext['classname'],
+                $schemaContext['className'],
                 $schemaContext['format'],
                 $schemaContext['type'],
                 $schema['operationType'],
