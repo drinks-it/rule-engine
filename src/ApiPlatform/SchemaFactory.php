@@ -51,30 +51,28 @@ final class SchemaFactory implements SchemaFactoryInterface
             return $schemaBuild;
         }
 
+        $schemaContext = [
+            'className'         => $className,
+            'format'            => $format,
+            'type'              => $type,
+            'operationType'     => $operationType,
+            'operationName'     => $operationName,
+            'serializerContext' => $serializerContext,
+            'forceCollection'   => $forceCollection,
+        ];
+
         switch ($className) {
             case Condition::class:
                 return $this->conditionSchemaFactory->buildSchemaForCondition(
                     $this,
-                    $className,
-                    $format,
-                    $type,
-                    $operationType,
-                    $operationName,
-                    $schemaBuild,
-                    $serializerContext,
-                    $forceCollection
+                    $schema,
+                    $schemaContext
                 );
             case ActionInterface::class:
                 return $this->actionSchemaFactory->buildSchemaForCondition(
                     $this,
-                    $className,
-                    $format,
-                    $type,
-                    $operationType,
-                    $operationName,
                     $schemaBuild,
-                    $serializerContext,
-                    $forceCollection
+                    $schemaContext
                 );
             case TriggerEventColumn::class:
                 $definitions = $schemaBuild->getDefinitions();

@@ -13,15 +13,5 @@ use ApiPlatform\Core\JsonSchema\SchemaFactoryInterface;
 
 interface ConditionSchemaFactoryInterface
 {
-    public function buildSchemaForCondition(
-        SchemaFactoryInterface $schemaFactory,
-        string $className,
-        string $format = 'json',
-        string $type = Schema::TYPE_OUTPUT,
-        ?string $operationType = null,
-        ?string $operationName = null,
-        ?Schema $schema = null,
-        ?array $serializerContext = null,
-        bool $forceCollection = false
-    ): Schema;
+    public function buildSchemaForCondition(SchemaFactoryInterface $schemaFactory, Schema $schema, array $schemaContext = []): Schema;
 }

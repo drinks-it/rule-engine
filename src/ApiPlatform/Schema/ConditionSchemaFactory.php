@@ -17,18 +17,18 @@ use DrinksIt\RuleEngineBundle\Rule\Condition\Types\StringAttributeConditionTypeI
 
 final class ConditionSchemaFactory implements ConditionSchemaFactoryInterface
 {
-    public function buildSchemaForCondition(SchemaFactoryInterface $schemaFactory, string $className, string $format = 'json', string $type = Schema::TYPE_OUTPUT, ?string $operationType = null, ?string $operationName = null, ?Schema $schema = null, ?array $serializerContext = null, bool $forceCollection = false): Schema
+    public function buildSchemaForCondition(SchemaFactoryInterface $schemaFactory, Schema $schema, array $schemaContext = []): Schema
     {
-        if (isset($serializerContext['condition_atribute'])) {
-            $definitionName = str_replace('Condition', 'Condition_attribute', $schema->getRootDefinitionKey());
+        if (isset($schemaContext['condition_attribute'])) {
+            $definitionName = 'Attribute'.$schema->getRootDefinitionKey();
             $ref = Schema::VERSION_OPENAPI === $schema->getVersion() ? '#/components/schemas/'.$definitionName : '#/definitions/'.$definitionName;
 
-            $newDefinistions = $schema->getDefinitions();
-            unset($newDefinistions[$schema->getRootDefinitionKey()]);
+            $newDefinitions = $schema->getDefinitions();
+            unset($newDefinitions[$schema->getRootDefinitionKey()]);
 
             $schema['$ref'] = $ref;
 
-            $newDefinistions->offsetSet(
+            $newDefinitions->offsetSet(
                 $definitionName,
                 new \ArrayObject([
                     'type' => 'object',
@@ -53,21 +53,34 @@ final class ConditionSchemaFactory implements ConditionSchemaFactoryInterface
                 ])
             );
 
-            $schema->setDefinitions($newDefinistions);
+            $schema->setDefinitions($newDefinitions);
 
             return $schema;
         }
 
-        $subAttributeCondition = $schemaFactory->buildSchema($className, $format, $type, $operationType, $operationName, new Schema($schema->getVersion()), array_merge($serializerContext, ['condition_atribute' => true]), $forceCollection);
+        $subAttributeCondition = $this->buildSchemaForCondition(
+            $schemaFactory,
+            $schemaFactory->buildSchema(
+                $schemaContext['classname'],
+                $schemaContext['format'],
+                $schemaContext['type'],
+                $schema['operationType'],
+                $schema['operationName'],
+                new Schema($schema->getVersion()),
+                $schema['serializerContext'],
+                $schema['forceCollection']
+            ),
+            array_merge($schemaContext, ['condition_attribute' => true])
+        );
 
-        $newDefinistions = $schema->getDefinitions();
-        $newDefinistions->offsetSet($subAttributeCondition->getRootDefinitionKey(), $subAttributeCondition->getDefinitions()[$subAttributeCondition->getRootDefinitionKey()]);
-        $newDefinistions->offsetSet(
+        $newDefinitions = $schema->getDefinitions();
+        $newDefinitions->offsetSet($subAttributeCondition->getRootDefinitionKey(), $subAttributeCondition->getDefinitions()[$subAttributeCondition->getRootDefinitionKey()]);
+        $newDefinitions->offsetSet(
             $schema->getRootDefinitionKey(),
             $this->makeSchemaForCondition($schema['$ref'], $subAttributeCondition['$ref'])
         );
 
-        $schema->setDefinitions($newDefinistions);
+        $schema->setDefinitions($newDefinitions);
 
         return $schema;
     }
