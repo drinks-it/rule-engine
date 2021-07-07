@@ -5,7 +5,7 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
 
-        <service id="DrinksIt\RuleEngineBundle\ApiPlatform\DataPersister\PlainRuleEntityDataPersister">
+        <service id="DrinksIt\RuleEngineBundle\ApiPlatform\DataPersister\PlainRuleEntityDataPersister" class="DrinksIt\RuleEngineBundle\ApiPlatform\DataPersister\PlainRuleEntityDataPersister">
             <argument type="service" id="rule_engine.serializer.actions_collection" />
             <argument type="service" id="rule_engine.serializer.conditions_collection" />
             <tag name="api_platform.data_persister" />
@@ -13,7 +13,7 @@
         <service id="rule_engine.api_platform.plain_data_persister" alias="DrinksIt\RuleEngineBundle\ApiPlatform\DataPersister\PlainRuleEntityDataPersister" />
 
         <!-- Update Schemas Factory -->
-        <service id="DrinksIt\RuleEngineBundle\ApiPlatform\SchemaTypeFactory" decorates="api_platform.json_schema.type_factory">
+        <service id="DrinksIt\RuleEngineBundle\ApiPlatform\SchemaTypeFactory" class="DrinksIt\RuleEngineBundle\ApiPlatform\SchemaTypeFactory" decorates="api_platform.json_schema.type_factory">
             <argument type="service" id="DrinksIt\RuleEngineBundle\ApiPlatform\SchemaTypeFactory.inner"/>
         </service>
 
