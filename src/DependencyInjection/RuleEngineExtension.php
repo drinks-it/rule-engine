@@ -33,7 +33,7 @@ class RuleEngineExtension extends Extension
         $container->registerForAutoconfiguration(RuleEntityFinderExtensionInterface::class)
             ->addTag('rule_engine.tag.doctrine.extension_finder');
 
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '../../Resources/config'));
+        $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
 
         $loader->load('maker.xsd');
         $loader->load('extractor.xsd');

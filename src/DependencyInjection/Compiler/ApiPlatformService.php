@@ -18,7 +18,7 @@ class ApiPlatformService implements CompilerPassInterface
     public function process(ContainerBuilder $container): void
     {
         if ($container->hasDefinition('api_platform.data_persister')) {
-            $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+            $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../../Resources/config'));
             $loader->load('api_platform.xsd');
         }
     }
