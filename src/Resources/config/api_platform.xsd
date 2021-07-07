@@ -12,9 +12,21 @@
         </service>
         <service id="rule_engine.api_platform.plain_data_persister" alias="DrinksIt\RuleEngineBundle\ApiPlatform\DataPersister\PlainRuleEntityDataPersister" />
 
+        <service id="DrinksIt\RuleEngineBundle\ApiPlatform\Schema\ActionSchemaFactory" class="DrinksIt\RuleEngineBundle\ApiPlatform\Schema\ActionSchemaFactory" />
+        <service id="rule_engine.api_platform.json_schema.action" alias="DrinksIt\RuleEngineBundle\ApiPlatform\Schema\ActionSchemaFactory" />
+        <service id="DrinksIt\RuleEngineBundle\ApiPlatform\Schema\ActionSchemaFactoryInterface" alias="rule_engine.api_platform.json_schema.action" />
+
+
+        <service id="DrinksIt\RuleEngineBundle\ApiPlatform\Schema\ConditionSchemaFactory" class="DrinksIt\RuleEngineBundle\ApiPlatform\Schema\ConditionSchemaFactory" />
+        <service id="rule_engine.api_platform.json_schema.condition" alias="DrinksIt\RuleEngineBundle\ApiPlatform\Schema\ConditionSchemaFactory" />
+        <service id="DrinksIt\RuleEngineBundle\ApiPlatform\Schema\ConditionSchemaFactoryInterface" alias="rule_engine.api_platform.json_schema.condition" />
+
+
         <!-- Update Schemas Factory -->
         <service id="DrinksIt\RuleEngineBundle\ApiPlatform\SchemaFactory" class="DrinksIt\RuleEngineBundle\ApiPlatform\SchemaFactory" decorates="api_platform.json_schema.schema_factory">
             <argument type="service" id="DrinksIt\RuleEngineBundle\ApiPlatform\SchemaFactory.inner"/>
+            <argument type="service" id="rule_engine.api_platform.json_schema.condition"/>
+            <argument type="service" id="rule_engine.api_platform.json_schema.action"/>
         </service>
 
         <service id="rule_engine.api_platform.json_schema.type_factory" alias="DrinksIt\RuleEngineBundle\ApiPlatform\SchemaFactory" />

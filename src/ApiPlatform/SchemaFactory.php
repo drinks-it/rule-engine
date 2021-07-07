@@ -10,14 +10,34 @@ namespace DrinksIt\RuleEngineBundle\ApiPlatform;
 
 use ApiPlatform\Core\JsonSchema\Schema;
 use ApiPlatform\Core\JsonSchema\SchemaFactoryInterface;
+use DrinksIt\RuleEngineBundle\ApiPlatform\Schema\ActionSchemaFactoryInterface;
+use DrinksIt\RuleEngineBundle\ApiPlatform\Schema\ConditionSchemaFactoryInterface;
+use DrinksIt\RuleEngineBundle\Rule\Action\ActionInterface;
+use DrinksIt\RuleEngineBundle\Rule\Condition\Condition;
+use DrinksIt\RuleEngineBundle\Rule\TriggerEventColumn;
 
 final class SchemaFactory implements SchemaFactoryInterface
 {
     private SchemaFactoryInterface $decoder;
 
-    public function __construct(SchemaFactoryInterface $schemaFactory)
-    {
+    private ConditionSchemaFactoryInterface $conditionSchemaFactory;
+
+    private ActionSchemaFactoryInterface $actionSchemaFactory;
+
+    private const SCHAMES_BUILDS = [
+        Condition::class,
+        ActionInterface::class,
+        TriggerEventColumn::class,
+    ];
+
+    public function __construct(
+        SchemaFactoryInterface $schemaFactory,
+        ConditionSchemaFactoryInterface $conditionSchemaFactory,
+        ActionSchemaFactoryInterface $actionSchemaFactory
+    ) {
         $this->decoder = $schemaFactory;
+        $this->conditionSchemaFactory = $conditionSchemaFactory;
+        $this->actionSchemaFactory = $actionSchemaFactory;
     }
 
     /**
@@ -25,6 +45,49 @@ final class SchemaFactory implements SchemaFactoryInterface
      */
     public function buildSchema(string $className, string $format = 'json', string $type = Schema::TYPE_OUTPUT, ?string $operationType = null, ?string $operationName = null, ?Schema $schema = null, ?array $serializerContext = null, bool $forceCollection = false): Schema
     {
-        return $this->decoder->buildSchema($className, $format, $type, $operationType, $operationName, $schema, $serializerContext);
+        $schemaBuild = $this->decoder->buildSchema($className, $format, $type, $operationType, $operationName, $schema, $serializerContext);
+
+        if (!\in_array($className, self::SCHAMES_BUILDS)) {
+            return $schemaBuild;
+        }
+
+        switch ($className) {
+            case Condition::class:
+                return $this->conditionSchemaFactory->buildSchemaForCondition(
+                    $this,
+                    $className,
+                    $format,
+                    $type,
+                    $operationType,
+                    $operationName,
+                    $schemaBuild,
+                    $serializerContext,
+                    $forceCollection
+                );
+            case ActionInterface::class:
+                return $this->actionSchemaFactory->buildSchemaForCondition(
+                    $this,
+                    $className,
+                    $format,
+                    $type,
+                    $operationType,
+                    $operationName,
+                    $schemaBuild,
+                    $serializerContext,
+                    $forceCollection
+                );
+            case TriggerEventColumn::class:
+                $definitions = $schemaBuild->getDefinitions();
+                $definitions->offsetSet($schemaBuild->getRootDefinitionKey(), new \ArrayObject([
+                    'type' => 'string',
+                    'example' => 'TriggerClassName',
+                ]));
+
+                $schemaBuild->setDefinitions($definitions);
+
+                return $schemaBuild;
+        }
+
+        return $schemaBuild;
     }
 }
