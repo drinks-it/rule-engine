@@ -42,4 +42,9 @@ class RuleEngineExtension extends Extension
         $loader->load('events.xsd');
         $loader->load('serializer.xsd');
     }
+
+    public function getAlias()
+    {
+        return 'rule_engine';
+    }
 }
