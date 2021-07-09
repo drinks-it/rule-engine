@@ -12,5 +12,9 @@ interface StringAttributeConditionTypeInterface extends AttributeConditionTypeIn
 {
     public const OPERATOR_EQ = 'EQ';
 
+    public const OPERATOR_NOT_EQ = 'NEQ';
+
     public const OPERATOR_CONTAINS = 'CONTAINS';
+
+    public const OPERATOR_NOT_CONTAINS = 'NOT_CONTAINS';
 }

@@ -21,6 +21,7 @@
             <argument type="service" id="DrinksIt\RuleEngineBundle\ApiPlatform\Serializer\RuleEnginePropertiesNormalizer.inner" />
             <argument type="service" id="rule_engine.serializer.conditions_collection" />
             <argument type="service" id="rule_engine.serializer.actions_collection" />
+            <argument type="service" id="rule_engine.events_follow_factory"/>
         </service>
 
         <service id="rule_engine.api_platform.serializer.normalizer.rule_properties" alias="DrinksIt\RuleEngineBundle\ApiPlatform\Serializer\RuleEnginePropertiesNormalizer"/>

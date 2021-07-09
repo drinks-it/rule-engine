@@ -180,6 +180,117 @@ class NumberConditionAttributeTest extends TestCase
         ];
     }
 
+    public function dataCasesNumbersNotEq(): array
+    {
+        return [
+            [
+                NumberAttributeConditionTypeInterface::OPERATOR_NOT_EQ,
+                34,
+                34,
+                false,
+                null,
+            ],
+            [
+                NumberAttributeConditionTypeInterface::OPERATOR_NOT_EQ,
+                '34',
+                '34',
+                false,
+                null,
+            ],
+            [
+                NumberAttributeConditionTypeInterface::OPERATOR_NOT_EQ,
+                '34.0',
+                '34',
+                false,
+                null,
+            ],
+            [
+                NumberAttributeConditionTypeInterface::OPERATOR_NOT_EQ,
+                '34',
+                '34.0',
+                false,
+                null,
+            ],
+            [
+                NumberAttributeConditionTypeInterface::OPERATOR_NOT_EQ,
+                '34.1',
+                '34.0',
+                true,
+                null,
+            ],
+            [
+                NumberAttributeConditionTypeInterface::OPERATOR_NOT_EQ,
+                '34.1',
+                '34.01',
+                true,
+                null,
+            ],
+            [
+                NumberAttributeConditionTypeInterface::OPERATOR_NOT_EQ,
+                34.1,
+                34.01,
+                true,
+                null,
+            ],
+            [
+                NumberAttributeConditionTypeInterface::OPERATOR_NOT_EQ,
+                34.01,
+                34.01,
+                false,
+                null,
+            ],
+            [
+                NumberAttributeConditionTypeInterface::OPERATOR_NOT_EQ,
+                '34.99',
+                35,
+                true,
+                null,
+            ],
+            [
+                NumberAttributeConditionTypeInterface::OPERATOR_NOT_EQ,
+                new class() {},
+                35,
+                false,
+                TypeValueNotSupportedForConditionException::class,
+            ],
+            [
+                NumberAttributeConditionTypeInterface::OPERATOR_NOT_EQ,
+                false,
+                35,
+                false,
+                TypeValueNotSupportedForConditionException::class,
+            ],
+            [
+                NumberAttributeConditionTypeInterface::OPERATOR_NOT_EQ,
+                [],
+                35,
+                false,
+                TypeValueNotSupportedForConditionException::class,
+            ],
+            [
+                NumberAttributeConditionTypeInterface::OPERATOR_NOT_EQ,
+                35,
+                new class() {},
+                false,
+                TypeValueNotSupportedForConditionException::class,
+            ],
+            [
+                NumberAttributeConditionTypeInterface::OPERATOR_NOT_EQ,
+                35,
+                false,
+                false,
+                TypeValueNotSupportedForConditionException::class,
+            ],
+            [
+                NumberAttributeConditionTypeInterface::OPERATOR_NOT_EQ,
+                35,
+                [],
+                false,
+                TypeValueNotSupportedForConditionException::class,
+            ],
+        ];
+    }
+
     public function dataCasesNumbersGt(): array
     {
         return array_merge([
