@@ -55,8 +55,5 @@ jobs:
         run: vendor/bin/simple-phpunit install
 
       - name: Run test suite
-        run: vendor/bin/simple-phpunit -v
-
-      - name: Code covarage
-        run: vendor/bin/simple-phpunit -v  --coverage-text
+        run: vendor/bin/simple-phpunit -v --coverage-text
 
