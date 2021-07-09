@@ -15,6 +15,10 @@ interface NumberAttributeConditionTypeInterface extends AttributeConditionTypeIn
      */
     public const OPERATOR_EQ = 'EQ';
     /**
+     * Not Equal
+     */
+    public const OPERATOR_NOT_EQ = 'NEQ';
+    /**
      * Great then.
      */
     public const OPERATOR_GT = 'GT';

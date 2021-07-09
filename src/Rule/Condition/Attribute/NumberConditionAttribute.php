@@ -33,6 +33,7 @@ class NumberConditionAttribute extends AttributeCondition implements NumberAttri
 
         switch ($this->getOperator()) {
             case NumberAttributeConditionTypeInterface::OPERATOR_EQ:  return $this->matchEq($value);
+            case NumberAttributeConditionTypeInterface::OPERATOR_NOT_EQ:  return !$this->matchEq($value);
             case NumberAttributeConditionTypeInterface::OPERATOR_GT:  return $this->matchGt($value);
             case NumberAttributeConditionTypeInterface::OPERATOR_GTE: return $this->matchGte($value);
             case NumberAttributeConditionTypeInterface::OPERATOR_LT:  return $this->matchLt($value);

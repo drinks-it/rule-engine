@@ -23,10 +23,13 @@ final class ResourceRuleEntity
      */
     private array $properties;
 
-    public function __construct(string $className, array $properties = [])
+    private array $events;
+
+    public function __construct(string $className, array $properties = [], array $events = [])
     {
         $this->className = $className;
         $this->properties = $properties;
+        $this->events = $events;
     }
 
     /**
@@ -43,5 +46,13 @@ final class ResourceRuleEntity
     public function getProperties(): array
     {
         return $this->properties;
+    }
+
+    /**
+     * @return array
+     */
+    public function getEvents(): array
+    {
+        return $this->events;
     }
 }

@@ -34,6 +34,10 @@ final class RuleEntityResourceFactory implements RuleEntityResourceFactoryInterf
             return null;
         }
 
-        return new ResourceRuleEntity($entityClass, $this->ruleEntityPropertyFactory->create($entityClass));
+        return new ResourceRuleEntity(
+            $entityClass,
+            $this->ruleEntityPropertyFactory->create($entityClass),
+            $annotationResource->events
+        );
     }
 }

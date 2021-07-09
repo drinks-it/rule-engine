@@ -59,6 +59,24 @@ class StringConditionAttributeTest extends TestCase
                 true,
             ],
             [
+                StringAttributeConditionTypeInterface::OPERATOR_NOT_CONTAINS,
+                'Hello, Going to Test',
+                'Test1',
+                true,
+            ],
+            [
+                StringAttributeConditionTypeInterface::OPERATOR_NOT_CONTAINS,
+                'Hello, Going to Test',
+                'Going toF',
+                true,
+            ],
+            [
+                StringAttributeConditionTypeInterface::OPERATOR_NOT_CONTAINS,
+                "Hello, Going to Test\nTestCheck",
+                "Test\nTestCheck2",
+                true,
+            ],
+            [
                 StringAttributeConditionTypeInterface::OPERATOR_EQ,
                 "Hello, Going to Test\nTestCheck",
                 "Hello, Going to Test\nTestCheck",
@@ -69,6 +87,18 @@ class StringConditionAttributeTest extends TestCase
                 "Hello, Going to Test\nTestCheck",
                 "Test\nTestCheck",
                 false,
+            ],
+            [
+                StringAttributeConditionTypeInterface::OPERATOR_NOT_EQ,
+                "Hello, Going to Test\nTestCheck",
+                "Hello, Going to Test\nTestCheck",
+                false,
+            ],
+            [
+                StringAttributeConditionTypeInterface::OPERATOR_NOT_EQ,
+                "Hello, Going to Test\nTestCheck",
+                "Test\nTestCheck",
+                true,
             ],
             [
                 StringAttributeConditionTypeInterface::OPERATOR_EQ,

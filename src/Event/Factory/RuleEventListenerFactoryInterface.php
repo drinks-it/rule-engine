@@ -8,10 +8,12 @@ declare(strict_types=1);
 
 namespace DrinksIt\RuleEngineBundle\Event\Factory;
 
+use DrinksIt\RuleEngineBundle\Event\RuleEventInterface;
+
 interface RuleEventListenerFactoryInterface
 {
     /**
-     * @return array
+     * @return array{event: RuleEventInterface, name: string, resource: string}[]
      */
     public function create(): iterable;
 }

@@ -16,4 +16,9 @@ use Doctrine\Common\Annotations\Annotation\Target;
  */
 class RuleEntityResource
 {
+    /**
+     * Class names events, if empty access to all events
+     * @var array
+     */
+    public array $events = [];
 }
