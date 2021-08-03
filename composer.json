@@ -17,7 +17,8 @@
         "friendsofphp/php-cs-fixer": "^2.19 || ^3.0",
         "phpunit/php-code-coverage": "^9.2",
         "symfony/maker-bundle": "^1.31",
-        "symfony/phpunit-bridge": "^5.0"
+        "symfony/phpunit-bridge": "^5.0",
+        "symfony/validator": "^5.0"
     },
     "license": "MIT",
     "autoload": {
