@@ -33,9 +33,7 @@ abstract class AttributeCondition implements AttributeConditionTypeInterface
             $this->setOperator($operator);
         }
 
-        if ($value) {
-            $this->setValue($value);
-        }
+        $this->setValue($value);
     }
 
     public function getOperator(): string

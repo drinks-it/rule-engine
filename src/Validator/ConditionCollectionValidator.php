@@ -11,6 +11,7 @@ namespace DrinksIt\RuleEngineBundle\Validator;
 use DrinksIt\RuleEngineBundle\Rule\CollectionActionsInterface;
 use DrinksIt\RuleEngineBundle\Rule\CollectionConditionInterface;
 use DrinksIt\RuleEngineBundle\Rule\Condition\Condition;
+use DrinksIt\RuleEngineBundle\Rule\Condition\Exception\TypeValueNotSupportedForConditionException;
 use DrinksIt\RuleEngineBundle\Rule\RuleEntityInterface;
 use DrinksIt\RuleEngineBundle\Rule\TriggerEventColumn;
 use DrinksIt\RuleEngineBundle\Validator\Asserts\ConditionCollection as ConstraintConditionCollection;
@@ -85,6 +86,12 @@ class ConditionCollectionValidator extends RuleConstraintValidator
         }
 
         if ($propertyRule->getClassNameAttributeConditionType() !== \get_class($attributeCondition)) {
+            $this->context->buildViolation($constraint->unsupportedTypeProperty)->atPath($idx)->addViolation();
+        }
+
+        try {
+            $attributeCondition->getValue();
+        } catch (TypeValueNotSupportedForConditionException | \TypeError $exception) {
             $this->context->buildViolation($constraint->unsupportedTypeProperty)->atPath($idx)->addViolation();
         }
     }
