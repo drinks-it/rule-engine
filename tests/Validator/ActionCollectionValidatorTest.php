@@ -59,6 +59,10 @@ class ActionCollectionValidatorTest extends TestCase
                     )
                     ->willReturn($builder);
 
+                $builder->method('setCode')->with(
+                    $this->equalTo(ActionCollectionValidator::CODE)
+                )->willReturnSelf();
+
                 $builder->expects($this->once())->method('addViolation');
             }
         }

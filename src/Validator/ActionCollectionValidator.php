@@ -20,6 +20,8 @@ use Symfony\Component\Validator\Exception\UnsupportedMetadataException;
 
 class ActionCollectionValidator extends RuleConstraintValidator
 {
+    public const CODE = 'rule_engine.action';
+
     public function validate($value, Constraint $constraint): void
     {
         if (!$constraint instanceof ConstraintActionCollection) {
@@ -46,27 +48,27 @@ class ActionCollectionValidator extends RuleConstraintValidator
         $resourceRuleEntity = $this->getResourceRuleEntity($action->getResourceClass());
 
         if (!$resourceRuleEntity) {
-            $this->context->buildViolation($constraint->unsupportedResourceMessage)->addViolation();
+            $this->context->buildViolation($constraint->unsupportedResourceMessage)->setCode(self::CODE)->addViolation();
 
             return;
         }
 
         if (!empty($resourceRuleEntity->getEvents())) {
             if (!\in_array($eventColumn->getEntityClassName(), $resourceRuleEntity->getEvents())) {
-                $this->context->buildViolation($constraint->unsupportedForEvent)->addViolation();
+                $this->context->buildViolation($constraint->unsupportedForEvent)->setCode(self::CODE)->addViolation();
             }
         }
 
         $propertyRule       = $this->getPropertyFromResource($resourceRuleEntity, $action->getFieldName());
 
         if (!$propertyRule) {
-            $this->context->buildViolation($constraint->unsupportedTypeProperty)->addViolation();
+            $this->context->buildViolation($constraint->unsupportedTypeProperty)->setCode(self::CODE)->addViolation();
 
             return;
         }
 
         if ($propertyRule->getClassNameActionFieldType() !== \get_class($action)) {
-            $this->context->buildViolation($constraint->unsupportedTypeProperty)->addViolation();
+            $this->context->buildViolation($constraint->unsupportedTypeProperty)->setCode(self::CODE)->addViolation();
         }
     }
 }

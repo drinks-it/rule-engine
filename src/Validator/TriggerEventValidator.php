@@ -20,6 +20,8 @@ use Symfony\Component\Validator\Exception\UnsupportedMetadataException;
 
 class TriggerEventValidator extends ConstraintValidator
 {
+    public const CODE = 'rule_engine.event';
+
     private RuleEventListenerFactoryInterface $eventListenerFactory;
 
     public function __construct(
@@ -48,6 +50,6 @@ class TriggerEventValidator extends ConstraintValidator
             }
         }
 
-        $this->context->buildViolation($constraint->message)->addViolation();
+        $this->context->buildViolation($constraint->message)->setCode(self::CODE)->addViolation();
     }
 }
