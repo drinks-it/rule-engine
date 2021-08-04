@@ -41,7 +41,7 @@ class ConditionCollectionValidator extends RuleConstraintValidator
         $eventColumn = $this->context->getRoot()->getTriggerEvent();
 
         foreach ($value as $idx => $condition) {
-            $this->checkConditionRow($constraint, $condition, $eventColumn, $idx);
+            $this->checkConditionRow($constraint, $condition, $eventColumn, null);
         }
     }
 
