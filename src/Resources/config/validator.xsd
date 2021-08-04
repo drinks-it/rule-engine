@@ -3,23 +3,21 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
-        <service id="DrinksIt\RuleEngineBundle\Validator\RuleConstraintValidator" abstract="true" autowire="true" autoconfigure="true">
-            <tag name="validator.constraint_validator"/>
+        <service id="DrinksIt\RuleEngineBundle\Validator\RuleConstraintValidator" abstract="true">
             <argument type="service"  id="rule_engine.metadata.factory"/>
         </service>
-        <service id="DrinksIt\RuleEngineBundle\Validator\ActionCollectionValidator" class="DrinksIt\RuleEngineBundle\Validator\ActionCollectionValidator" parent="DrinksIt\RuleEngineBundle\Validator\RuleConstraintValidator" autowire="true" autoconfigure="true" />
 
-        <service id="rule_engine.validator.action_collection" alias="DrinksIt\RuleEngineBundle\Validator\ActionCollectionValidator" />
-
-        <service id="DrinksIt\RuleEngineBundle\Validator\ConditionCollectionValidator" class="DrinksIt\RuleEngineBundle\Validator\ConditionCollectionValidator" parent="DrinksIt\RuleEngineBundle\Validator\RuleConstraintValidator" autowire="true" autoconfigure="true" />
-
-        <service id="rule_engine.validator.condition_collection" alias="DrinksIt\RuleEngineBundle\Validator\ConditionCollectionValidator" />
-
-        <service id="DrinksIt\RuleEngineBundle\Validator\TriggerEventValidator" class="DrinksIt\RuleEngineBundle\Validator\TriggerEventValidator" autowire="true" autoconfigure="true">
-            <tag name="validator.constraint_validator"/>
-            <argument type="service" id="rule_engine.events_follow_factory"/>
+        <service id="rule_engine.validator.action_collection" class="DrinksIt\RuleEngineBundle\Validator\ActionCollectionValidator" parent="DrinksIt\RuleEngineBundle\Validator\RuleConstraintValidator" public="true">
+            <tag name="validator.constraint_validator" alias="rule_engine.validator.action_collection"/>
         </service>
 
-        <service id="rule_engine.validator.event" alias="DrinksIt\RuleEngineBundle\Validator\TriggerEventValidator" />
+        <service id="rule_engine.validator.condition_collection" class="DrinksIt\RuleEngineBundle\Validator\ConditionCollectionValidator" parent="DrinksIt\RuleEngineBundle\Validator\RuleConstraintValidator" public="true">
+            <tag name="validator.constraint_validator" alias="rule_engine.validator.condition_collection"/>
+        </service>
+
+        <service id="rule_engine.validator.event" class="DrinksIt\RuleEngineBundle\Validator\TriggerEventValidator" public="true">
+            <tag name="validator.constraint_validator" alias="rule_engine.validator.event" />
+            <argument type="service" id="rule_engine.events_follow_factory"/>
+        </service>
     </services>
 </container>
