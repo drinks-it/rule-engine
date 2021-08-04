@@ -12,9 +12,6 @@ use DrinksIt\RuleEngineBundle\Metadata\Property\PropertyRuleEntity;
 use DrinksIt\RuleEngineBundle\Metadata\Resource\Factory\RuleEngineFactoryInterface;
 use DrinksIt\RuleEngineBundle\Metadata\Resource\ResourceRuleEntity;
 use DrinksIt\RuleEngineBundle\Metadata\Resource\ResourceRuleEntityCollection;
-use DrinksIt\RuleEngineBundle\Rule\Action\Attribute\NumberActionType;
-use DrinksIt\RuleEngineBundle\Rule\Action\Attribute\StringActionType;
-use DrinksIt\RuleEngineBundle\Rule\CollectionActionsInterface;
 use DrinksIt\RuleEngineBundle\Rule\CollectionConditionInterface;
 use DrinksIt\RuleEngineBundle\Rule\Condition\Attribute\NumberConditionAttribute;
 use DrinksIt\RuleEngineBundle\Rule\Condition\Attribute\StringConditionAttribute;
@@ -256,6 +253,33 @@ class ConditionCollectionValidatorTest extends TestCase
                     self::RULE_ENTITY_NAME,
                     'field',
                     NumberAttributeConditionTypeInterface::OPERATOR_EQ,
+                    []
+                )
+            ),
+        ]));
+
+        $collection->method('getIterator')->willReturn(new \ArrayIterator([
+            new Condition(Condition::TYPE_ALL, 1, null, $subCollection, true),
+        ]));
+
+        yield 'Value is not supported type' => [
+            $collection,
+            null,
+            $this->createMock(ConditionCollection::class),
+            $ruleEntityInterface,
+        ];
+
+        $collection = $this->createMock(CollectionConditionInterface::class);
+        $subCollection = $this->createMock(CollectionConditionInterface::class);
+        $subCollection->method('isEmpty')->willReturn(false);
+        $subCollection->method('getIterator')->willReturn(new \ArrayIterator([
+            new Condition(
+                Condition::TYPE_ATTRIBUTE,
+                1,
+                new NumberConditionAttribute(
+                    self::RULE_ENTITY_NAME,
+                    'field',
+                    NumberAttributeConditionTypeInterface::OPERATOR_EQ,
                     1
                 )
             ),
@@ -276,31 +300,5 @@ class ConditionCollectionValidatorTest extends TestCase
             $this->createMock(ConditionCollection::class),
             $ruleEntityInterface,
         ];
-//
-//        $collection = $this->createMock(CollectionConditionInterface::class);
-//        $collection->method('getIterator')->willReturn(new \ArrayIterator([
-//            new NumberActionType('fieldType', self::RULE_ENTITY_NAME, '1 + 1'),
-//        ]));
-//
-//        $ruleEntityInterface = $this->createMock(RuleEntityInterface::class);
-//
-//        yield 'Property not found' => [
-//            $collection,
-//            null,
-//            $this->createMock(ConditionCollection::class),
-//            $ruleEntityInterface,
-//        ];
-//
-//        $collection = $this->createMock(CollectionActionsInterface::class);
-//        $collection->method('getIterator')->willReturn(new \ArrayIterator([
-//            new StringActionType('field', self::RULE_ENTITY_NAME, '1 + 1'),
-//        ]));
-//
-//        yield 'Not match actions field types' => [
-//            $collection,
-//            null,
-//            $this->createMock(ConditionCollection::class),
-//            $ruleEntityInterface,
-//        ];
     }
 }
