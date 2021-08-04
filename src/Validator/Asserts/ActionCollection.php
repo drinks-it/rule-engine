@@ -8,7 +8,6 @@ declare(strict_types=1);
 
 namespace DrinksIt\RuleEngineBundle\Validator\Asserts;
 
-use DrinksIt\RuleEngineBundle\Validator\ActionCollectionValidator;
 use Symfony\Component\Validator\Constraint;
 
 /**
@@ -24,6 +23,6 @@ class ActionCollection extends Constraint
 
     public function validatedBy()
     {
-        return ActionCollectionValidator::class;
+        return 'rule_engine.validator.action_collection';
     }
 }
