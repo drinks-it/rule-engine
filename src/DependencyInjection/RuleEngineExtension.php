@@ -41,6 +41,7 @@ class RuleEngineExtension extends Extension
         $loader->load('doctrine.xsd');
         $loader->load('events.xsd');
         $loader->load('serializer.xsd');
+        $loader->load('validator.xsd');
     }
 
     public function getAlias()
