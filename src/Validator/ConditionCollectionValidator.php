@@ -60,7 +60,7 @@ class ConditionCollectionValidator extends RuleConstraintValidator
                 return;
             }
             foreach ($condition->getSubConditions() as $subIdx => $subCondition) {
-                $this->checkConditionRow($constraint, $subCondition, $eventColumn, $idx.'.'.$subIdx);
+                $this->checkConditionRow($constraint, $subCondition, $eventColumn, $idx ? $idx.'.'.$subIdx : $subIdx);
             }
 
             return;
