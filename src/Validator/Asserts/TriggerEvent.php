@@ -8,7 +8,6 @@ declare(strict_types=1);
 
 namespace DrinksIt\RuleEngineBundle\Validator\Asserts;
 
-use DrinksIt\RuleEngineBundle\Validator\TriggerEventValidator;
 use Symfony\Component\Validator\Constraint;
 
 /**
@@ -20,6 +19,6 @@ class TriggerEvent extends Constraint
 
     public function validatedBy()
     {
-        return TriggerEventValidator::class;
+        return 'rule_engine.validator.event';
     }
 }
