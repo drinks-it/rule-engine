@@ -22,6 +22,8 @@ use Symfony\Component\Validator\Exception\UnsupportedMetadataException;
 
 class ConditionCollectionValidator extends RuleConstraintValidator
 {
+    public const CODE = 'rule_engine.condition';
+
     public function validate($value, Constraint $constraint): void
     {
         if (!$constraint instanceof ConstraintConditionCollection) {
@@ -51,6 +53,7 @@ class ConditionCollectionValidator extends RuleConstraintValidator
             if ($condition->getSubConditions()->isEmpty()) {
                 $this->context->buildViolation($constraint->messageSubConditionIsEmpty)
                     ->atPath($idx)
+                    ->setCode(self::CODE)
                     ->addViolation()
                 ;
 
@@ -66,33 +69,35 @@ class ConditionCollectionValidator extends RuleConstraintValidator
         $resourceRuleEntity = $this->getResourceRuleEntity($attributeCondition->getClassResource());
 
         if (!$resourceRuleEntity) {
-            $this->context->buildViolation($constraint->unsupportedResourceMessage)->atPath($idx)->addViolation();
+            $this->context->buildViolation($constraint->unsupportedResourceMessage)->atPath($idx)->setCode(self::CODE)->addViolation();
 
             return;
         }
 
         if (!empty($resourceRuleEntity->getEvents())) {
             if (!\in_array($eventColumn->getEntityClassName(), $resourceRuleEntity->getEvents())) {
-                $this->context->buildViolation($constraint->unsupportedForEvent)->atPath($idx)->addViolation();
+                $this->context->buildViolation($constraint->unsupportedForEvent)->atPath($idx)->setCode(self::CODE)->addViolation();
             }
         }
 
         $propertyRule       = $this->getPropertyFromResource($resourceRuleEntity, $attributeCondition->getFieldName());
 
         if (!$propertyRule) {
-            $this->context->buildViolation($constraint->unsupportedTypeProperty)->atPath($idx)->addViolation();
+            $this->context->buildViolation($constraint->unsupportedTypeProperty)->atPath($idx)->setCode(self::CODE)->addViolation();
 
             return;
         }
 
         if ($propertyRule->getClassNameAttributeConditionType() !== \get_class($attributeCondition)) {
-            $this->context->buildViolation($constraint->unsupportedTypeProperty)->atPath($idx)->addViolation();
+            $this->context->buildViolation($constraint->unsupportedTypeProperty)->atPath($idx)->setCode(self::CODE)->addViolation();
         }
 
         try {
             $attributeCondition->getValue();
         } catch (TypeValueNotSupportedForConditionException | \TypeError $exception) {
-            $this->context->buildViolation($constraint->unsupportedTypeProperty)->atPath($idx)->addViolation();
+            $this->context->buildViolation($constraint->unsupportedTypeProperty)->atPath($idx)
+                ->setCode(self::CODE)
+                ->addViolation();
         }
     }
 }

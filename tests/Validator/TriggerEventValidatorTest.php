@@ -57,6 +57,10 @@ class TriggerEventValidatorTest extends TestCase
                     )
                     ->willReturn($builder);
 
+                $builder->method('setCode')->with(
+                    $this->equalTo(TriggerEventValidator::CODE)
+                )->willReturnSelf();
+
                 $builder->expects($this->once())->method('addViolation');
             }
         }

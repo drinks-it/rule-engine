@@ -65,6 +65,10 @@ class ConditionCollectionValidatorTest extends TestCase
                     $this->isType('string')
                 )->willReturnSelf();
 
+                $builder->method('setCode')->with(
+                    $this->equalTo(ConditionCollectionValidator::CODE)
+                )->willReturnSelf();
+
                 $builder->expects($this->once())->method('addViolation');
             }
         }
