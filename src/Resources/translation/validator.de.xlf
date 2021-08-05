@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="rule_engine_resource_not_found">
+                <source>rule_engine_resource_not_found</source>
+                <target>Datenmodell nicht gefunden</target>
+            </trans-unit>
+            <trans-unit id="rule_engine_type_property">
+                <source>rule_engine_type_property</source>
+                <target>Die ausgewählte Immobilie entspricht nicht den Anforderungen</target>
+            </trans-unit>
+            <trans-unit id="rule_engine_condition_empty_subs">
+                <source>rule_engine_condition_empty_subs</source>
+                <target>Der Bedingungsblock muss mit anderen Bedingungen mit bestimmten Attributen gefüllt werden</target>
+            </trans-unit>
+            <trans-unit id="rule_engine_event_not_found">
+                <source>rule_engine_event_not_found</source>
+                <target>Triggerereignis nicht gefunden</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
