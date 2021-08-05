@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Constraint;
  */
 class TriggerEvent extends Constraint
 {
-    public string $message = 'validation.message.rule_engine.event_not_found';
+    public string $message = 'rule_engine_event_not_found';
 
     public function validatedBy()
     {

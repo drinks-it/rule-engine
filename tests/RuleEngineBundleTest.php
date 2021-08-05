@@ -28,6 +28,11 @@ class RuleEngineBundleTest extends TestCase
             $this->isType('string')
         )->willReturn(true);
 
+        $container =  $this->createMock(ContainerBuilder::class);
+        $container->expects($this->any())->method('hasDefinition')->with(
+            $this->isType('string')
+        )->willReturn(true);
+
         $container->expects($this->any())->method('addCompilerPass')->with(
             $this->isInstanceOf(CompilerPassInterface::class)
         )->willReturnCallback(function (CompilerPassInterface $service) use ($container) {

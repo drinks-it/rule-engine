@@ -15,11 +15,11 @@ use Symfony\Component\Validator\Constraint;
  */
 class ActionCollection extends Constraint
 {
-    public string $unsupportedResourceMessage = 'validation.message.rule_engine.resource';
+    public string $unsupportedResourceMessage = 'rule_engine_resource_not_found';
 
-    public string $unsupportedTypeProperty = 'validation.message.rule_engine.type_property';
+    public string $unsupportedTypeProperty = 'rule_engine_type_property';
 
-    public string $unsupportedForEvent = 'validation.message.rule_engine.event';
+    public string $unsupportedForEvent = 'rule_engine_event_not_found';
 
     public function validatedBy()
     {

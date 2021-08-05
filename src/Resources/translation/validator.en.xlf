@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="rule_engine_resource_not_found">
+                <source>rule_engine_resource_not_found</source>
+                <target>Data model not found</target>
+            </trans-unit>
+            <trans-unit id="rule_engine_type_property">
+                <source>rule_engine_type_property</source>
+                <target>The selected property does not meet the requirements</target>
+            </trans-unit>
+            <trans-unit id="rule_engine_condition_empty_subs">
+                <source>rule_engine_condition_empty_subs</source>
+                <target>The block of conditions must be filled with other conditions</target>
+            </trans-unit>
+            <trans-unit id="rule_engine_event_not_found">
+                <source>rule_engine_event_not_found</source>
+                <target>Trigger event not found</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
