@@ -42,18 +42,22 @@ abstract class Action implements ActionInterface
         $pathToField = str_replace('%', '', $pathToField);
 
         if (strpos($pathToField, '.')) {
-            $pathMap =explode('.', $pathToField);
-            $relationMethodName = array_shift($pathMap);
-            $methodRelationName = StrEntity::getGetterNameMethod($relationMethodName);
+            $pathMap = explode('.', $pathToField);
+            $objectFromGet = $objectEntity;
+            foreach ($pathMap as $relationMethodName) {
+                if (!\is_object($objectFromGet)) {
+                    break;
+                }
 
-            if (!method_exists($objectEntity, $methodRelationName)) {
-                throw new MethodDoesNotExistRuleException();
+                $methodRelationName = StrEntity::getGetterNameMethod($relationMethodName);
 
-                throw new \RuntimeException('Method not found');
+                if (!method_exists($objectFromGet, $methodRelationName)) {
+                    throw new MethodDoesNotExistRuleException(\get_class($objectFromGet), $methodRelationName);
+                }
+                $objectFromGet = $objectFromGet->{$methodRelationName}();
             }
-            $objectEntity = $objectEntity->{$methodRelationName}();
 
-            return $this->getValueFromObjectByMacros($objectEntity, implode('.', $pathMap));
+            return $objectFromGet;
         }
 
         if (mb_strtolower($pathToField) === 'self') {
@@ -62,8 +66,7 @@ abstract class Action implements ActionInterface
         $methodName = StrEntity::getGetterNameMethod($pathToField);
 
         if (!method_exists($objectEntity, $methodName)) {
-            // todo
-            throw new \RuntimeException('Method not found ' .$methodName);
+            throw new MethodDoesNotExistRuleException(\get_class($objectEntity), $methodName);
         }
 
         return (string) $objectEntity->{$methodName}();

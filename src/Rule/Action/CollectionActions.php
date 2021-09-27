@@ -28,27 +28,21 @@ class CollectionActions extends ArrayCollection implements CollectionActionsInte
             }
             $resourceClass = $action->getResourceClass();
 
-            if ($resourceClass === \get_class($objectEntity)) {
+            if ($objectEntity instanceof ExecuteMethodAction || $resourceClass === \get_class($objectEntity)) {
                 $action->executeAction($objectEntity);
 
                 continue;
-            }
-
-            $objectToExecute = $objectEntity;
-
-            if ($objectToExecute instanceof ExecuteMethodAction) {
-                $objectToExecute = $objectToExecute->getObjectToExecute();
             }
 
             $methodName = StrEntity::getGetterNameMethod(
                 StrEntity::getShortName($resourceClass)
             );
 
-            if (!method_exists($objectToExecute, $methodName)) {
+            if (!method_exists($objectEntity, $methodName)) {
                 continue;
             }
 
-            $action->executeAction($objectToExecute->{$methodName}());
+            $action->executeAction($objectEntity->{$methodName}());
         }
     }
 }

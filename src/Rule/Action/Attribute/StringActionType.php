@@ -12,6 +12,7 @@ use DrinksIt\RuleEngineBundle\Doctrine\Helper\StrEntity;
 use DrinksIt\RuleEngineBundle\Rule\Action\Action;
 use DrinksIt\RuleEngineBundle\Rule\Action\ActionInterface;
 use DrinksIt\RuleEngineBundle\Rule\Action\Types\StringActionTypeInterface;
+use DrinksIt\RuleEngineBundle\Rule\Condition\Exception\MethodDoesNotExistException;
 
 class StringActionType extends Action implements StringActionTypeInterface
 {
@@ -45,16 +46,28 @@ class StringActionType extends Action implements StringActionTypeInterface
     {
         $setMethodNameField = StrEntity::getSetterNameMethod($this->getFieldName());
 
-        if (!method_exists($objectEntity, $setMethodNameField)) {
-            // todo
-            throw new \RuntimeException('Method not found');
+        $objectToSet = $objectEntity;
+
+        if (!method_exists($objectToSet, $setMethodNameField)) {
+            $methodGetResource = StrEntity::getGetterNameMethod(
+                StrEntity::getShortName($this->getResourceClass())
+            );
+
+            if (method_exists($objectEntity, $methodGetResource)) {
+                $objectToSet = $objectEntity->{$methodGetResource}();
+            }
         }
+
+        if (!method_exists($objectToSet, $setMethodNameField)) {
+            throw new MethodDoesNotExistException(\get_class($objectToSet), $setMethodNameField);
+        }
+
         $resultSet = $this->actionsFields['pattern'];
         foreach ($this->actionsFields['macros'] as $macro) {
             $resultSet = str_replace($macro, $this->getValueFromObjectByMacros($objectEntity, $macro), $resultSet);
         }
 
-        $objectEntity->{$setMethodNameField}($resultSet);
+        $objectToSet->{$setMethodNameField}($resultSet);
     }
 
     public function getAction()

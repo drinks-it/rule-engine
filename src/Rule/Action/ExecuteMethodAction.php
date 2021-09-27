@@ -10,5 +10,4 @@ namespace DrinksIt\RuleEngineBundle\Rule\Action;
 
 interface ExecuteMethodAction
 {
-    public function getObjectToExecute();
 }
