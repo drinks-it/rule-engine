@@ -67,12 +67,6 @@ class NumberActionTypeFieldTest extends TestCase
             0,
         ];
 
-        yield 'basic of v1' => [
-            '1 x 1',
-            $enObject,
-            1,
-        ];
-
         yield 'basic of v2' => [
             '1 * 1',
             $enObject,
@@ -98,12 +92,6 @@ class NumberActionTypeFieldTest extends TestCase
 
         yield 'L1: basic minus' => [
             '12 - 1 - 1',
-            $enObject,
-            10,
-        ];
-
-        yield 'L1: basic of v1' => [
-            '1 x 1 x 10',
             $enObject,
             10,
         ];
@@ -137,12 +125,6 @@ class NumberActionTypeFieldTest extends TestCase
             12,
         ];
 
-        yield 'L2: basic of v1' => [
-            '1 x (1 x 10)',
-            $enObject,
-            10,
-        ];
-
         yield 'L2: basic of v2' => [
             '1 * (1 * 20)',
             $enObject,
@@ -173,19 +155,19 @@ class NumberActionTypeFieldTest extends TestCase
         ];
 
         yield 'C: of | Plus' => [
-            '1 - (1.34 x 22)',
+            '1 - (1.34 * 22)',
             $enObject,
             (1 - (1.34 * 22)),
         ];
 
         yield 'C: of | Plus | Minus' => [
-            '1 - (1.34 x 22) - 877',
+            '1 - (1.34 * 22) - 877',
             $enObject,
             (1 - (1.34 * 22) - 877),
         ];
 
         yield 'C: of | Plus | division | Minus' => [
-            '1 - (1.34 x 22 / 34) - 877',
+            '1 - (1.34 * 22 / 34) - 877',
             $enObject,
             (1 - (1.34 * 22 / 34) - 877),
         ];
