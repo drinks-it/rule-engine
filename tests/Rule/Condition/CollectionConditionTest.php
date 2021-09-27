@@ -37,6 +37,17 @@ class CollectionConditionTest extends TestCase
 
     public function dataScriptsConditions(): iterable
     {
+        $closerClass = new class() {
+            public function getField1(): string
+            {
+                return 'Eko Hi';
+            }
+
+            public function getField2(): float
+            {
+                return 3;
+            }
+        };
         yield 'ANY (Ture) | Ex: true' => [
             new CollectionCondition([
                 new Condition(
@@ -47,32 +58,33 @@ class CollectionConditionTest extends TestCase
                         new Condition(
                             Condition::TYPE_ATTRIBUTE,
                             1,
-                            new StringConditionAttribute(\stdClass::class, 'field1', StringConditionAttribute::OPERATOR_EQ, 'Eko')
+                            new StringConditionAttribute(\get_class($closerClass), 'field1', StringConditionAttribute::OPERATOR_EQ, 'Eko')
                         ),
                         new Condition(
                             Condition::TYPE_ATTRIBUTE,
                             1,
-                            new NumberConditionAttribute(\stdClass::class, 'field2', NumberConditionAttribute::OPERATOR_EQ, 3)
+                            new NumberConditionAttribute(\get_class($closerClass), 'field2', NumberConditionAttribute::OPERATOR_EQ, 3)
                         ),
                     ]),
                     true,
                 ),
             ]),
             true,
-            new class() {
-                public function getField1(): string
-                {
-                    return 'Eko Hi';
-                }
-
-                public function getField2(): float
-                {
-                    return 3;
-                }
-            },
+            $closerClass,
             null,
         ];
 
+        $closerClass = new class() {
+            public function getField1(): string
+            {
+                return 'Eko Hi';
+            }
+
+            public function getField2(): float
+            {
+                return 5;
+            }
+        };
         yield 'ANY (Ture) | Ex: false' => [
             new CollectionCondition([
                 new Condition(
@@ -83,32 +95,33 @@ class CollectionConditionTest extends TestCase
                         new Condition(
                             Condition::TYPE_ATTRIBUTE,
                             1,
-                            new StringConditionAttribute(\stdClass::class, 'field1', StringConditionAttribute::OPERATOR_EQ, 'Eko')
+                            new StringConditionAttribute(\get_class($closerClass), 'field1', StringConditionAttribute::OPERATOR_EQ, 'Eko')
                         ),
                         new Condition(
                             Condition::TYPE_ATTRIBUTE,
                             1,
-                            new NumberConditionAttribute(\stdClass::class, 'field2', NumberConditionAttribute::OPERATOR_EQ, 3)
+                            new NumberConditionAttribute(\get_class($closerClass), 'field2', NumberConditionAttribute::OPERATOR_EQ, 3)
                         ),
                     ]),
                     true,
                 ),
             ]),
             false,
-            new class() {
-                public function getField1(): string
-                {
-                    return 'Eko Hi';
-                }
-
-                public function getField2(): float
-                {
-                    return 5;
-                }
-            },
+            $closerClass,
             null,
         ];
 
+        $closerClass = new class() {
+            public function getField1(): string
+            {
+                return 'Eko';
+            }
+
+            public function getField2(): float
+            {
+                return 3;
+            }
+        };
         yield 'ALL(TRUE) { [ATTRIBUTES](2) } ==> true | Ex: true' => [
             new CollectionCondition([
                 new Condition(
@@ -119,31 +132,32 @@ class CollectionConditionTest extends TestCase
                         new Condition(
                             Condition::TYPE_ATTRIBUTE,
                             1,
-                            new StringConditionAttribute(\stdClass::class, 'field1', StringConditionAttribute::OPERATOR_EQ, 'Eko')
+                            new StringConditionAttribute(\get_class($closerClass), 'field1', StringConditionAttribute::OPERATOR_EQ, 'Eko')
                         ),
                         new Condition(
                             Condition::TYPE_ATTRIBUTE,
                             1,
-                            new NumberConditionAttribute(\stdClass::class, 'field2', NumberConditionAttribute::OPERATOR_EQ, 3)
+                            new NumberConditionAttribute(\get_class($closerClass), 'field2', NumberConditionAttribute::OPERATOR_EQ, 3)
                         ),
                     ]),
                     Condition::IS_TRUE
                 ),
             ]),
             true,
-            new class() {
-                public function getField1(): string
-                {
-                    return 'Eko';
-                }
-
-                public function getField2(): float
-                {
-                    return 3;
-                }
-            },
+            $closerClass,
         ];
 
+        $closerClass = new class() {
+            public function getField1(): string
+            {
+                return 'Eko';
+            }
+
+            public function getField2(): float
+            {
+                return 3;
+            }
+        };
         yield 'Double ALL(TRUE) { [ATTRIBUTES](2) } ==> true | Ex: true' => [
             new CollectionCondition([
                 new Condition(
@@ -154,12 +168,12 @@ class CollectionConditionTest extends TestCase
                         new Condition(
                             Condition::TYPE_ATTRIBUTE,
                             1,
-                            new StringConditionAttribute(\stdClass::class, 'field1', StringConditionAttribute::OPERATOR_EQ, 'Eko')
+                            new StringConditionAttribute(\get_class($closerClass), 'field1', StringConditionAttribute::OPERATOR_EQ, 'Eko')
                         ),
                         new Condition(
                             Condition::TYPE_ATTRIBUTE,
                             1,
-                            new NumberConditionAttribute(\stdClass::class, 'field2', NumberConditionAttribute::OPERATOR_EQ, 3)
+                            new NumberConditionAttribute(\get_class($closerClass), 'field2', NumberConditionAttribute::OPERATOR_EQ, 3)
                         ),
                     ]),
                     Condition::IS_TRUE
@@ -172,31 +186,32 @@ class CollectionConditionTest extends TestCase
                         new Condition(
                             Condition::TYPE_ATTRIBUTE,
                             1,
-                            new StringConditionAttribute(\stdClass::class, 'field1', StringConditionAttribute::OPERATOR_EQ, 'Eko')
+                            new StringConditionAttribute(\get_class($closerClass), 'field1', StringConditionAttribute::OPERATOR_EQ, 'Eko')
                         ),
                         new Condition(
                             Condition::TYPE_ATTRIBUTE,
                             1,
-                            new NumberConditionAttribute(\stdClass::class, 'field2', NumberConditionAttribute::OPERATOR_EQ, 3)
+                            new NumberConditionAttribute(\get_class($closerClass), 'field2', NumberConditionAttribute::OPERATOR_EQ, 3)
                         ),
                     ]),
                     Condition::IS_TRUE
                 ),
             ]),
             true,
-            new class() {
-                public function getField1(): string
-                {
-                    return 'Eko';
-                }
-
-                public function getField2(): float
-                {
-                    return 3;
-                }
-            },
+            $closerClass,
         ];
 
+        $closeClass = new class() {
+            public function getField1(): string
+            {
+                return 'EkoOlo';
+            }
+
+            public function getField2(): float
+            {
+                return 55;
+            }
+        };
         yield 'ALL(FALSE) { [ATTRIBUTES](2) } ==> true | Ex: false' => [
             new CollectionCondition([
                 new Condition(
@@ -207,31 +222,32 @@ class CollectionConditionTest extends TestCase
                         new Condition(
                             Condition::TYPE_ATTRIBUTE,
                             1,
-                            new StringConditionAttribute(\stdClass::class, 'field1', StringConditionAttribute::OPERATOR_EQ, 'Eko')
+                            new StringConditionAttribute(\get_class($closeClass), 'field1', StringConditionAttribute::OPERATOR_EQ, 'Eko')
                         ),
                         new Condition(
                             Condition::TYPE_ATTRIBUTE,
                             1,
-                            new NumberConditionAttribute(\stdClass::class, 'field2', NumberConditionAttribute::OPERATOR_EQ, 3)
+                            new NumberConditionAttribute(\get_class($closeClass), 'field2', NumberConditionAttribute::OPERATOR_EQ, 3)
                         ),
                     ]),
                     Condition::IS_TRUE
                 ),
             ]),
             false,
-            new class() {
-                public function getField1(): string
-                {
-                    return 'EkoOlo';
-                }
-
-                public function getField2(): float
-                {
-                    return 55;
-                }
-            },
+            $closeClass,
         ];
 
+        $closeClass = new class() {
+            public function getField1(): string
+            {
+                return 'Eko';
+            }
+
+            public function getField2(): float
+            {
+                return 3;
+            }
+        };
         yield 'ALL(TRUE) { [ATTRIBUTES](1), [ANY](FALSE) { [ATTRIBUTES](2) } } ==> true | Ex: true' => [
             new CollectionCondition([
                 new Condition(
@@ -242,7 +258,7 @@ class CollectionConditionTest extends TestCase
                         new Condition(
                             Condition::TYPE_ATTRIBUTE,
                             1,
-                            new StringConditionAttribute(\stdClass::class, 'field1', StringConditionAttribute::OPERATOR_EQ, 'Eko')
+                            new StringConditionAttribute(\get_class($closeClass), 'field1', StringConditionAttribute::OPERATOR_EQ, 'Eko')
                         ),
                         new Condition(
                             Condition::TYPE_ANY,
@@ -252,12 +268,12 @@ class CollectionConditionTest extends TestCase
                                 new Condition(
                                     Condition::TYPE_ATTRIBUTE,
                                     1,
-                                    new StringConditionAttribute(\stdClass::class, 'field1', StringConditionAttribute::OPERATOR_EQ, 'EkoHolo')
+                                    new StringConditionAttribute(\get_class($closeClass), 'field1', StringConditionAttribute::OPERATOR_EQ, 'EkoHolo')
                                 ),
                                 new Condition(
                                     Condition::TYPE_ATTRIBUTE,
                                     1,
-                                    new NumberConditionAttribute(\stdClass::class, 'field2', NumberConditionAttribute::OPERATOR_EQ, 3)
+                                    new NumberConditionAttribute(\get_class($closeClass), 'field2', NumberConditionAttribute::OPERATOR_EQ, 3)
                                 ),
                             ]),
                             Condition::IS_FALSE
@@ -267,18 +283,20 @@ class CollectionConditionTest extends TestCase
                 ),
             ]),
             true,
-            new class() {
-                public function getField1(): string
-                {
-                    return 'Eko';
-                }
-
-                public function getField2(): float
-                {
-                    return 3;
-                }
-            },
+            $closeClass,
         ];
+
+        $closeClass =  new class() {
+            public function getField1(): string
+            {
+                return 'Eko';
+            }
+
+            public function getField2(): float
+            {
+                return 3;
+            }
+        };
 
         yield 'ALL(TRUE) { [ATTRIBUTES](1), [ANY](FALSE) { [ATTRIBUTES](2), ALL(TRUE) - Repeat } } ==> true | Ex: true' => [
             new CollectionCondition([
@@ -290,7 +308,7 @@ class CollectionConditionTest extends TestCase
                         new Condition(
                             Condition::TYPE_ATTRIBUTE,
                             1,
-                            new StringConditionAttribute(\stdClass::class, 'field1', StringConditionAttribute::OPERATOR_EQ, 'Eko')
+                            new StringConditionAttribute(\get_class($closeClass), 'field1', StringConditionAttribute::OPERATOR_EQ, 'Eko')
                         ),
                         new Condition(
                             Condition::TYPE_ANY,
@@ -300,12 +318,12 @@ class CollectionConditionTest extends TestCase
                                 new Condition(
                                     Condition::TYPE_ATTRIBUTE,
                                     1,
-                                    new StringConditionAttribute(\stdClass::class, 'field1', StringConditionAttribute::OPERATOR_EQ, 'EkoHolo')
+                                    new StringConditionAttribute(\get_class($closeClass), 'field1', StringConditionAttribute::OPERATOR_EQ, 'EkoHolo')
                                 ),
                                 new Condition(
                                     Condition::TYPE_ATTRIBUTE,
                                     1,
-                                    new NumberConditionAttribute(\stdClass::class, 'field2', NumberConditionAttribute::OPERATOR_EQ, 3)
+                                    new NumberConditionAttribute(\get_class($closeClass), 'field2', NumberConditionAttribute::OPERATOR_EQ, 3)
                                 ),
                                 new Condition(
                                     Condition::TYPE_ALL,
@@ -315,7 +333,7 @@ class CollectionConditionTest extends TestCase
                                         new Condition(
                                             Condition::TYPE_ATTRIBUTE,
                                             1,
-                                            new StringConditionAttribute(\stdClass::class, 'field1', StringConditionAttribute::OPERATOR_EQ, 'Eko')
+                                            new StringConditionAttribute(\get_class($closeClass), 'field1', StringConditionAttribute::OPERATOR_EQ, 'Eko')
                                         ),
                                         new Condition(
                                             Condition::TYPE_ANY,
@@ -325,12 +343,12 @@ class CollectionConditionTest extends TestCase
                                                 new Condition(
                                                     Condition::TYPE_ATTRIBUTE,
                                                     1,
-                                                    new StringConditionAttribute(\stdClass::class, 'field1', StringConditionAttribute::OPERATOR_EQ, 'EkoHolo')
+                                                    new StringConditionAttribute(\get_class($closeClass), 'field1', StringConditionAttribute::OPERATOR_EQ, 'EkoHolo')
                                                 ),
                                                 new Condition(
                                                     Condition::TYPE_ATTRIBUTE,
                                                     1,
-                                                    new NumberConditionAttribute(\stdClass::class, 'field2', NumberConditionAttribute::OPERATOR_EQ, 3)
+                                                    new NumberConditionAttribute(\get_class($closeClass), 'field2', NumberConditionAttribute::OPERATOR_EQ, 3)
                                                 ),
                                             ]),
                                             Condition::IS_FALSE
@@ -346,41 +364,38 @@ class CollectionConditionTest extends TestCase
                 ),
             ]),
             true,
-            new class() {
-                public function getField1(): string
-                {
-                    return 'Eko';
-                }
-
-                public function getField2(): float
-                {
-                    return 3;
-                }
-            },
+            $closeClass,
         ];
     }
 
     public function dataExceptionConditions(): iterable
     {
+        $classCloser = new class() {};
         yield 'Exception: MethodDoesNotExistException' => [
             new CollectionCondition([
                 new Condition(
                     Condition::TYPE_ATTRIBUTE,
                     1,
-                    new StringConditionAttribute(\stdClass::class, 'fieldOlo', StringConditionAttribute::OPERATOR_CONTAINS, 'hi')
+                    new StringConditionAttribute(\get_class($classCloser), 'fieldOlo', StringConditionAttribute::OPERATOR_CONTAINS, 'hi')
                 ),
             ]),
             false,
-            new class() {},
+            $classCloser,
             MethodDoesNotExistException::class,
         ];
 
+        $classCloser = new class() {
+            public function getFieldOlo(): array
+            {
+                return [];
+            }
+        };
         yield 'Exception: KeyNotFoundInArrayConditionException' => [
             new CollectionCondition([
                 new Condition(
                     Condition::TYPE_ATTRIBUTE,
                     1,
-                    new StringConditionAttribute(\stdClass::class, 'fieldOlo', StringConditionAttribute::OPERATOR_CONTAINS, 'hi')
+                    new StringConditionAttribute(\get_class($classCloser), 'fieldOlo', StringConditionAttribute::OPERATOR_CONTAINS, 'hi')
                 ),
             ]),
             false,

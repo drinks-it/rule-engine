@@ -30,5 +30,7 @@ class RuleEntityProperty
      */
     public ?string $action = null;
 
+    public array $onlyEvents = [];
+
     public bool $relationObject = false;
 }

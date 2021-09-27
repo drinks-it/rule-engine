@@ -26,12 +26,31 @@ class CollectionCondition extends ArrayCollection implements CollectionCondition
         /** @var Condition $condition */
         foreach ($this->getIterator() as $condition) {
             if ($condition->getType() === Condition::TYPE_ATTRIBUTE) {
-                $attributesResults[] = $this->checkAttributesConditions(
-                    $objectEntity,
-                    $condition->getAttributeCondition()
-                );
+                $resourceClass = $condition->getAttributeCondition()->getClassResource();
 
-                continue;
+                if (
+                    (\is_object($objectEntity) && \get_class($objectEntity) === $resourceClass)
+                    || \is_array($objectEntity)
+                ) {
+                    $attributesResults[] = $this->checkAttributesConditions(
+                        $objectEntity,
+                        $condition->getAttributeCondition()
+                    );
+
+                    continue;
+                }
+
+                $getShortNameResource = mb_substr($resourceClass, mb_strrpos($resourceClass, '\\') + 1);
+                $methodName           = StrEntity::getGetterNameMethod($getShortNameResource);
+
+                if (method_exists($objectEntity, $methodName)) {
+                    $attributesResults[] = $this->checkAttributesConditions(
+                        $objectEntity->{$methodName}(),
+                        $condition->getAttributeCondition()
+                    );
+
+                    continue;
+                }
             }
 
             $attributesResults[] = $condition->getSubConditions()->isMatched($objectEntity, [
@@ -82,6 +101,8 @@ class CollectionCondition extends ArrayCollection implements CollectionCondition
             if (!\array_key_exists($fieldName, $objectEntity)) {
                 throw new KeyNotFoundInArrayConditionException($fieldName);
             }
+
+            $value = $objectEntity[$fieldName];
         }
 
         return $attributeCondition->match($value);

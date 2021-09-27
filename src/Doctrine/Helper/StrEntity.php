@@ -34,6 +34,11 @@ final class StrEntity
         return 'set' . self::asCamelCase($fieldName);
     }
 
+    public static function getShortName(string $resourceClassName): string
+    {
+        return mb_substr($resourceClassName, mb_strrpos($resourceClassName, '\\') + 1);
+    }
+
     /**
      * @param string $fieldName
      * @return string
