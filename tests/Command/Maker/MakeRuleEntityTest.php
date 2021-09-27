@@ -125,7 +125,8 @@ class MakeRuleEntityTest extends TestCase
                 return null;
             });
 
-        $generator = new Generator($fileManager, self::TEST_NAMESPACE, new PhpCompatUtil($fileManager));
+        $util = new PhpCompatUtil($fileManager);
+        $generator = new Generator($fileManager, self::TEST_NAMESPACE, $util);
 
         $makeRuleEntity = new MakeRuleEntity(
             $fileManager,
@@ -133,6 +134,7 @@ class MakeRuleEntityTest extends TestCase
                 $generator,
                 new DoctrineHelper(
                     'Entity',
+                    $util,
                     $manageRegistry
                 )
             ),
@@ -155,8 +157,8 @@ class MakeRuleEntityTest extends TestCase
             ->willReturnCallback(fn ($param) => $param === 'rule_engine.collection_actions_class');
 
         $container->expects($this->never())->method('getParameter');
-
-        $generator = new Generator($fileManager, self::TEST_NAMESPACE, new PhpCompatUtil($fileManager));
+        $util = new PhpCompatUtil($fileManager);
+        $generator = new Generator($fileManager, self::TEST_NAMESPACE, $util);
 
         new MakeRuleEntity(
             $fileManager,
@@ -164,6 +166,7 @@ class MakeRuleEntityTest extends TestCase
                 $generator,
                 new DoctrineHelper(
                     'Entity',
+                    $util,
                     $manageRegistry
                 )
             ),
@@ -184,7 +187,8 @@ class MakeRuleEntityTest extends TestCase
         $container->expects($this->once())->method('getParameter')
             ->with('rule_engine.collection_condition_class')->willReturn(CollectionCondition::class);
 
-        $generator = new Generator($fileManager, self::TEST_NAMESPACE, new PhpCompatUtil($fileManager));
+        $util = new PhpCompatUtil($fileManager);
+        $generator = new Generator($fileManager, self::TEST_NAMESPACE, $util);
 
         new MakeRuleEntity(
             $fileManager,
@@ -192,6 +196,7 @@ class MakeRuleEntityTest extends TestCase
                 $generator,
                 new DoctrineHelper(
                     'Entity',
+                    $util,
                     $manageRegistry
                 )
             ),
@@ -219,6 +224,7 @@ class MakeRuleEntityTest extends TestCase
                 return CollectionActions::class;
             });
 
+        $util = new PhpCompatUtil($fileManager);
         $generator = new Generator($fileManager, self::TEST_NAMESPACE, new PhpCompatUtil($fileManager));
 
         new MakeRuleEntity(
@@ -227,6 +233,7 @@ class MakeRuleEntityTest extends TestCase
                 $generator,
                 new DoctrineHelper(
                     'Entity',
+                    $util,
                     $manageRegistry
                 )
             ),
@@ -253,6 +260,7 @@ class MakeRuleEntityTest extends TestCase
 
                 return CollectionCondition::class;
             });
+        $util = new PhpCompatUtil($fileManager);
         $generator = new Generator($fileManager, self::TEST_NAMESPACE, new PhpCompatUtil($fileManager));
 
         new MakeRuleEntity(
@@ -261,6 +269,7 @@ class MakeRuleEntityTest extends TestCase
                 $generator,
                 new DoctrineHelper(
                     'Entity',
+                    $util,
                     $manageRegistry
                 )
             ),
