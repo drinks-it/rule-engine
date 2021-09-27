@@ -19,6 +19,7 @@ class CollectionActionsTest extends TestCase
     public function testValidActions(): void
     {
         $action = $this->createMock(ActionInterface::class);
+        $action->expects($this->once())->method('getResourceClass')->willReturn(\stdClass::class);
         $action->expects($this->once())->method('executeAction')->with($this->isType('object'));
         $collection = new CollectionActions([
             $action,

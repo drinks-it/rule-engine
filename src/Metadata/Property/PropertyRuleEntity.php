@@ -18,18 +18,22 @@ final class PropertyRuleEntity
 
     private ?string $classNameActionFieldType;
 
+    private array $onlyEvents = [];
+
     private ?RuleEntityResource $ruleEntityResource;
 
     public function __construct(
         string $name,
         string $classNameAttributeConditionType = null,
         string $classNameActionFieldType = null,
+        array  $onlyEvents = [],
         RuleEntityResource $entityResource = null
     ) {
         $this->name = $name;
         $this->classNameAttributeConditionType = $classNameAttributeConditionType;
         $this->classNameActionFieldType = $classNameActionFieldType;
         $this->ruleEntityResource = $entityResource;
+        $this->onlyEvents = $onlyEvents;
     }
 
     /**
@@ -80,6 +84,15 @@ final class PropertyRuleEntity
         }
 
         return $this->classNameActionFieldType::getType();
+    }
+
+    public function getEvents(): array
+    {
+        if (!$this->onlyEvents) {
+            return [];
+        }
+
+        return $this->onlyEvents;
     }
 
     /**
