@@ -14,9 +14,13 @@ use DrinksIt\RuleEngineBundle\Rule\CollectionConditionInterface;
 use DrinksIt\RuleEngineBundle\Rule\Condition\Exception\KeyNotFoundInArrayConditionException;
 use DrinksIt\RuleEngineBundle\Rule\Condition\Exception\MethodDoesNotExistException;
 use DrinksIt\RuleEngineBundle\Rule\Condition\Types\AttributeConditionTypeInterface;
+use DrinksIt\RuleEngineBundle\Rule\ConditionPropertyNormalizerInterface;
+use DrinksIt\RuleEngineBundle\Serializer\NormalizerPropertyInterface;
 
-class CollectionCondition extends ArrayCollection implements CollectionConditionInterface
+class CollectionCondition extends ArrayCollection implements CollectionConditionInterface, ConditionPropertyNormalizerInterface
 {
+    private ?NormalizerPropertyInterface $normalizerProperty = null;
+
     public function isMatched($objectEntity, array $context = []): bool
     {
         $contextType = $context['type'] ?? null;
@@ -105,6 +109,17 @@ class CollectionCondition extends ArrayCollection implements CollectionCondition
             $value = $objectEntity[$fieldName];
         }
 
+        if ($this->normalizerProperty) {
+            $value = $this->normalizerProperty->normalize($value, $attributeCondition->getClassResource(), $fieldName);
+        }
+
         return $attributeCondition->match($value);
+    }
+
+    public function setNormalizer(NormalizerPropertyInterface $normalizerProperty): self
+    {
+        $this->normalizerProperty = $normalizerProperty;
+
+        return $this;
     }
 }

@@ -24,6 +24,18 @@
         <service id="rule_engine.serializer.actions_collection" alias="DrinksIt\RuleEngineBundle\Serializer\SerializerActionsField" />
         <service id="DrinksIt\RuleEngineBundle\Serializer\SerializerActionsFieldInterface" alias="DrinksIt\RuleEngineBundle\Serializer\SerializerActionsField" />
 
+
+        <instanceof id="DrinksIt\RuleEngineBundle\Serializer\Property\NormalizeFieldPropertyInterface" autowire="true" public="true">
+            <tag name="rule_engine.serializer.normalizer.property.tag"/>
+        </instanceof>
+
+        <service id="DrinksIt\RuleEngineBundle\Serializer\NormalizerProperty">
+            <argument type="tagged_iterator" tag="rule_engine.serializer.normalizer.property.tag"/>
+        </service>
+
+        <service id="rule_engine.serializer.normalizer.property" alias="DrinksIt\RuleEngineBundle\Serializer\NormalizerProperty" />
+        <service id="DrinksIt\RuleEngineBundle\Serializer\NormalizerPropertyInterface" alias="DrinksIt\RuleEngineBundle\Serializer\NormalizerProperty" />
+
     </services>
 
 

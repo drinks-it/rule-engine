@@ -14,6 +14,7 @@ use DrinksIt\RuleEngineBundle\Rule\Condition\CollectionCondition;
 use DrinksIt\RuleEngineBundle\Rule\Condition\Condition;
 use DrinksIt\RuleEngineBundle\Rule\Condition\Exception\KeyNotFoundInArrayConditionException;
 use DrinksIt\RuleEngineBundle\Rule\Condition\Exception\MethodDoesNotExistException;
+use DrinksIt\RuleEngineBundle\Serializer\NormalizerPropertyInterface;
 use PHPUnit\Framework\TestCase;
 
 class CollectionConditionTest extends TestCase
@@ -32,6 +33,10 @@ class CollectionConditionTest extends TestCase
         if ($exceptionClass) {
             $this->expectException($exceptionClass);
         }
+        $normalizer = $this->createMock(NormalizerPropertyInterface::class);
+        $normalizer->method('normalize')->willReturnArgument(0);
+
+        $collectionCondition->setNormalizer($normalizer);
         $this->assertEquals($exceptedResult, $collectionCondition->isMatched($mockEntity));
     }
 

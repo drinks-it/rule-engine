@@ -67,6 +67,8 @@ class StringActionType extends Action implements StringActionTypeInterface
             $resultSet = str_replace($macro, $this->getValueFromObjectByMacros($objectEntity, $macro), $resultSet);
         }
 
+        $resultSet = $this->normalizeResult($resultSet, \get_class($objectToSet), $this->getFieldName());
+
         $objectToSet->{$setMethodNameField}($resultSet);
     }
 

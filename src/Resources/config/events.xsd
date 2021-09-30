@@ -20,6 +20,7 @@
             <argument type="service" id="rule_engine.events_follow_factory"/>
             <argument type="service" id="rule_engine.doctrine.rule_entity_finder" />
             <argument type="service" id="logger" />
+            <argument type="service" id="rule_engine.serializer.normalizer.property"/>
         </service>
     </services>
 </container>

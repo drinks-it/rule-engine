@@ -9,6 +9,7 @@ declare(strict_types=1);
 namespace Tests\DrinksIt\RuleEngineBundle\Rule\Action\Attribute;
 
 use DrinksIt\RuleEngineBundle\Rule\Action\Attribute\NumberActionType;
+use DrinksIt\RuleEngineBundle\Serializer\NormalizerPropertyInterface;
 use PHPUnit\Framework\TestCase;
 
 class NumberActionTypeFieldTest extends TestCase
@@ -26,6 +27,11 @@ class NumberActionTypeFieldTest extends TestCase
     public function testDecode(string $inputToParse, $objectEntity, $resultExecute): void
     {
         $actionNumber = new NumberActionType('field', \stdClass::class);
+
+        $normalizer = $this->createMock(NormalizerPropertyInterface::class);
+        $normalizer->method('normalize')->willReturnArgument(0);
+
+        $actionNumber->setNormalizer($normalizer);
 
         $decodedOperations = $actionNumber->decodeAction($inputToParse);
         $decodedOperations->executeAction($objectEntity);
