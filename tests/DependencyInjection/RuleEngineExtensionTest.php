@@ -43,7 +43,7 @@ class RuleEngineExtensionTest extends TestCase
             ->with($this->isType('string'))->willReturn($mockChildDefinition);
 
         $mockChildDefinition->expects($this->any())->method('addTag')->with(
-            $this->stringStartsWith('rule_engine.tag'),
+            $this->stringStartsWith('rule_engine.'),
             $this->isType('array')
         );
 
