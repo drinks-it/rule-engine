@@ -10,6 +10,7 @@ namespace DrinksIt\RuleEngineBundle\DependencyInjection;
 
 use DrinksIt\RuleEngineBundle\Doctrine\RuleEntityFinderExtensionInterface;
 use DrinksIt\RuleEngineBundle\Event\RuleEventInterface;
+use DrinksIt\RuleEngineBundle\Serializer\Property\NormalizeFieldPropertyInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
@@ -32,6 +33,9 @@ class RuleEngineExtension extends Extension
 
         $container->registerForAutoconfiguration(RuleEntityFinderExtensionInterface::class)
             ->addTag('rule_engine.tag.doctrine.extension_finder');
+
+        $container->registerForAutoconfiguration(NormalizeFieldPropertyInterface::class)
+            ->addTag('rule_engine.serializer.normalizer.property.tag');
 
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
 
