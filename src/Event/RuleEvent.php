@@ -11,6 +11,9 @@ namespace DrinksIt\RuleEngineBundle\Event;
 use DrinksIt\RuleEngineBundle\Doctrine\RuleEntityFinderInterface;
 use DrinksIt\RuleEngineBundle\Event\Exception\ItemObservedEntityNotObjectException;
 use DrinksIt\RuleEngineBundle\Event\Factory\RuleEventListenerFactoryInterface;
+use DrinksIt\RuleEngineBundle\Rule\ActionPropertyNormalizerInterface;
+use DrinksIt\RuleEngineBundle\Rule\ConditionPropertyNormalizerInterface;
+use DrinksIt\RuleEngineBundle\Serializer\NormalizerPropertyInterface;
 use Psr\Log\LoggerInterface;
 
 final class RuleEvent
@@ -21,16 +24,20 @@ final class RuleEvent
 
     private LoggerInterface $logger;
 
+    private NormalizerPropertyInterface $normalizerProperty;
+
     public const EVENT = 'rule_event';
 
     public function __construct(
         RuleEventListenerFactoryInterface $eventListenerFactory,
         RuleEntityFinderInterface $ruleEntityFinder,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        NormalizerPropertyInterface $normalizerProperty
     ) {
         $this->eventListenerFactory = $eventListenerFactory;
         $this->ruleEntityFinder = $ruleEntityFinder;
         $this->logger = $logger;
+        $this->normalizerProperty = $normalizerProperty;
     }
 
     public function __invoke(ObserverEntityEventInterface $observerEntityEvent): void
@@ -59,11 +66,22 @@ final class RuleEvent
             }
 
             foreach ($ruleEntitiesMatched as $ruleEntity) {
-                if (!$ruleEntity->getConditions()->isMatched($observedEntity)) {
-                    continue;
+                $conditions = $ruleEntity->getConditions();
+
+                if ($conditions instanceof ConditionPropertyNormalizerInterface) {
+                    $conditions->setNormalizer($this->normalizerProperty);
                 }
 
-                $ruleEntity->getActions()->execute($observedEntity);
+                if (!$conditions->isMatched($observedEntity)) {
+                    continue;
+                }
+                $actions = $ruleEntity->getActions();
+
+                if ($actions instanceof ActionPropertyNormalizerInterface) {
+                    $actions->setNormalizer($this->normalizerProperty);
+                }
+
+                $actions->execute($observedEntity);
                 $this->logger->debug(sprintf('Complete Rule (%s)', $ruleEntity->getName()));
 
                 if ($ruleEntity->getStopRuleProcessing()) {

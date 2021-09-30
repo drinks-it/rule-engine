@@ -9,6 +9,7 @@ declare(strict_types=1);
 namespace Tests\DrinksIt\RuleEngineBundle\Rule\Action\Attribute;
 
 use DrinksIt\RuleEngineBundle\Rule\Action\Attribute\StringActionType;
+use DrinksIt\RuleEngineBundle\Serializer\NormalizerPropertyInterface;
 use PHPUnit\Framework\TestCase;
 
 class StringActionTypeFieldTest extends TestCase
@@ -22,9 +23,14 @@ class StringActionTypeFieldTest extends TestCase
      */
     public function testDecode($inputToParse, $objectEntity, $resultExecute): void
     {
-        $actionNumber = new StringActionType('field', \stdClass::class);
+        $actionString = new StringActionType('field', \stdClass::class);
 
-        $decodedOperations = $actionNumber->decodeAction($inputToParse);
+        $normalizer = $this->createMock(NormalizerPropertyInterface::class);
+        $normalizer->method('normalize')->willReturnArgument(0);
+
+        $actionString->setNormalizer($normalizer);
+
+        $decodedOperations = $actionString->decodeAction($inputToParse);
         $decodedOperations->executeAction($objectEntity);
         $this->assertEquals($resultExecute, $objectEntity->getField());
     }

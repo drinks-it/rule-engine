@@ -9,10 +9,14 @@ declare(strict_types=1);
 namespace DrinksIt\RuleEngineBundle\Rule\Action;
 
 use DrinksIt\RuleEngineBundle\Doctrine\Helper\StrEntity;
+use DrinksIt\RuleEngineBundle\Rule\ActionPropertyNormalizerInterface;
 use DrinksIt\RuleEngineBundle\Rule\Exception\MethodDoesNotExistRuleException;
+use DrinksIt\RuleEngineBundle\Serializer\NormalizerPropertyInterface;
 
-abstract class Action implements ActionInterface
+abstract class Action implements ActionInterface, ActionPropertyNormalizerInterface
 {
+    protected ?NormalizerPropertyInterface $normalizerProperty = null;
+
     protected string $fieldName;
 
     protected string $resourceClass;
@@ -44,20 +48,28 @@ abstract class Action implements ActionInterface
         if (strpos($pathToField, '.')) {
             $pathMap = explode('.', $pathToField);
             $objectFromGet = $objectEntity;
+            $classNameReturned = \get_class($objectFromGet);
+            $relationNameField = $pathToField;
             foreach ($pathMap as $relationMethodName) {
                 if (!\is_object($objectFromGet)) {
                     break;
                 }
-
+                $classNameReturned = \get_class($objectFromGet);
+                $relationNameField = $relationMethodName;
                 $methodRelationName = StrEntity::getGetterNameMethod($relationMethodName);
 
                 if (!method_exists($objectFromGet, $methodRelationName)) {
-                    throw new MethodDoesNotExistRuleException(\get_class($objectFromGet), $methodRelationName);
+                    throw new MethodDoesNotExistRuleException($classNameReturned, $methodRelationName);
                 }
                 $objectFromGet = $objectFromGet->{$methodRelationName}();
             }
 
-            return $objectFromGet;
+            return $this->normalizerProperty->normalize($objectFromGet, $classNameReturned, $relationNameField, [
+                'type' => 'decode_macros',
+                'path_field' => $pathToField,
+                'source_entity' => \get_class($objectEntity),
+                'action' => $this,
+            ]);
         }
 
         if (mb_strtolower($pathToField) === 'self') {
@@ -69,6 +81,36 @@ abstract class Action implements ActionInterface
             throw new MethodDoesNotExistRuleException(\get_class($objectEntity), $methodName);
         }
 
-        return (string) $objectEntity->{$methodName}();
+        $value = (string) $objectEntity->{$methodName}();
+
+        if (!$this->normalizerProperty) {
+            return $value;
+        }
+
+        return $this->normalizerProperty->normalize($value, \get_class($objectEntity), $pathToField, [
+            'type' => 'decode_macros',
+            'path_field' => $pathToField,
+            'source_entity' => \get_class($objectEntity),
+            'action' => $this,
+        ]);
+    }
+
+    protected function normalizeResult($value, string $resourceClass, string $propertyName)
+    {
+        if (!$this->normalizerProperty) {
+            return $value;
+        }
+
+        return $this->normalizerProperty->normalize($value, $resourceClass, $propertyName, [
+            'type' => 'set_action_value',
+            'action' => $this,
+        ]);
+    }
+
+    public function setNormalizer(NormalizerPropertyInterface $normalizerProperty): self
+    {
+        $this->normalizerProperty = $normalizerProperty;
+
+        return $this;
     }
 }

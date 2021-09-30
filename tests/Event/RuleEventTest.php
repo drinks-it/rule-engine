@@ -17,6 +17,7 @@ use DrinksIt\RuleEngineBundle\Event\RuleEventInterface;
 use DrinksIt\RuleEngineBundle\Rule\Action\CollectionActions;
 use DrinksIt\RuleEngineBundle\Rule\Condition\CollectionCondition;
 use DrinksIt\RuleEngineBundle\Rule\RuleEntityInterface;
+use DrinksIt\RuleEngineBundle\Serializer\NormalizerPropertyInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 
@@ -80,7 +81,10 @@ class RuleEventTest extends TestCase
         $loggerInterface->expects($this->any())
             ->method('debug')->with($this->isType('string'));
 
-        $ruleEvent = new RuleEvent($listerFactory, $finderInterface, $loggerInterface);
+        $normalizer = $this->createMock(NormalizerPropertyInterface::class);
+        $normalizer->method('normalize')->willReturnArgument(0);
+
+        $ruleEvent = new RuleEvent($listerFactory, $finderInterface, $loggerInterface, $normalizer);
 
         $observerEntity = new class() implements ObserverEntityEventInterface {
             public function getObservedEntities(): iterable
@@ -169,7 +173,10 @@ class RuleEventTest extends TestCase
         $loggerInterface->expects($this->any())
             ->method('debug')->with($this->isType('string'));
 
-        $ruleEvent = new RuleEvent($listerFactory, $finderInterface, $loggerInterface);
+        $normalizer = $this->createMock(NormalizerPropertyInterface::class);
+        $normalizer->method('normalize')->willReturnArgument(0);
+
+        $ruleEvent = new RuleEvent($listerFactory, $finderInterface, $loggerInterface, $normalizer);
 
         $observerEntity = new class() implements ObserverEntityEventInterface {
             public function getObservedEntities(): iterable
@@ -248,7 +255,10 @@ class RuleEventTest extends TestCase
         $loggerInterface->expects($this->any())
             ->method('debug')->with($this->isType('string'));
 
-        $ruleEvent = new RuleEvent($listerFactory, $finderInterface, $loggerInterface);
+        $normalizer = $this->createMock(NormalizerPropertyInterface::class);
+        $normalizer->method('normalize')->willReturnArgument(0);
+
+        $ruleEvent = new RuleEvent($listerFactory, $finderInterface, $loggerInterface, $normalizer);
 
         $observerEntity = new class() implements ObserverEntityEventInterface {
             public function getObservedEntities(): iterable

@@ -76,7 +76,9 @@ class NumberActionType extends Action implements NumberActionTypeInterface
             }
         }
 
-        $objectToSet->{$methodSetField}(math_eval($this->actionsFields['math']));
+        $value = $this->normalizeResult(math_eval($this->actionsFields['math']), \get_class($objectToSet), $this->getFieldName());
+
+        $objectToSet->{$methodSetField}($value);
 
         return $objectEntity;
     }
