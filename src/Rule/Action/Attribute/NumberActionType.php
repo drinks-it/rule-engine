@@ -65,18 +65,20 @@ class NumberActionType extends Action implements NumberActionTypeInterface
             throw new MethodDoesNotExistException(\get_class($objectToSet), $methodSetField);
         }
 
-        if ($this->actionsFields['macros']) {
-            foreach ($this->actionsFields['macros'] as $pathToField => $val) {
+        $math = $this->actionsFields['math'];
+
+        if ($macros = $this->actionsFields['macros']) {
+            foreach ($macros as $pathToField => $val) {
                 $valDecoded = $this->getValueFromObjectByMacros($objectEntity, $pathToField);
 
                 if (!\is_array($valDecoded)) {
                     $valDecoded = (string) $valDecoded;
                 }
-                $this->actionsFields['math'] = str_replace($pathToField, $valDecoded, $this->actionsFields['math']);
+                $math = str_replace($pathToField, $valDecoded, $math);
             }
         }
 
-        $value = $this->normalizeResult(math_eval($this->actionsFields['math']), \get_class($objectToSet), $this->getFieldName());
+        $value = $this->normalizeResult(math_eval($math), \get_class($objectToSet), $this->getFieldName());
 
         $objectToSet->{$methodSetField}($value);
 
