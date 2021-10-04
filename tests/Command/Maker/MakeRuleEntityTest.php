@@ -10,7 +10,7 @@ namespace Tests\DrinksIt\RuleEngineBundle\Command\Maker;
 
 use Composer\Autoload\ClassLoader;
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\Platforms\MySqlPlatform;
+use Doctrine\DBAL\Platforms\MySQLPlatform;
 use Doctrine\ORM\Configuration;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\DefaultNamingStrategy;
@@ -458,7 +458,7 @@ class MakeRuleEntityTest extends TestCase
 
         $emConnection = $this->createMock(Connection::class);
         $emConnection->method('getDatabasePlatform')->willReturn(
-            new MySqlPlatform()
+            new MySQLPlatform()
         );
         $manageRegistry->method('getManager')->willReturn($em);
         $manageRegistry->method('getConnection')->willReturn($emConnection);

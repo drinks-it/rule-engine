@@ -42,7 +42,7 @@ class StringActionType extends Action implements StringActionTypeInterface
         return $this;
     }
 
-    public function executeAction($objectEntity): void
+    public function executeAction($objectEntity)
     {
         $setMethodNameField = StrEntity::getSetterNameMethod($this->getFieldName());
 
@@ -70,6 +70,8 @@ class StringActionType extends Action implements StringActionTypeInterface
         $resultSet = $this->normalizeResult($resultSet, \get_class($objectToSet), $this->getFieldName());
 
         $objectToSet->{$setMethodNameField}($resultSet);
+
+        return $objectEntity;
     }
 
     public function getAction()
