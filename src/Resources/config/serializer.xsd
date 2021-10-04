@@ -29,6 +29,11 @@
             <tag name="rule_engine.serializer.normalizer.property.tag"/>
         </instanceof>
 
+        <instanceof id="DrinksIt\RuleEngineBundle\Serializer\Property\AwareNormalizeFieldPropertyInterface" autowire="true" public="true">
+            <tag name="rule_engine.serializer.normalizer.property.tag"/>
+        </instanceof>
+
+
         <service id="DrinksIt\RuleEngineBundle\Serializer\NormalizerProperty">
             <argument type="tagged_iterator" tag="rule_engine.serializer.normalizer.property.tag"/>
         </service>
