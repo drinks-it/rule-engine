@@ -32,7 +32,7 @@ class RuleEventTest extends TestCase
             [
                 'resource' => 'TestRuleEventNameObject',
                 'name' => 'NameObject',
-                'event' => new class($callableCheckObjectOnEvent) implements RuleEventInterface {
+                'event' => new class ($callableCheckObjectOnEvent) implements RuleEventInterface {
                     private $testCase;
                     public function __construct(callable $testCase)
                     {
@@ -86,10 +86,10 @@ class RuleEventTest extends TestCase
 
         $ruleEvent = new RuleEvent($listerFactory, $finderInterface, $loggerInterface, $normalizer);
 
-        $observerEntity = new class() implements ObserverEntityEventInterface {
+        $observerEntity = new class () implements ObserverEntityEventInterface {
             public function getObservedEntities(): iterable
             {
-                yield new class() {
+                yield new class () {
                     public function assertCheckCall()
                     {
                         return 'yes';
@@ -106,7 +106,7 @@ class RuleEventTest extends TestCase
         $ruleEvent($observerEntity);
 
         $this->expectException(ItemObservedEntityNotObjectException::class);
-        $observerEntity = new class() implements ObserverEntityEventInterface {
+        $observerEntity = new class () implements ObserverEntityEventInterface {
             public function getObservedEntities(): iterable
             {
                 yield [];
@@ -130,7 +130,7 @@ class RuleEventTest extends TestCase
             [
                 'resource' => 'TestRuleEventNameObject',
                 'name' => 'NameObject',
-                'event' => new class($callableCheckObjectOnEvent) {
+                'event' => new class ($callableCheckObjectOnEvent) {
                     private $testCase;
                     public function __construct(callable $testCase)
                     {
@@ -178,10 +178,10 @@ class RuleEventTest extends TestCase
 
         $ruleEvent = new RuleEvent($listerFactory, $finderInterface, $loggerInterface, $normalizer);
 
-        $observerEntity = new class() implements ObserverEntityEventInterface {
+        $observerEntity = new class () implements ObserverEntityEventInterface {
             public function getObservedEntities(): iterable
             {
-                yield new class() {
+                yield new class () {
                     public function assertCheckCall()
                     {
                         return 'yes';
@@ -207,7 +207,7 @@ class RuleEventTest extends TestCase
             [
                 'resource' => 'TestRuleEventNameObject',
                 'name' => 'NameObject',
-                'event' => new class($callableCheckObjectOnEvent) implements RuleEventInterface {
+                'event' => new class ($callableCheckObjectOnEvent) implements RuleEventInterface {
                     private $testCase;
                     public function __construct(callable $testCase)
                     {
@@ -260,10 +260,10 @@ class RuleEventTest extends TestCase
 
         $ruleEvent = new RuleEvent($listerFactory, $finderInterface, $loggerInterface, $normalizer);
 
-        $observerEntity = new class() implements ObserverEntityEventInterface {
+        $observerEntity = new class () implements ObserverEntityEventInterface {
             public function getObservedEntities(): iterable
             {
-                yield new class() {
+                yield new class () {
                     public function assertCheckCall()
                     {
                         return 'yes';
@@ -280,7 +280,7 @@ class RuleEventTest extends TestCase
         $ruleEvent($observerEntity);
 
         $this->expectException(ItemObservedEntityNotObjectException::class);
-        $observerEntity = new class() implements ObserverEntityEventInterface {
+        $observerEntity = new class () implements ObserverEntityEventInterface {
             public function getObservedEntities(): iterable
             {
                 yield [];

@@ -42,7 +42,7 @@ class CollectionConditionTest extends TestCase
 
     public function dataScriptsConditions(): iterable
     {
-        $closerClass = new class() {
+        $closerClass = new class () {
             public function getField1(): string
             {
                 return 'Eko Hi';
@@ -79,7 +79,7 @@ class CollectionConditionTest extends TestCase
             null,
         ];
 
-        $closerClass = new class() {
+        $closerClass = new class () {
             public function getField1(): string
             {
                 return 'Eko Hi';
@@ -116,7 +116,7 @@ class CollectionConditionTest extends TestCase
             null,
         ];
 
-        $closerClass = new class() {
+        $closerClass = new class () {
             public function getField1(): string
             {
                 return 'Eko';
@@ -152,7 +152,7 @@ class CollectionConditionTest extends TestCase
             $closerClass,
         ];
 
-        $closerClass = new class() {
+        $closerClass = new class () {
             public function getField1(): string
             {
                 return 'Eko';
@@ -206,7 +206,7 @@ class CollectionConditionTest extends TestCase
             $closerClass,
         ];
 
-        $closeClass = new class() {
+        $closeClass = new class () {
             public function getField1(): string
             {
                 return 'EkoOlo';
@@ -242,7 +242,7 @@ class CollectionConditionTest extends TestCase
             $closeClass,
         ];
 
-        $closeClass = new class() {
+        $closeClass = new class () {
             public function getField1(): string
             {
                 return 'Eko';
@@ -291,7 +291,7 @@ class CollectionConditionTest extends TestCase
             $closeClass,
         ];
 
-        $closeClass =  new class() {
+        $closeClass =  new class () {
             public function getField1(): string
             {
                 return 'Eko';
@@ -375,7 +375,7 @@ class CollectionConditionTest extends TestCase
 
     public function dataExceptionConditions(): iterable
     {
-        $classCloser = new class() {};
+        $classCloser = new class () {};
         yield 'Exception: MethodDoesNotExistException' => [
             new CollectionCondition([
                 new Condition(
@@ -389,7 +389,7 @@ class CollectionConditionTest extends TestCase
             MethodDoesNotExistException::class,
         ];
 
-        $classCloser = new class() {
+        $classCloser = new class () {
             public function getFieldOlo(): array
             {
                 return [];

@@ -35,7 +35,7 @@ final class DecodeRuleProperty
 
         return array_filter(
             $reflection->getConstants(),
-            fn ($constName) => strpos($constName, $key) !== false,
+            fn ($constName) => str_contains($constName, $key),
             ARRAY_FILTER_USE_KEY
         );
     }

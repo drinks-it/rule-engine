@@ -50,12 +50,12 @@ class NumberConditionAttribute extends AttributeCondition implements NumberAttri
 
     public function matchGt($value): bool
     {
-        return $this->getValue() > $value;
+        return $this->getValue() < $value;
     }
 
     public function matchLt($value): bool
     {
-        return $this->getValue() < $value;
+        return $this->getValue() > $value;
     }
 
     public function matchGte($value): bool

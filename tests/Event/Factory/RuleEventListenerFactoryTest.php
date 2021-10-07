@@ -17,8 +17,8 @@ class RuleEventListenerFactoryTest extends TestCase
     public function testCreateWithWrongInterfaces(): void
     {
         $handlerTagRuleEvents = function (): iterable {
-            yield new class() {};
-            yield new class() implements RuleEventInterface {
+            yield new class () {};
+            yield new class () implements RuleEventInterface {
                 public function onEvent(iterable $data): void
                 {
                 }

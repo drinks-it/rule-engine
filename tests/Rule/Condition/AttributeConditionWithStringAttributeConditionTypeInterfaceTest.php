@@ -17,7 +17,7 @@ class AttributeConditionWithStringAttributeConditionTypeInterfaceTest extends At
     public function testGetSupportOperators(): void
     {
         $reflectionInterface = new \ReflectionClass(StringAttributeConditionTypeInterface::class);
-        $operatorsConstants = array_filter($reflectionInterface->getConstants(), fn ($name) => strpos($name, 'OPERATOR_') !== false, ARRAY_FILTER_USE_KEY);
+        $operatorsConstants = array_filter($reflectionInterface->getConstants(), fn ($name) => str_contains($name, 'OPERATOR_'), ARRAY_FILTER_USE_KEY);
 
         $this->assertNotEmpty($operatorsConstants);
         $this->assertNotEmpty($this->attributeCondition->getSupportOperators());
@@ -30,7 +30,7 @@ class AttributeConditionWithStringAttributeConditionTypeInterfaceTest extends At
         $stringCondition = new StringConditionAttribute(self::class, 'fieldBaseTest');
         $this->assertEquals('string', $stringCondition->getType());
 
-        $stringCondition->setValue(new class() {
+        $stringCondition->setValue(new class () {
             public function __toString(): string
             {
                 return 'HelloString';
@@ -39,7 +39,7 @@ class AttributeConditionWithStringAttributeConditionTypeInterfaceTest extends At
 
         $this->assertEquals('HelloString', $stringCondition->getValue());
 
-        $stringCondition->setValue(new class() {});
+        $stringCondition->setValue(new class () {});
         $this->assertIsString($stringCondition->getValue());
 
         $stringCondition->setValue([]);
@@ -51,8 +51,8 @@ class AttributeConditionWithStringAttributeConditionTypeInterfaceTest extends At
 
     public function makeAttributeConditionObject(): AttributeCondition
     {
-        return new class(self::class, 'fieldNameTest') extends AttributeCondition implements StringAttributeConditionTypeInterface {
-            public function getType(): string
+        return new class (self::class, 'fieldNameTest') extends AttributeCondition implements StringAttributeConditionTypeInterface {
+            public static function getType(): string
             {
                 return 'string';
             }

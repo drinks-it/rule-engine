@@ -137,7 +137,7 @@ class NumberConditionAttributeTest extends TestCase
             ],
             [
                 NumberAttributeConditionTypeInterface::OPERATOR_EQ,
-                new class() {},
+                new class () {},
                 35,
                 false,
                 TypeValueNotSupportedForConditionException::class,
@@ -159,7 +159,7 @@ class NumberConditionAttributeTest extends TestCase
             [
                 NumberAttributeConditionTypeInterface::OPERATOR_EQ,
                 35,
-                new class() {},
+                new class () {},
                 false,
                 TypeValueNotSupportedForConditionException::class,
             ],
@@ -248,7 +248,7 @@ class NumberConditionAttributeTest extends TestCase
             ],
             [
                 NumberAttributeConditionTypeInterface::OPERATOR_NOT_EQ,
-                new class() {},
+                new class () {},
                 35,
                 false,
                 TypeValueNotSupportedForConditionException::class,
@@ -270,7 +270,7 @@ class NumberConditionAttributeTest extends TestCase
             [
                 NumberAttributeConditionTypeInterface::OPERATOR_NOT_EQ,
                 35,
-                new class() {},
+                new class () {},
                 false,
                 TypeValueNotSupportedForConditionException::class,
             ],
@@ -296,27 +296,27 @@ class NumberConditionAttributeTest extends TestCase
         return array_merge([
             [
                 NumberAttributeConditionTypeInterface::OPERATOR_GT,
-                '0.0000001',
                 '0.00000001',
+                '0.0000001',
                 true,
             ],
             [
                 NumberAttributeConditionTypeInterface::OPERATOR_GT,
-                '0.00000001',
                 '0.0000001',
+                '0.00000001',
                 false,
             ],
             [
                 NumberAttributeConditionTypeInterface::OPERATOR_GT,
-                '0.9999998',
                 '0.99999998',
+                '0.9999998',
                 false,
             ],
         ], array_map(function ($item): array {
             [$operator, $valueSet, $valueMatch, $isEq, $exceptionClass] = $item;
 
             if (!$exceptionClass) {
-                $isEq = $valueSet > $valueMatch;
+                $isEq = $valueSet < $valueMatch;
             }
 
             return [
@@ -336,25 +336,25 @@ class NumberConditionAttributeTest extends TestCase
                 NumberAttributeConditionTypeInterface::OPERATOR_LT,
                 '0.0000001',
                 '0.00000001',
-                false,
+                true,
             ],
             [
                 NumberAttributeConditionTypeInterface::OPERATOR_LT,
                 '0.00000001',
                 '0.0000001',
-                true,
+                false,
             ],
             [
                 NumberAttributeConditionTypeInterface::OPERATOR_LT,
                 '0.9999998',
                 '0.99999998',
-                true,
+                false,
             ],
         ], array_map(function ($item): array {
             [$operator, $valueSet, $valueMatch, $isEq, $exceptionClass] = $item;
 
             if (!$exceptionClass) {
-                $isEq = $valueSet < $valueMatch;
+                $isEq = $valueSet > $valueMatch;
             }
 
             return [
@@ -374,25 +374,25 @@ class NumberConditionAttributeTest extends TestCase
                 NumberAttributeConditionTypeInterface::OPERATOR_GTE,
                 '0.0000001',
                 '0.00000001',
-                true,
+                false,
             ],
             [
                 NumberAttributeConditionTypeInterface::OPERATOR_GTE,
                 '0.00000001',
                 '0.0000001',
-                false,
+                true,
             ],
             [
                 NumberAttributeConditionTypeInterface::OPERATOR_GTE,
                 '0.9999998',
                 '0.99999998',
-                false,
+                true,
             ],
         ], array_map(function ($item): array {
             [$operator, $valueSet, $valueMatch, $isEq, $exceptionClass] = $item;
 
             if (!$exceptionClass) {
-                $isEq = $valueSet >= $valueMatch;
+                $isEq = $valueSet <= $valueMatch;
             }
 
             return [
@@ -412,25 +412,25 @@ class NumberConditionAttributeTest extends TestCase
                 NumberAttributeConditionTypeInterface::OPERATOR_LTE,
                 '0.0000001',
                 '0.00000001',
-                false,
+                true,
             ],
             [
                 NumberAttributeConditionTypeInterface::OPERATOR_LTE,
                 '0.00000001',
                 '0.0000001',
-                true,
+                false,
             ],
             [
                 NumberAttributeConditionTypeInterface::OPERATOR_LTE,
                 '0.9999998',
                 '0.99999998',
-                true,
+                false,
             ],
         ], array_map(function ($item): array {
             [$operator, $valueSet, $valueMatch, $isEq, $exceptionClass] = $item;
 
             if (!$exceptionClass) {
-                $isEq = $valueSet <= $valueMatch;
+                $isEq = $valueSet >= $valueMatch;
             }
 
             return [

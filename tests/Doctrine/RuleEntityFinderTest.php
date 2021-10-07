@@ -62,7 +62,7 @@ class RuleEntityFinderTest extends TestCase
         $manageRegistry = $this->makeManageRegistry();
 
         $ruleEntityFinder = new RuleEntityFinder($manageRegistry, [
-            new class() {},
+            new class () {},
         ]);
         $this->assertInstanceOf(RuleEntityFinderInterface::class, $ruleEntityFinder);
     }

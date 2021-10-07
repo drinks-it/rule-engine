@@ -16,7 +16,7 @@ class AttributeConditionBooleanAttributeConditionTypeInterfaceTest extends Attri
     public function testGetSupportOperators(): void
     {
         $reflectionInterface = new \ReflectionClass(BooleanAttributeConditionTypeInterface::class);
-        $operatorsConstants = array_filter($reflectionInterface->getConstants(), fn ($name) => strpos($name, 'OPERATOR_') !== false, ARRAY_FILTER_USE_KEY);
+        $operatorsConstants = array_filter($reflectionInterface->getConstants(), fn ($name) => str_contains($name, 'OPERATOR_'), ARRAY_FILTER_USE_KEY);
 
         $this->assertNotEmpty($operatorsConstants);
         $this->assertNotEmpty($this->attributeCondition->getSupportOperators());
@@ -31,8 +31,8 @@ class AttributeConditionBooleanAttributeConditionTypeInterfaceTest extends Attri
 
     public function makeAttributeConditionObject(): AttributeCondition
     {
-        return new class(self::class, 'fieldNameTest') extends AttributeCondition implements BooleanAttributeConditionTypeInterface {
-            public function getType(): string
+        return new class (self::class, 'fieldNameTest') extends AttributeCondition implements BooleanAttributeConditionTypeInterface {
+            public static function getType(): string
             {
                 return 'boolean';
             }

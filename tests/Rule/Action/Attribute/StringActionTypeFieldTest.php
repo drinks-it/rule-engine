@@ -37,7 +37,7 @@ class StringActionTypeFieldTest extends TestCase
 
     private function makeEntityObject()
     {
-        return new class() {
+        return new class () {
             private $field;
 
             public function getField()
@@ -98,7 +98,7 @@ class StringActionTypeFieldTest extends TestCase
             'Pattern Check Test test',
         ];
 
-        $relationCase = new class() {
+        $relationCase = new class () {
             private $field = 'Olo';
 
             public function getField()
@@ -115,7 +115,7 @@ class StringActionTypeFieldTest extends TestCase
 
             public function getRelationData()
             {
-                return new class() {
+                return new class () {
                     public function getSupportData()
                     {
                         return 'Hello';

@@ -127,32 +127,32 @@ class StringConditionAttributeTest extends TestCase
             ],
             [
                 StringAttributeConditionTypeInterface::OPERATOR_EQ,
-                new class() {},
-                new class() {},
+                new class () {},
+                new class () {},
                 false,
                 TypeValueNotSupportedForConditionException::class,
             ],
             [
                 StringAttributeConditionTypeInterface::OPERATOR_EQ,
-                new class() {
+                new class () {
                     public function __toString(): string
                     {
                         return 'CheckToString';
                     }
                 },
-                new class() {},
+                new class () {},
                 false,
                 TypeValueNotSupportedForConditionException::class,
             ],
             [
                 StringAttributeConditionTypeInterface::OPERATOR_EQ,
-                new class() {
+                new class () {
                     public function __toString(): string
                     {
                         return 'CheckToString';
                     }
                 },
-                new class() {
+                new class () {
                     public function __toString(): string
                     {
                         return 'CheckToString';
@@ -163,7 +163,7 @@ class StringConditionAttributeTest extends TestCase
             [
                 StringAttributeConditionTypeInterface::OPERATOR_EQ,
                 'CheckToString',
-                new class() {
+                new class () {
                     public function __toString(): string
                     {
                         return 'CheckToString';

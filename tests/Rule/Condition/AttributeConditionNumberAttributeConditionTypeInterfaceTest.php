@@ -18,7 +18,7 @@ class AttributeConditionNumberAttributeConditionTypeInterfaceTest extends Attrib
     public function testGetSupportOperators(): void
     {
         $reflectionInterface = new \ReflectionClass(NumberAttributeConditionTypeInterface::class);
-        $operatorsConstants = array_filter($reflectionInterface->getConstants(), fn ($name) => strpos($name, 'OPERATOR_') !== false, ARRAY_FILTER_USE_KEY);
+        $operatorsConstants = array_filter($reflectionInterface->getConstants(), fn ($name) => str_contains($name, 'OPERATOR_'), ARRAY_FILTER_USE_KEY);
 
         $this->assertNotEmpty($operatorsConstants);
         $this->assertNotEmpty($this->attributeCondition->getSupportOperators());
@@ -49,8 +49,8 @@ class AttributeConditionNumberAttributeConditionTypeInterfaceTest extends Attrib
 
     public function makeAttributeConditionObject(): AttributeCondition
     {
-        return new class(self::class, 'fieldNameTest') extends AttributeCondition implements NumberAttributeConditionTypeInterface {
-            public function getType(): string
+        return new class (self::class, 'fieldNameTest') extends AttributeCondition implements NumberAttributeConditionTypeInterface {
+            public static function getType(): string
             {
                 return 'number';
             }

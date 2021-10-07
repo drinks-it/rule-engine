@@ -57,7 +57,13 @@ class CollectionCondition extends ArrayCollection implements CollectionCondition
                 }
             }
 
-            $attributesResults[] = $condition->getSubConditions()->isMatched($objectEntity, [
+            $subConditions = $condition->getSubConditions();
+
+            if ($subConditions instanceof ConditionPropertyNormalizerInterface) {
+                $subConditions->setNormalizer($this->normalizerProperty);
+            }
+
+            $attributesResults[] = $subConditions->isMatched($objectEntity, [
                 'type' => $condition->getType(),
                 'result' => $condition->getResultBlock(),
             ]);

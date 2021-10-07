@@ -34,9 +34,9 @@ class StringConditionAttribute extends AttributeCondition implements StringAttri
             case StringAttributeConditionTypeInterface::OPERATOR_NOT_EQ:
                 return $this->getValue() !== $value;
             case StringAttributeConditionTypeInterface::OPERATOR_CONTAINS:
-                return strpos($this->getValue(), $value) !== false;
+                return str_contains($this->getValue(), $value)  ;
             case StringAttributeConditionTypeInterface::OPERATOR_NOT_CONTAINS:
-                return strpos($this->getValue(), $value) === false;
+                return !str_contains($this->getValue(), $value)  ;
         }
 
         return false;

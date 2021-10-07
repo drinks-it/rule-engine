@@ -76,7 +76,7 @@ class CachedRuleEntityPropertyFactoryTest extends TestCase
                     $this->expectException(InvalidArgumentException::class);
 
                     $mockCache->expects($this->once())->method('getItem')
-                        ->with($this->equalTo($keyCache))->willThrowException(new class() extends \Exception implements InvalidArgumentException {});
+                        ->with($this->equalTo($keyCache))->willThrowException(new class () extends \Exception implements InvalidArgumentException {});
                 },
                 function (MockObject $mockDecorated): void {
                     $mockDecorated->expects($this->once())->method('create')

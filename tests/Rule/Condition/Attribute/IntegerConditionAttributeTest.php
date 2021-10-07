@@ -117,7 +117,7 @@ class IntegerConditionAttributeTest extends TestCase
             ],
             [
                 NumberAttributeConditionTypeInterface::OPERATOR_EQ,
-                new class() {},
+                new class () {},
                 35,
                 false,
                 TypeValueNotSupportedForConditionException::class,
@@ -139,7 +139,7 @@ class IntegerConditionAttributeTest extends TestCase
             [
                 NumberAttributeConditionTypeInterface::OPERATOR_EQ,
                 35,
-                new class() {},
+                new class () {},
                 false,
                 TypeValueNotSupportedForConditionException::class,
             ],
@@ -185,7 +185,7 @@ class IntegerConditionAttributeTest extends TestCase
             [$operator, $valueSet, $valueMatch, $isEq, $exceptionClass] = $item;
 
             if (!$exceptionClass) {
-                $isEq = (int)$valueSet > (int)$valueMatch;
+                $isEq = (int)$valueSet < (int)$valueMatch;
             }
 
             return [
@@ -223,7 +223,7 @@ class IntegerConditionAttributeTest extends TestCase
             [$operator, $valueSet, $valueMatch, $isEq, $exceptionClass] = $item;
 
             if (!$exceptionClass) {
-                $isEq = (int)$valueSet < (int)$valueMatch;
+                $isEq = (int)$valueSet > (int)$valueMatch;
             }
 
             return [
@@ -261,7 +261,7 @@ class IntegerConditionAttributeTest extends TestCase
             [$operator, $valueSet, $valueMatch, $isEq, $exceptionClass] = $item;
 
             if (!$exceptionClass) {
-                $isEq = (int)$valueSet >= (int)$valueMatch;
+                $isEq = (int)$valueSet <= (int)$valueMatch;
             }
 
             return [
@@ -299,7 +299,7 @@ class IntegerConditionAttributeTest extends TestCase
             [$operator, $valueSet, $valueMatch, $isEq, $exceptionClass] = $item;
 
             if (!$exceptionClass) {
-                $isEq = (int)$valueSet <= (int)$valueMatch;
+                $isEq = (int)$valueSet >= (int)$valueMatch;
             }
 
             return [

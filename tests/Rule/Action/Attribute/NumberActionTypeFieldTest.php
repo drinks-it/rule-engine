@@ -40,7 +40,7 @@ class NumberActionTypeFieldTest extends TestCase
 
     private function makeEntityObject()
     {
-        return new class() {
+        return new class () {
             private $field;
 
             public function getField()
@@ -188,7 +188,7 @@ class NumberActionTypeFieldTest extends TestCase
     public function dataProviderWithMacrosObjects()
     {
         $enObject = function () {
-            return new class() {
+            return new class () {
                 private $field = 564;
 
                 private $field_get = 3;
@@ -212,7 +212,7 @@ class NumberActionTypeFieldTest extends TestCase
 
                 public function getRelationField()
                 {
-                    return new class() {
+                    return new class () {
                         private $foo = 5;
 
                         public function getFoo()

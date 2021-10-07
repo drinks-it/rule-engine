@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of Rule Engine Symfony Bundle.
  * © 2010-2021 DRINKS | Silverbogen AG
@@ -16,7 +17,7 @@ class AttributeConditionArrayAttributeConditionTypeInterfaceTest extends Attribu
     public function testGetSupportOperators(): void
     {
         $reflectionInterface = new \ReflectionClass(ArrayAttributeConditionTypeInterface::class);
-        $operatorsConstants = array_filter($reflectionInterface->getConstants(), fn ($name) => strpos($name, 'OPERATOR_') !== false, ARRAY_FILTER_USE_KEY);
+        $operatorsConstants = array_filter($reflectionInterface->getConstants(), fn ($name) => str_contains($name, 'OPERATOR_'), ARRAY_FILTER_USE_KEY);
 
         $this->assertNotEmpty($operatorsConstants);
         $this->assertGreaterThan(0, $this->attributeCondition->getSupportOperators());
@@ -31,7 +32,7 @@ class AttributeConditionArrayAttributeConditionTypeInterfaceTest extends Attribu
 
     public function makeAttributeConditionObject(): AttributeCondition
     {
-        return new class(self::class, 'fieldNameTest') extends AttributeCondition implements ArrayAttributeConditionTypeInterface {
+        return new class (self::class, 'fieldNameTest') extends AttributeCondition implements ArrayAttributeConditionTypeInterface {
             public function setValue($value): AttributeCondition
             {
                 if (!\is_array($value)) {
@@ -42,7 +43,7 @@ class AttributeConditionArrayAttributeConditionTypeInterfaceTest extends Attribu
                 return $this;
             }
 
-            public function getType(): string
+            public static function getType(): string
             {
                 return 'boolean';
             }
