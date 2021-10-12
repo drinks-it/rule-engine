@@ -44,7 +44,7 @@ final class RuleEntityFinder implements RuleEntityFinderInterface
     /**
      * @inheritDoc
      */
-    public function getRulesByEventName(string $eventClassName): iterable
+    public function getRulesByEventName(string $eventClassName, array $context = []): iterable
     {
         $ruleEntities = [];
         foreach ($this->ruleEntitesRepositories as $entityClassName) {
@@ -60,10 +60,10 @@ final class RuleEntityFinder implements RuleEntityFinderInterface
                 ->orderBy('rule.priority', 'ASC');
 
             foreach ($this->ruleExtensions as $extension) {
-                if (!$extension->supportExtension($eventClassName)) {
+                if (!$extension->supportExtension($eventClassName, $context)) {
                     continue;
                 }
-                $extension->updateQueryBuilder($qb, $this->managerRegistry, $eventClassName);
+                $extension->updateQueryBuilder($qb, $this->managerRegistry, $eventClassName, $context);
             }
 
             $ruleEntities = array_merge($ruleEntities, $qb->getQuery()->getResult());

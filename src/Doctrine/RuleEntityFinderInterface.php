@@ -14,7 +14,8 @@ interface RuleEntityFinderInterface
 {
     /**
      * @param string $eventClassName
+     * @param array $context
      * @return iterable|RuleEntityInterface[]
      */
-    public function getRulesByEventName(string $eventClassName): iterable;
+    public function getRulesByEventName(string $eventClassName, array $context = []): iterable;
 }

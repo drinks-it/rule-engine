@@ -19,4 +19,6 @@ interface ObserverEntityEventInterface
      * @return string
      */
     public function getClassNameRuleEventInterface(): string;
+
+    public function getContext(): array;
 }
