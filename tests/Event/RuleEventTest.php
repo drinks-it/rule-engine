@@ -101,6 +101,11 @@ class RuleEventTest extends TestCase
             {
                 return 'TestRuleEventNameObject';
             }
+
+            public function getContext(): array
+            {
+                return [];
+            }
         };
 
         $ruleEvent($observerEntity);
@@ -115,6 +120,11 @@ class RuleEventTest extends TestCase
             public function getClassNameRuleEventInterface(): string
             {
                 return 'TestRuleEventNameObject';
+            }
+
+            public function getContext(): array
+            {
+                return [];
             }
         };
 
@@ -192,6 +202,11 @@ class RuleEventTest extends TestCase
             public function getClassNameRuleEventInterface(): string
             {
                 return 'TestRuleEventNameObject';
+            }
+
+            public function getContext(): array
+            {
+                return [];
             }
         };
 
@@ -275,6 +290,11 @@ class RuleEventTest extends TestCase
             {
                 return 'TestRuleEventNameObject';
             }
+
+            public function getContext(): array
+            {
+                return [];
+            }
         };
 
         $ruleEvent($observerEntity);
@@ -289,6 +309,11 @@ class RuleEventTest extends TestCase
             public function getClassNameRuleEventInterface(): string
             {
                 return 'TestRuleEventNameObject';
+            }
+
+            public function getContext(): array
+            {
+                return [];
             }
         };
 

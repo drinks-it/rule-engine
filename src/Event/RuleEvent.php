@@ -57,7 +57,8 @@ final class RuleEvent
         }
 
         $ruleEntitiesMatched = $this->ruleEntityFinder->getRulesByEventName(
-            $observerEntityEvent->getClassNameRuleEventInterface()
+            $observerEntityEvent->getClassNameRuleEventInterface(),
+            $observerEntityEvent->getContext()
         );
 
         foreach ($observerEntityEvent->getObservedEntities() as $observedEntity) {

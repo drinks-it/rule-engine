@@ -32,7 +32,7 @@ class RuleEngineExtension extends Extension
             ->addTag('rule_engine.tag.event');
 
         $container->registerForAutoconfiguration(RuleEntityFinderExtensionInterface::class)
-            ->addTag('rule_engine.tag.doctrine.extension_finder');
+            ->addTag('rule_engine.tag.doctrine_extension_finder');
 
         $container->registerForAutoconfiguration(NormalizeFieldPropertyInterface::class)
             ->addTag('rule_engine.serializer.normalizer.property.tag');

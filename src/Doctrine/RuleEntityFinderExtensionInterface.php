@@ -13,7 +13,7 @@ use Doctrine\Persistence\ManagerRegistry;
 
 interface RuleEntityFinderExtensionInterface
 {
-    public function updateQueryBuilder(QueryBuilder $builder, ManagerRegistry $managerRegistry, string $ruleEventClassName);
+    public function updateQueryBuilder(QueryBuilder $builder, ManagerRegistry $managerRegistry, string $ruleEventClassName, array $context = []);
 
-    public function supportExtension(string $ruleEventClassName): bool;
+    public function supportExtension(string $ruleEventClassName, array $context = []): bool;
 }

@@ -9,7 +9,7 @@
 
         <service class="DrinksIt\RuleEngineBundle\Doctrine\RuleEntityFinder" id="rule_engine.doctrine.rule_entity_finder" public="false">
             <argument type="service" id="doctrine" />
-            <argument type="tagged_iterator" tag="rule_engine.doctrine.extension_finder" />
+            <argument type="tagged_iterator" tag="rule_engine.tag.doctrine_extension_finder" />
         </service>
 
         <instanceof id="DrinksIt\RuleEngineBundle\Doctrine\RuleEntityFinderExtensionInterface" autowire="true">
