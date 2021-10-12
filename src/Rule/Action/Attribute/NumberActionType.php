@@ -107,6 +107,8 @@ class NumberActionType extends Action implements NumberActionTypeInterface
 
     public function getPatternExecute(): string
     {
-        return $this->actionsFields['math'];
+        $math = str_replace(['-', '+', '/', '*', '(', ')'], [' - ', ' + ', ' / ', ' * ', ' ( ', ' ) '], $this->actionsFields['math']);
+
+        return preg_replace('~\s+~', ' ', $math);
     }
 }
