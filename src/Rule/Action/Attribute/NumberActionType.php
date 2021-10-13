@@ -14,6 +14,7 @@ use DrinksIt\RuleEngineBundle\Rule\Action\ActionInterface;
 use DrinksIt\RuleEngineBundle\Rule\Action\Types\NumberActionTypeInterface;
 use DrinksIt\RuleEngineBundle\Rule\Condition\Exception\MethodDoesNotExistException;
 use DrinksIt\RuleEngineBundle\Rule\Exception\TypeArgumentRuleException;
+use MathParser\Exceptions\MathParserException;
 
 class NumberActionType extends Action implements NumberActionTypeInterface
 {
@@ -110,5 +111,22 @@ class NumberActionType extends Action implements NumberActionTypeInterface
         $math = str_replace(['-', '+', '/', '*', '(', ')'], [' - ', ' + ', ' / ', ' * ', ' ( ', ' ) '], $this->actionsFields['math']);
 
         return preg_replace('~\s+~', ' ', $math);
+    }
+
+    public function validateExecutedAction(): bool
+    {
+        try {
+            $mathAction = $this->actionsFields['math'];
+
+            if ($macros = $this->actionsFields['macros']) {
+                foreach ($macros as $pathToField => $val) {
+                    $mathAction = str_replace($pathToField, (string) (random_int(100, 5000) / 100), $mathAction);
+                }
+            }
+
+            return is_numeric(math_eval($mathAction));
+        } catch (MathParserException $exception) {
+            return false;
+        }
     }
 }

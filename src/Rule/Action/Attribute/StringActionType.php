@@ -98,4 +98,18 @@ class StringActionType extends Action implements StringActionTypeInterface
     {
         return $this->actionsFields['pattern'];
     }
+
+    public function validateExecutedAction(): bool
+    {
+        $resultSet = $this->actionsFields['pattern'];
+        foreach ($this->actionsFields['macros'] as $macro) {
+            $resultSet = str_replace($macro, "[any_{$macro}]", $resultSet);
+        }
+
+        foreach ($this->actionsFields['macros'] as $macro) {
+            $resultSet = str_replace("[any_{$macro}]", $macro, $resultSet);
+        }
+
+        return $resultSet === $this->actionsFields['pattern'];
+    }
 }

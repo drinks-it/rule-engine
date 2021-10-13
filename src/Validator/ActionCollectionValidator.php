@@ -69,6 +69,12 @@ class ActionCollectionValidator extends RuleConstraintValidator
 
         if ($propertyRule->getClassNameActionFieldType() !== \get_class($action)) {
             $this->context->buildViolation($constraint->unsupportedTypeProperty)->setCode(self::CODE)->addViolation();
+
+            return;
+        }
+
+        if (!$action->validateExecutedAction()) {
+            $this->context->buildViolation($constraint->unsupportedExecutedAction)->setCode(self::CODE)->addViolation();
         }
     }
 }

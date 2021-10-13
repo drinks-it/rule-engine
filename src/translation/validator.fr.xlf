@@ -18,6 +18,10 @@
                 <source>rule_engine_event_not_found</source>
                 <target>Événement déclencheur introuvable</target>
             </trans-unit>
+            <trans-unit id="rule_engine_action_unsupported">
+                <source>rule_engine_action_unsupported</source>
+                <target>Impossible d'agir sur cette instruction. Veuillez vérifier la syntaxe</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

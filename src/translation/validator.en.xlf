@@ -18,6 +18,10 @@
                 <source>rule_engine_event_not_found</source>
                 <target>Trigger event not found</target>
             </trans-unit>
+            <trans-unit id="rule_engine_action_unsupported">
+                <source>rule_engine_action_unsupported</source>
+                <target>Unable to take action on this instruction. Please check the syntax</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

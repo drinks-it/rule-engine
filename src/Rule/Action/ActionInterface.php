@@ -34,4 +34,6 @@ interface ActionInterface
     public function executeAction($objectEntity);
 
     public function getPatternExecute(): string;
+
+    public function validateExecutedAction(): bool;
 }

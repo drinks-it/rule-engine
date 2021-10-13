@@ -18,6 +18,10 @@
                 <source>rule_engine_event_not_found</source>
                 <target>Triggerereignis nicht gefunden</target>
             </trans-unit>
+            <trans-unit id="rule_engine_action_unsupported">
+                <source>rule_engine_action_unsupported</source>
+                <target>Diese Anweisung kann nicht ausgeführt werden. Bitte überprüfen Sie die Syntax</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

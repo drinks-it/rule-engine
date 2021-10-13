@@ -21,6 +21,8 @@ class ActionCollection extends Constraint
 
     public string $unsupportedForEvent = 'rule_engine_event_not_found';
 
+    public string $unsupportedExecutedAction = 'rule_engine_action_unsupported';
+
     public function validatedBy()
     {
         return 'rule_engine.validator.action_collection';
