@@ -21,7 +21,7 @@ class RuleEngineBundle extends Bundle
         $container->addCompilerPass(new ApiPlatformService());
     }
 
-    public function getContainerExtensionClass()
+    public function getContainerExtensionClass(): string
     {
         return RuleEngineExtension::class;
     }

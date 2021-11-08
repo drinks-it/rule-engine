@@ -1,7 +1,7 @@
 ## Install
 
 ```shell
-composer requrie drinks-it/rule-engine
+composer require drinks-it/rule-engine
 ```
 
 #### depends
