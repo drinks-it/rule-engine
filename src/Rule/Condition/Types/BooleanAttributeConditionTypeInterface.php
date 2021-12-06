@@ -11,4 +11,6 @@ namespace DrinksIt\RuleEngineBundle\Rule\Condition\Types;
 interface BooleanAttributeConditionTypeInterface extends AttributeConditionTypeInterface
 {
     public const OPERATOR_EQ = 'EQ';
+
+    public const OPERATOR_NEQ = 'NEQ';
 }
