@@ -139,9 +139,15 @@ final class RuleEntityAnnotationExtractor implements RuleEntityExtractorInterfac
         }
 
         if (!class_exists($mappingRelation->targetEntity)) {
+            $targetEntityClassName = $class->getNamespaceName() . '\\' . $mappingRelation->targetEntity;
+        } else {
+            $targetEntityClassName = $mappingRelation->targetEntity;
+        }
+
+        if (!class_exists($targetEntityClassName)) {
             return null;
         }
 
-        return $mappingRelation->targetEntity;
+        return $targetEntityClassName;
     }
 }
