@@ -1,7 +1,7 @@
 <?php
 /*
  * This file is part of Rule Engine Symfony Bundle.
- * © 2010-2021 DRINKS | Silverbogen AG
+ * © 2010-2022 DRINKS | Silverbogen AG
  */
 
 declare(strict_types=1);
@@ -65,6 +65,11 @@ final class RuleEntityPropertyFactory implements RuleEntityPropertyFactoryInterf
             return $this->entityExtractor->getRuleEntityClassNameFromRelationField($className, $propertyName);
         }
 
-        return new PropertyRuleEntity($setPropertyName ?: $propertyName, $annotationProperty->condition, $annotationProperty->action);
+        return new PropertyRuleEntity(
+            $setPropertyName ?: $propertyName,
+            $annotationProperty->condition,
+            $annotationProperty->action,
+            $annotationProperty->onlyEvents
+        );
     }
 }
