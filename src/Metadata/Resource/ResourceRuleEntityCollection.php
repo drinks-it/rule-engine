@@ -1,12 +1,14 @@
 <?php
 /*
  * This file is part of Rule Engine Symfony Bundle.
- * © 2010-2021 DRINKS | Silverbogen AG
+ * © 2010-2022 DRINKS | Silverbogen AG
  */
 
 declare(strict_types=1);
 
 namespace DrinksIt\RuleEngineBundle\Metadata\Resource;
+
+use Traversable;
 
 final class ResourceRuleEntityCollection implements \IteratorAggregate, \Countable
 {
@@ -22,7 +24,7 @@ final class ResourceRuleEntityCollection implements \IteratorAggregate, \Countab
     /**
      * @return iterable|ResourceRuleEntity[]
      */
-    public function getIterator(): iterable
+    public function getIterator(): Traversable
     {
         return new \ArrayIterator($this->resources);
     }
