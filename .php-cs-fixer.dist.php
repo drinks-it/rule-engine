@@ -1,7 +1,7 @@
 <?php
 /*
  * This file is part of Rule Engine Symfony Bundle.
- * © 2010-2021 DRINKS | Silverbogen AG
+ * © 2010-2022 DRINKS | Silverbogen AG
  */
 
 declare(strict_types=1);
@@ -25,7 +25,7 @@ $finder->name('*.php')
 
 return (new PhpCsFixer\Config())
     ->setFinder($finder)
-    ->setCacheFile(__DIR__.'.php_cs.cache')
+    ->setCacheFile(__DIR__.DIRECTORY_SEPARATOR.'.php_cs.cache')
     ->setRules([
         '@DoctrineAnnotation' => true,
         '@PHP80Migration' => true,
@@ -85,7 +85,7 @@ return (new PhpCsFixer\Config())
             'tokens' => [
                 'break', 'case', 'continue', 'curly_brace_block',
                 'default', 'extra', 'parenthesis_brace_block',
-                'return', 'square_brace_block', 'switch', 'throw', 'use', 'use_trait',
+                'return', 'square_brace_block', 'switch', 'throw', 'use',
             ],
         ],
         'no_spaces_around_offset' => true,
