@@ -12,6 +12,11 @@
         <service id="rule_engine.metadata.annotation_extractor" class="DrinksIt\RuleEngineBundle\Metadata\Extractor\RuleEntityAnnotationExtractor">
             <argument type="service" id="annotations.cached_reader" />
         </service>
+
+        <!-- Extractor Attributes -->
+        <service id="rule_engine.metadata.attribute_extractor" class="DrinksIt\RuleEngineBundle\Metadata\Extractor\RuleEntityAttributeExtractor" decorates="rule_engine.metadata.annotation_extractor">
+            <argument type="service" id="rule_engine.metadata.attribute_extractor.inner" />
+        </service>
     </services>
 
 </container>

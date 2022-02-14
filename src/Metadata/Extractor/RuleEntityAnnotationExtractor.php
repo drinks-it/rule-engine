@@ -1,7 +1,7 @@
 <?php
 /*
  * This file is part of Rule Engine Symfony Bundle.
- * © 2010-2021 DRINKS | Silverbogen AG
+ * © 2010-2022 DRINKS | Silverbogen AG
  */
 
 declare(strict_types=1);
@@ -17,38 +17,31 @@ final class RuleEntityAnnotationExtractor implements RuleEntityExtractorInterfac
 {
     private ?Reader $annotationReader;
 
-    private const RELATION_CLASS_NAMES = [
-        'Doctrine\ORM\Mapping\ManyToOne',
-        'Doctrine\ORM\Mapping\OneToOne',
-        'Doctrine\ORM\Mapping\OneToMany',
-        'Doctrine\ORM\Mapping\ManyToMany',
-    ];
-
     public function __construct(Reader $annotationReader = null)
     {
         $this->annotationReader = $annotationReader;
     }
 
-    public function getRuleEntityResourceAnnotation(string $classResource): ?RuleEntityResource
+    public function getRuleEntityResourceAnnotation(string $class): ?RuleEntityResource
     {
         if (!$this->annotationReader) {
             return null;
         }
 
-        if (!ClassHelper::exist($classResource)) {
+        if (!ClassHelper::exist($class)) {
             return null;
         }
 
-        $class = new \ReflectionClass($classResource);
+        $classResource = new \ReflectionClass($class);
 
         $ruleEntity = null;
 
         if (\PHP_VERSION_ID >= 80000) {
-            $ruleEntity = $class->getAttributes(RuleEntityResource::class);
+            $ruleEntity = $classResource->getAttributes(RuleEntityResource::class);
         }
 
         if (!$ruleEntity) {
-            $ruleEntity = $this->annotationReader->getClassAnnotation($class, RuleEntityResource::class);
+            $ruleEntity = $this->annotationReader->getClassAnnotation($classResource, RuleEntityResource::class);
         }
 
         if ($ruleEntity instanceof RuleEntityResource) {
@@ -122,7 +115,7 @@ final class RuleEntityAnnotationExtractor implements RuleEntityExtractorInterfac
         }
 
         $mappingRelation = null;
-        foreach (self::RELATION_CLASS_NAMES as $mappingRelationClassName) {
+        foreach (RuleEntityExtractorInterface::RELATION_CLASS_NAMES as $mappingRelationClassName) {
             $mappingRelation = $this->annotationReader->getPropertyAnnotation($propertyRelationReflection, $mappingRelationClassName);
 
             if ($mappingRelation instanceof $mappingRelationClassName) {
