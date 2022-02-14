@@ -1,19 +1,22 @@
 <?php
 /*
  * This file is part of Rule Engine Symfony Bundle.
- * © 2010-2021 DRINKS | Silverbogen AG
+ * © 2010-2022 DRINKS | Silverbogen AG
  */
 
 declare(strict_types=1);
 
 namespace DrinksIt\RuleEngineBundle\Mapping;
 
+use Doctrine\Common\Annotations\Annotation\NamedArgumentConstructor;
 use Doctrine\Common\Annotations\Annotation\Target;
 
 /**
  * @Annotation
  * @Target({"CLASS"})
+ * @NamedArgumentConstructor
  */
+#[\Attribute(\Attribute::TARGET_CLASS)]
 class RuleEntityResource
 {
     /**
@@ -21,4 +24,9 @@ class RuleEntityResource
      * @var array
      */
     public array $events = [];
+
+    public function __construct(array $events = [])
+    {
+        $this->events = $events;
+    }
 }

@@ -1,36 +1,42 @@
 <?php
 /*
  * This file is part of Rule Engine Symfony Bundle.
- * © 2010-2021 DRINKS | Silverbogen AG
+ * © 2010-2022 DRINKS | Silverbogen AG
  */
 
 declare(strict_types=1);
 
 namespace DrinksIt\RuleEngineBundle\Mapping;
 
+use Doctrine\Common\Annotations\Annotation\NamedArgumentConstructor;
 use Doctrine\Common\Annotations\Annotation\Target;
-use DrinksIt\RuleEngineBundle\Rule\Action\ActionInterface;
-use DrinksIt\RuleEngineBundle\Rule\Condition\Types\AttributeConditionTypeInterface;
 
 /**
  * @Annotation
  * @Target({"PROPERTY"})
+ * @NamedArgumentConstructor
  */
+#[\Attribute(\Attribute::TARGET_PROPERTY)]
 class RuleEntityProperty
 {
-    /**
-     * @var string
-     * @see AttributeConditionTypeInterface
-     */
-    public ?string $condition = null;
-
-    /**
-     * @var string
-     * @see ActionInterface
-     */
     public ?string $action = null;
-
+    public ?string $condition = null;
     public array $onlyEvents = [];
-
     public bool $relationObject = false;
+
+    /**
+     * @param string|null $action ActionInterface
+     * @param string|null $condition AttributeConditionTypeInterface
+     */
+    public function __construct(
+        ?string $condition = null,
+        ?string $action = null,
+        array $onlyEvents = [],
+        bool $relationObject = false
+    ) {
+        $this->relationObject = $relationObject;
+        $this->onlyEvents = $onlyEvents;
+        $this->condition = $condition;
+        $this->action = $action;
+    }
 }
