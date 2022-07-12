@@ -24,7 +24,7 @@ class ConditionCollection extends Constraint
 
     public string $unsupportedForEvent = 'rule_engine_event_not_found';
 
-    public function validatedBy()
+    public function validatedBy(): string
     {
         return 'rule_engine.validator.condition_collection';
     }

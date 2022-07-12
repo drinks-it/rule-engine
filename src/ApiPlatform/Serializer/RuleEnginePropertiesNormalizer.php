@@ -51,7 +51,7 @@ final class RuleEnginePropertiesNormalizer implements NormalizerInterface, Seria
      * @param mixed $object
      * @throws ExceptionInterface
      */
-    public function normalize($object, string $format = null, array $context = [])
+    public function normalize($object, string $format = null, array $context = []): mixed
     {
         if ($object instanceof Condition) {
             return $this->serializerConditionsField->encodeItemConditionToArray($object, $context);
@@ -80,7 +80,7 @@ final class RuleEnginePropertiesNormalizer implements NormalizerInterface, Seria
         return $this->decorated->normalize($object, $format, $context);
     }
 
-    public function supportsNormalization($data, string $format = null)
+    public function supportsNormalization($data, string $format = null): bool
     {
         if ($data instanceof Condition || $data instanceof CollectionConditionInterface) {
             return true;
@@ -111,7 +111,7 @@ final class RuleEnginePropertiesNormalizer implements NormalizerInterface, Seria
     /**
      * {@inheritDoc}
      */
-    public function denormalize($data, string $type, string $format = null, array $context = [])
+    public function denormalize($data, string $type, string $format = null, array $context = []): mixed
     {
         if (TriggerEventColumn::class === $type) {
             foreach ($this->eventListenerFactory->create() as $eventMetaData) {
@@ -141,7 +141,7 @@ final class RuleEnginePropertiesNormalizer implements NormalizerInterface, Seria
     /**
      * {@inheritDoc}
      */
-    public function supportsDenormalization($data, string $type, string $format = null)
+    public function supportsDenormalization($data, string $type, string $format = null): bool
     {
         if (TriggerEventColumn::class === $type) {
             return true;

@@ -19,7 +19,7 @@ final class ActionType extends RuleEngineType
 {
     public const TYPE = 'rule_engine_action';
 
-    public function convertToPHPValue($value, AbstractPlatform $platform)
+    public function convertToPHPValue($value, AbstractPlatform $platform): mixed
     {
         $actionCollectionProperties = $this->decodeJson($value);
 
@@ -53,7 +53,7 @@ final class ActionType extends RuleEngineType
         return parent::convertToDatabaseValue($denormalize->denormalizeCollection(), $platform);
     }
 
-    public function getName()
+    public function getName(): string
     {
         return self::TYPE;
     }

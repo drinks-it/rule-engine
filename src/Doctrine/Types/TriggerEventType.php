@@ -16,12 +16,12 @@ final class TriggerEventType extends RuleEngineType
 {
     public const TYPE = 'rule_engine_event';
 
-    public function getSQLDeclaration(array $column, AbstractPlatform $platform)
+    public function getSQLDeclaration(array $column, AbstractPlatform $platform): string
     {
         return $platform->getVarcharTypeDeclarationSQL($column);
     }
 
-    public function convertToPHPValue($value, AbstractPlatform $platform)
+    public function convertToPHPValue($value, AbstractPlatform $platform): mixed
     {
         return new TriggerEventColumn($value);
     }
@@ -45,7 +45,7 @@ final class TriggerEventType extends RuleEngineType
         return $value->getEntityClassName();
     }
 
-    public function getName()
+    public function getName(): string
     {
         return self::TYPE;
     }

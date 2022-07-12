@@ -16,21 +16,22 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 
 abstract class RuleEngineType extends Type
 {
-    public function getSQLDeclaration(array $column, AbstractPlatform $platform)
+    public function getSQLDeclaration(array $column, AbstractPlatform $platform): string
     {
         return $platform->getJsonTypeDeclarationSQL($column);
     }
 
-    public function requiresSQLCommentHint(AbstractPlatform $platform)
+    public function requiresSQLCommentHint(AbstractPlatform $platform): bool
     {
         return true;
     }
 
-    public function convertToDatabaseValue($value, AbstractPlatform $platform)
+    public function convertToDatabaseValue($value, AbstractPlatform $platform): mixed
     {
         return (new JsonEncode())->encode($value, JsonEncoder::FORMAT);
     }
-    protected function decodeJson($value)
+
+    protected function decodeJson($value): array
     {
         return (new JsonDecode())->decode($value, JsonEncoder::FORMAT, [
             'json_decode_associative' => true,

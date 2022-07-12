@@ -19,7 +19,7 @@ final class ConditionsType extends RuleEngineType
 {
     public const TYPE = 'rule_engine_conditions';
 
-    public function convertToPHPValue($value, AbstractPlatform $platform)
+    public function convertToPHPValue($value, AbstractPlatform $platform): mixed
     {
         $decodedConditions = $this->decodeJson($value);
 
@@ -36,7 +36,7 @@ final class ConditionsType extends RuleEngineType
      * @param CollectionConditionInterface $value
      * @throws ConversionException
      */
-    public function convertToDatabaseValue($value, AbstractPlatform $platform)
+    public function convertToDatabaseValue($value, AbstractPlatform $platform): mixed
     {
         if (!$value instanceof CollectionConditionInterface) {
             throw ConversionException::conversionFailedInvalidType(
@@ -52,7 +52,7 @@ final class ConditionsType extends RuleEngineType
         return parent::convertToDatabaseValue($denormalize->denormalizeCollection(), $platform);
     }
 
-    public function getName()
+    public function getName(): string
     {
         return self::TYPE;
     }

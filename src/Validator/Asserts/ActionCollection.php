@@ -24,7 +24,7 @@ class ActionCollection extends Constraint
 
     public string $unsupportedExecutedAction = 'rule_engine_action_unsupported';
 
-    public function validatedBy()
+    public function validatedBy(): string
     {
         return 'rule_engine.validator.action_collection';
     }
