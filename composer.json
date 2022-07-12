@@ -45,7 +45,11 @@
         }
     ],
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true,
+            "symfony/flex": true
+        }
     },
     "scripts": {
         "test-unit": [
@@ -62,5 +66,5 @@
     },
     "archive": {
         "exclude": ["tests/", ".run/", ".github/", "phpunit.xml.dist"]
-    }
+    },
 }
