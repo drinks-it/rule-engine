@@ -66,5 +66,5 @@
     },
     "archive": {
         "exclude": ["tests/", ".run/", ".github/", "phpunit.xml.dist"]
-    },
+    }
 }
