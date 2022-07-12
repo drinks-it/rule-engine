@@ -3,7 +3,7 @@
     "description": "Rule Engine Bundle is a (sub)system which allows end-user to run specified actions if they met specified criteria(conditions) on specified events.",
     "type": "symfony-bundle",
     "require": {
-        "php": "^7.4 || ^8.0 || ^8.1",
+        "php": "^8.0 || ^8.1",
         "langleyfoxall/math_eval": "^2.0",
         "symfony/config": "^5.0",
         "symfony/dependency-injection": "^5.0",

@@ -18,7 +18,7 @@ class TriggerEvent extends Constraint
 {
     public string $message = 'rule_engine_event_not_found';
 
-    public function validatedBy()
+    public function validatedBy(): string
     {
         return 'rule_engine.validator.event';
     }
