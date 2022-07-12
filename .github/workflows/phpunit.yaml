@@ -45,7 +45,7 @@ jobs:
 
       - name: Require Symfony version
         run: |         
-          composer global require --no-interaction --no-progress symfony/flex:^1.11
+          composer global require --no-interaction --no-progress symfony/flex:^1.11 --no-plugins --no-scripts
           composer config extra.symfony.require ${{ matrix.symfony }}
           composer config --no-plugins allow-plugins.symfony/flex true
 
