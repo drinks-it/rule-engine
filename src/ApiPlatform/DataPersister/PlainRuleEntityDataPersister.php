@@ -41,10 +41,10 @@ final class PlainRuleEntityDataPersister implements ContextAwareDataPersisterInt
      * @param PlainFieldRuleEntityInterface $data
      * @inheritDoc
      */
-    public function persist($data, array $context = [])
+    public function persist($data, array $context = []): PlainFieldRuleEntityInterface
     {
         $context = array_merge($context, [
-            'rule_entity_class_name' => \get_class($data),
+            'rule_entity_class_name' => $data::class,
             'rule_default_resource' => null,
         ]);
 
