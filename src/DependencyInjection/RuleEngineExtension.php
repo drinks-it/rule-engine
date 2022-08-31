@@ -48,7 +48,7 @@ class RuleEngineExtension extends Extension
         $loader->load('validator.xsd');
     }
 
-    public function getAlias()
+    public function getAlias(): string
     {
         return 'rule_engine';
     }
