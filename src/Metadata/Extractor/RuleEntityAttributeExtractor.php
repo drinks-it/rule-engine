@@ -67,7 +67,7 @@ final class RuleEntityAttributeExtractor implements RuleEntityExtractorInterface
         );
 
         if (!$properties) {
-            return [];
+            return $this->decorated->getRuleEntityPropertiesNames($classResource);
         }
 
         return array_map(fn (\ReflectionProperty $property) => $property->getName(), $properties);
