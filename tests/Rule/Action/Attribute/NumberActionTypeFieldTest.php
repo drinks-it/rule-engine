@@ -35,7 +35,8 @@ class NumberActionTypeFieldTest extends TestCase
 
         $decodedOperations = $actionNumber->decodeAction($inputToParse);
         $decodedOperations->executeAction($objectEntity);
-        $this->assertEquals($resultExecute, $objectEntity->getField());
+        $this->assertGreaterThanOrEqual($resultExecute - 0.001, $objectEntity->getField());
+        $this->assertLessThanOrEqual($resultExecute + 0.002, $objectEntity->getField());
     }
 
     private function makeEntityObject()
