@@ -77,7 +77,8 @@ final class NormalizeCondition
             $properties['class_resource'],
             $properties['field_name'],
             $properties['operator'],
-            $properties['value']
+            $properties['value'],
+            $properties['resource_short_name'] ?? null
         );
 
         if (!$objectConditionAttribute instanceof AttributeConditionTypeInterface) {

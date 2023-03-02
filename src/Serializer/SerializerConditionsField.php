@@ -89,6 +89,10 @@ final class SerializerConditionsField implements SerializerConditionsFieldInterf
             $attributeCondition->setOperator($conditionItem['operator']);
             $attributeCondition->setValue($conditionItem['value']);
 
+            if (isset($conditionItem['resourceShortName'])) {
+                $attributeCondition->setResourceShortName($conditionItem['resourceShortName']);
+            }
+
             $condition->setAttributeCondition($attributeCondition);
             $collection->add($condition);
         }

@@ -60,6 +60,7 @@ final class DenormalizeCondition
             'class_condition' => \get_class($attributeConditionType),
             'properties' => [
                 'class_resource' => $attributeConditionType->getClassResource(),
+                'resource_short_name' => $attributeConditionType->getResourceShortName(),
                 'field_name' => $attributeConditionType->getFieldName(),
                 'operator' => $attributeConditionType->getOperator(),
                 'type' => $attributeConditionType->getType(),
