@@ -39,7 +39,6 @@ class RuleEngineExtension extends Extension
 
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
 
-        $loader->load('maker.xsd');
         $loader->load('extractor.xsd');
         $loader->load('metadata.xsd');
         $loader->load('doctrine.xsd');
