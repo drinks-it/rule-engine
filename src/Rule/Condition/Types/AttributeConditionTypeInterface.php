@@ -45,4 +45,8 @@ interface AttributeConditionTypeInterface
     public function getSupportOperators(): array;
 
     public function match($value): bool;
+
+    public function getResourceShortName(): ?string;
+
+    public function setResourceShortName(?string $resourceShortName): self;
 }

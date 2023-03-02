@@ -23,7 +23,9 @@ abstract class AttributeCondition implements AttributeConditionTypeInterface
 
     protected string $operator;
 
-    public function __construct(string $classResource, string $fieldName, string $operator = null, $value = null)
+    protected ?string $resourceShortName;
+
+    public function __construct(string $classResource, string $fieldName, string $operator = null, $value = null, ?string $resourceShortName = null)
     {
         $this->classResource = $classResource;
         $this->fieldName = $fieldName;
@@ -34,6 +36,7 @@ abstract class AttributeCondition implements AttributeConditionTypeInterface
         }
 
         $this->setValue($value);
+        $this->setResourceShortName($resourceShortName);
     }
 
     public function getOperator(): string
@@ -81,6 +84,23 @@ abstract class AttributeCondition implements AttributeConditionTypeInterface
         return $this->supportsOperators;
     }
 
+    /**
+     * @return string|null
+     */
+    public function getResourceShortName(): ?string
+    {
+        return $this->resourceShortName;
+    }
+
+    /**
+     * @param string|null $resourceShortName
+     */
+    public function setResourceShortName(?string $resourceShortName): self
+    {
+        $this->resourceShortName = $resourceShortName;
+        return $this;
+    }
+
     public function toArray(): array
     {
         return [
@@ -89,6 +109,7 @@ abstract class AttributeCondition implements AttributeConditionTypeInterface
             'operator'      => $this->getOperator(),
             'type'          => $this->getType(),
             'value'         => $this->getValue(),
+            'resource_short_name' => $this->getResourceShortName(),
         ];
     }
 }
