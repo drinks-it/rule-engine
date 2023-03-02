@@ -134,6 +134,7 @@ final class SerializerConditionsField implements SerializerConditionsFieldInterf
             'field' => $condition->getAttributeCondition()->getFieldName(),
             'operator' => $condition->getAttributeCondition()->getOperator(),
             'value' => $condition->getAttributeCondition()->getValue(),
+            'resourceShortName' => $condition->getAttributeCondition()->getResourceShortName(),
         ];
     }
 
