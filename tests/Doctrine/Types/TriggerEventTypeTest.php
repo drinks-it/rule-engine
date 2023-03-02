@@ -56,7 +56,7 @@ class TriggerEventTypeTest extends TestCase
 
     public function testGetSQLDeclaration(): void
     {
-        $this->platform->expects($this->once())->method('getVarcharTypeDeclarationSQL')
+        $this->platform->expects($this->once())->method('getStringTypeDeclarationSQL')
             ->with($this->equalTo(['foo', 'test']))
             ->willReturn('AnyTypeDoctrine');
 
