@@ -1,7 +1,7 @@
 <?php
 /*
  * This file is part of Rule Engine Symfony Bundle.
- * © 2010-2022 DRINKS | Silverbogen AG
+ * © 2010-2023 DRINKS | Silverbogen AG
  */
 
 declare(strict_types=1);
@@ -109,7 +109,7 @@ final class SerializerConditionsField implements SerializerConditionsFieldInterf
 
         foreach ($collectionCondition as $condition) {
             if (!$condition instanceof Condition) {
-                throw new \RuntimeException(sprintf('Element in `%s` collection is not `%s` type', \is_object($collectionCondition) ? \get_class($collectionCondition) : \gettype($collectionCondition), Condition::class));
+                throw new \RuntimeException(sprintf('Element in `%s` collection is not `%s` type', \is_object($collectionCondition) ? $collectionCondition::class : \gettype($collectionCondition), Condition::class));
             }
 
             $valuesReturn[] = $this->encodeItemConditionToArray($condition, $context);

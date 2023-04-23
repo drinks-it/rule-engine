@@ -1,7 +1,7 @@
 <?php
 /*
  * This file is part of Rule Engine Symfony Bundle.
- * © 2010-2022 DRINKS | Silverbogen AG
+ * © 2010-2023 DRINKS | Silverbogen AG
  */
 
 declare(strict_types=1);
@@ -29,7 +29,7 @@ class RuleEventListenerFactory implements RuleEventListenerFactoryInterface
             $events[] = [
                 'event' => $ruleEvent,
                 'name' => $ruleEvent->getName(),
-                'resource' => \get_class($ruleEvent),
+                'resource' => $ruleEvent::class,
             ];
         }
 

@@ -1,7 +1,7 @@
 <?php
 /*
  * This file is part of Rule Engine Symfony Bundle.
- * © 2010-2022 DRINKS | Silverbogen AG
+ * © 2010-2023 DRINKS | Silverbogen AG
  */
 
 declare(strict_types=1);
@@ -86,11 +86,11 @@ class BooleanActionType extends Action implements BooleanActionTypeInterface
         }
 
         if (!method_exists($objectToSet, $methodSetField)) {
-            throw new MethodDoesNotExistException(\get_class($objectToSet), $methodSetField);
+            throw new MethodDoesNotExistException($objectToSet::class, $methodSetField);
         }
 
         $objectToSet->{$methodSetField}(
-            $this->normalizeResult($this->actionsSavedField, \get_class($objectToSet), $this->getFieldName())
+            $this->normalizeResult($this->actionsSavedField, $objectToSet::class, $this->getFieldName())
         );
 
         return $objectEntity;

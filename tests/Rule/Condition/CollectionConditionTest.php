@@ -1,7 +1,7 @@
 <?php
 /*
  * This file is part of Rule Engine Symfony Bundle.
- * © 2010-2022 DRINKS | Silverbogen AG
+ * © 2010-2023 DRINKS | Silverbogen AG
  */
 
 declare(strict_types=1);
@@ -63,12 +63,12 @@ class CollectionConditionTest extends TestCase
                         new Condition(
                             Condition::TYPE_ATTRIBUTE,
                             1,
-                            new StringConditionAttribute(\get_class($closerClass), 'field1', StringConditionAttribute::OPERATOR_EQ, 'Eko')
+                            new StringConditionAttribute($closerClass::class, 'field1', StringConditionAttribute::OPERATOR_EQ, 'Eko')
                         ),
                         new Condition(
                             Condition::TYPE_ATTRIBUTE,
                             1,
-                            new NumberConditionAttribute(\get_class($closerClass), 'field2', NumberConditionAttribute::OPERATOR_EQ, 3)
+                            new NumberConditionAttribute($closerClass::class, 'field2', NumberConditionAttribute::OPERATOR_EQ, 3)
                         ),
                     ]),
                     true,
@@ -100,12 +100,12 @@ class CollectionConditionTest extends TestCase
                         new Condition(
                             Condition::TYPE_ATTRIBUTE,
                             1,
-                            new StringConditionAttribute(\get_class($closerClass), 'field1', StringConditionAttribute::OPERATOR_EQ, 'Eko')
+                            new StringConditionAttribute($closerClass::class, 'field1', StringConditionAttribute::OPERATOR_EQ, 'Eko')
                         ),
                         new Condition(
                             Condition::TYPE_ATTRIBUTE,
                             1,
-                            new NumberConditionAttribute(\get_class($closerClass), 'field2', NumberConditionAttribute::OPERATOR_EQ, 3)
+                            new NumberConditionAttribute($closerClass::class, 'field2', NumberConditionAttribute::OPERATOR_EQ, 3)
                         ),
                     ]),
                     true,
@@ -137,12 +137,12 @@ class CollectionConditionTest extends TestCase
                         new Condition(
                             Condition::TYPE_ATTRIBUTE,
                             1,
-                            new StringConditionAttribute(\get_class($closerClass), 'field1', StringConditionAttribute::OPERATOR_EQ, 'Eko')
+                            new StringConditionAttribute($closerClass::class, 'field1', StringConditionAttribute::OPERATOR_EQ, 'Eko')
                         ),
                         new Condition(
                             Condition::TYPE_ATTRIBUTE,
                             1,
-                            new NumberConditionAttribute(\get_class($closerClass), 'field2', NumberConditionAttribute::OPERATOR_EQ, 3)
+                            new NumberConditionAttribute($closerClass::class, 'field2', NumberConditionAttribute::OPERATOR_EQ, 3)
                         ),
                     ]),
                     Condition::IS_TRUE
@@ -173,12 +173,12 @@ class CollectionConditionTest extends TestCase
                         new Condition(
                             Condition::TYPE_ATTRIBUTE,
                             1,
-                            new StringConditionAttribute(\get_class($closerClass), 'field1', StringConditionAttribute::OPERATOR_EQ, 'Eko')
+                            new StringConditionAttribute($closerClass::class, 'field1', StringConditionAttribute::OPERATOR_EQ, 'Eko')
                         ),
                         new Condition(
                             Condition::TYPE_ATTRIBUTE,
                             1,
-                            new NumberConditionAttribute(\get_class($closerClass), 'field2', NumberConditionAttribute::OPERATOR_EQ, 3)
+                            new NumberConditionAttribute($closerClass::class, 'field2', NumberConditionAttribute::OPERATOR_EQ, 3)
                         ),
                     ]),
                     Condition::IS_TRUE
@@ -191,12 +191,12 @@ class CollectionConditionTest extends TestCase
                         new Condition(
                             Condition::TYPE_ATTRIBUTE,
                             1,
-                            new StringConditionAttribute(\get_class($closerClass), 'field1', StringConditionAttribute::OPERATOR_EQ, 'Eko')
+                            new StringConditionAttribute($closerClass::class, 'field1', StringConditionAttribute::OPERATOR_EQ, 'Eko')
                         ),
                         new Condition(
                             Condition::TYPE_ATTRIBUTE,
                             1,
-                            new NumberConditionAttribute(\get_class($closerClass), 'field2', NumberConditionAttribute::OPERATOR_EQ, 3)
+                            new NumberConditionAttribute($closerClass::class, 'field2', NumberConditionAttribute::OPERATOR_EQ, 3)
                         ),
                     ]),
                     Condition::IS_TRUE
@@ -227,12 +227,12 @@ class CollectionConditionTest extends TestCase
                         new Condition(
                             Condition::TYPE_ATTRIBUTE,
                             1,
-                            new StringConditionAttribute(\get_class($closeClass), 'field1', StringConditionAttribute::OPERATOR_EQ, 'Eko')
+                            new StringConditionAttribute($closeClass::class, 'field1', StringConditionAttribute::OPERATOR_EQ, 'Eko')
                         ),
                         new Condition(
                             Condition::TYPE_ATTRIBUTE,
                             1,
-                            new NumberConditionAttribute(\get_class($closeClass), 'field2', NumberConditionAttribute::OPERATOR_EQ, 3)
+                            new NumberConditionAttribute($closeClass::class, 'field2', NumberConditionAttribute::OPERATOR_EQ, 3)
                         ),
                     ]),
                     Condition::IS_TRUE
@@ -263,7 +263,7 @@ class CollectionConditionTest extends TestCase
                         new Condition(
                             Condition::TYPE_ATTRIBUTE,
                             1,
-                            new StringConditionAttribute(\get_class($closeClass), 'field1', StringConditionAttribute::OPERATOR_EQ, 'Eko')
+                            new StringConditionAttribute($closeClass::class, 'field1', StringConditionAttribute::OPERATOR_EQ, 'Eko')
                         ),
                         new Condition(
                             Condition::TYPE_ANY,
@@ -273,12 +273,12 @@ class CollectionConditionTest extends TestCase
                                 new Condition(
                                     Condition::TYPE_ATTRIBUTE,
                                     1,
-                                    new StringConditionAttribute(\get_class($closeClass), 'field1', StringConditionAttribute::OPERATOR_EQ, 'EkoHolo')
+                                    new StringConditionAttribute($closeClass::class, 'field1', StringConditionAttribute::OPERATOR_EQ, 'EkoHolo')
                                 ),
                                 new Condition(
                                     Condition::TYPE_ATTRIBUTE,
                                     1,
-                                    new NumberConditionAttribute(\get_class($closeClass), 'field2', NumberConditionAttribute::OPERATOR_EQ, 3)
+                                    new NumberConditionAttribute($closeClass::class, 'field2', NumberConditionAttribute::OPERATOR_EQ, 3)
                                 ),
                             ]),
                             Condition::IS_FALSE
@@ -313,7 +313,7 @@ class CollectionConditionTest extends TestCase
                         new Condition(
                             Condition::TYPE_ATTRIBUTE,
                             1,
-                            new StringConditionAttribute(\get_class($closeClass), 'field1', StringConditionAttribute::OPERATOR_EQ, 'Eko')
+                            new StringConditionAttribute($closeClass::class, 'field1', StringConditionAttribute::OPERATOR_EQ, 'Eko')
                         ),
                         new Condition(
                             Condition::TYPE_ANY,
@@ -323,12 +323,12 @@ class CollectionConditionTest extends TestCase
                                 new Condition(
                                     Condition::TYPE_ATTRIBUTE,
                                     1,
-                                    new StringConditionAttribute(\get_class($closeClass), 'field1', StringConditionAttribute::OPERATOR_EQ, 'EkoHolo')
+                                    new StringConditionAttribute($closeClass::class, 'field1', StringConditionAttribute::OPERATOR_EQ, 'EkoHolo')
                                 ),
                                 new Condition(
                                     Condition::TYPE_ATTRIBUTE,
                                     1,
-                                    new NumberConditionAttribute(\get_class($closeClass), 'field2', NumberConditionAttribute::OPERATOR_EQ, 3)
+                                    new NumberConditionAttribute($closeClass::class, 'field2', NumberConditionAttribute::OPERATOR_EQ, 3)
                                 ),
                                 new Condition(
                                     Condition::TYPE_ALL,
@@ -338,7 +338,7 @@ class CollectionConditionTest extends TestCase
                                         new Condition(
                                             Condition::TYPE_ATTRIBUTE,
                                             1,
-                                            new StringConditionAttribute(\get_class($closeClass), 'field1', StringConditionAttribute::OPERATOR_EQ, 'Eko')
+                                            new StringConditionAttribute($closeClass::class, 'field1', StringConditionAttribute::OPERATOR_EQ, 'Eko')
                                         ),
                                         new Condition(
                                             Condition::TYPE_ANY,
@@ -348,12 +348,12 @@ class CollectionConditionTest extends TestCase
                                                 new Condition(
                                                     Condition::TYPE_ATTRIBUTE,
                                                     1,
-                                                    new StringConditionAttribute(\get_class($closeClass), 'field1', StringConditionAttribute::OPERATOR_EQ, 'EkoHolo')
+                                                    new StringConditionAttribute($closeClass::class, 'field1', StringConditionAttribute::OPERATOR_EQ, 'EkoHolo')
                                                 ),
                                                 new Condition(
                                                     Condition::TYPE_ATTRIBUTE,
                                                     1,
-                                                    new NumberConditionAttribute(\get_class($closeClass), 'field2', NumberConditionAttribute::OPERATOR_EQ, 3)
+                                                    new NumberConditionAttribute($closeClass::class, 'field2', NumberConditionAttribute::OPERATOR_EQ, 3)
                                                 ),
                                             ]),
                                             Condition::IS_FALSE
@@ -381,7 +381,7 @@ class CollectionConditionTest extends TestCase
                 new Condition(
                     Condition::TYPE_ATTRIBUTE,
                     1,
-                    new StringConditionAttribute(\get_class($classCloser), 'fieldOlo', StringConditionAttribute::OPERATOR_CONTAINS, 'hi')
+                    new StringConditionAttribute($classCloser::class, 'fieldOlo', StringConditionAttribute::OPERATOR_CONTAINS, 'hi')
                 ),
             ]),
             false,
@@ -400,7 +400,7 @@ class CollectionConditionTest extends TestCase
                 new Condition(
                     Condition::TYPE_ATTRIBUTE,
                     1,
-                    new StringConditionAttribute(\get_class($classCloser), 'fieldOlo', StringConditionAttribute::OPERATOR_CONTAINS, 'hi')
+                    new StringConditionAttribute($classCloser::class, 'fieldOlo', StringConditionAttribute::OPERATOR_CONTAINS, 'hi')
                 ),
             ]),
             false,

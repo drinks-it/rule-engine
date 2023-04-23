@@ -1,7 +1,7 @@
 <?php
 /*
  * This file is part of Rule Engine Symfony Bundle.
- * © 2010-2022 DRINKS | Silverbogen AG
+ * © 2010-2023 DRINKS | Silverbogen AG
  */
 
 declare(strict_types=1);
@@ -63,7 +63,7 @@ class NumberActionType extends Action implements NumberActionTypeInterface
         }
 
         if (!method_exists($objectToSet, $methodSetField)) {
-            throw new MethodDoesNotExistException(\get_class($objectToSet), $methodSetField);
+            throw new MethodDoesNotExistException($objectToSet::class, $methodSetField);
         }
 
         $math = $this->actionsFields['math'];
@@ -79,7 +79,7 @@ class NumberActionType extends Action implements NumberActionTypeInterface
             }
         }
 
-        $value = $this->normalizeResult(math_eval($math), \get_class($objectToSet), $this->getFieldName());
+        $value = $this->normalizeResult(math_eval($math), $objectToSet::class, $this->getFieldName());
 
         $objectToSet->{$methodSetField}($value);
 

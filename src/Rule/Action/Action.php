@@ -1,7 +1,7 @@
 <?php
 /*
  * This file is part of Rule Engine Symfony Bundle.
- * © 2010-2022 DRINKS | Silverbogen AG
+ * © 2010-2023 DRINKS | Silverbogen AG
  */
 
 declare(strict_types=1);
@@ -48,13 +48,13 @@ abstract class Action implements ActionInterface, ActionPropertyNormalizerInterf
         if (strpos($pathToField, '.')) {
             $pathMap = explode('.', $pathToField);
             $objectFromGet = $objectEntity;
-            $classNameReturned = \get_class($objectFromGet);
+            $classNameReturned = $objectFromGet::class;
             $relationNameField = $pathToField;
             foreach ($pathMap as $relationMethodName) {
                 if (!\is_object($objectFromGet)) {
                     break;
                 }
-                $classNameReturned = \get_class($objectFromGet);
+                $classNameReturned = $objectFromGet::class;
                 $relationNameField = $relationMethodName;
                 $methodRelationName = StrEntity::getGetterNameMethod($relationMethodName);
 
@@ -67,7 +67,7 @@ abstract class Action implements ActionInterface, ActionPropertyNormalizerInterf
             return $this->normalizerProperty->normalize($objectFromGet, $classNameReturned, $relationNameField, [
                 'type' => 'decode_macros',
                 'path_field' => $pathToField,
-                'source_entity' => \get_class($objectEntity),
+                'source_entity' => $objectEntity::class,
                 'action' => $this,
             ]);
         }
@@ -78,7 +78,7 @@ abstract class Action implements ActionInterface, ActionPropertyNormalizerInterf
         $methodName = StrEntity::getGetterNameMethod($pathToField);
 
         if (!method_exists($objectEntity, $methodName)) {
-            throw new MethodDoesNotExistRuleException(\get_class($objectEntity), $methodName);
+            throw new MethodDoesNotExistRuleException($objectEntity::class, $methodName);
         }
 
         $value = (string) $objectEntity->{$methodName}();
@@ -87,10 +87,10 @@ abstract class Action implements ActionInterface, ActionPropertyNormalizerInterf
             return $value;
         }
 
-        return $this->normalizerProperty->normalize($value, \get_class($objectEntity), $pathToField, [
+        return $this->normalizerProperty->normalize($value, $objectEntity::class, $pathToField, [
             'type' => 'decode_macros',
             'path_field' => $pathToField,
-            'source_entity' => \get_class($objectEntity),
+            'source_entity' => $objectEntity::class,
             'action' => $this,
         ]);
     }

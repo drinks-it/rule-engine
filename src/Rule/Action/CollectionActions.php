@@ -1,7 +1,7 @@
 <?php
 /*
  * This file is part of Rule Engine Symfony Bundle.
- * © 2010-2022 DRINKS | Silverbogen AG
+ * © 2010-2023 DRINKS | Silverbogen AG
  */
 
 declare(strict_types=1);
@@ -28,7 +28,7 @@ class CollectionActions extends ArrayCollection implements CollectionActionsInte
         /** @var ActionInterface $action */
         foreach ($this as $action) {
             if (!$action instanceof ActionInterface) {
-                throw new ClassDoesNotImplementInterfaceRuleException(\get_class($action), ActionInterface::class);
+                throw new ClassDoesNotImplementInterfaceRuleException($action::class, ActionInterface::class);
             }
 
             if ($action instanceof ActionPropertyNormalizerInterface && $this->normalizerProperty) {
@@ -37,7 +37,7 @@ class CollectionActions extends ArrayCollection implements CollectionActionsInte
 
             $resourceClass = $action->getResourceClass();
 
-            if ($objectEntity instanceof ExecuteMethodAction || $resourceClass === \get_class($objectEntity)) {
+            if ($objectEntity instanceof ExecuteMethodAction || $resourceClass === $objectEntity::class) {
                 $action->executeAction($objectEntity);
 
                 continue;

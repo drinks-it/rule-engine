@@ -1,7 +1,7 @@
 <?php
 /*
  * This file is part of Rule Engine Symfony Bundle.
- * © 2010-2022 DRINKS | Silverbogen AG
+ * © 2010-2023 DRINKS | Silverbogen AG
  */
 
 declare(strict_types=1);
@@ -98,6 +98,7 @@ abstract class AttributeCondition implements AttributeConditionTypeInterface
     public function setResourceShortName(?string $resourceShortName): self
     {
         $this->resourceShortName = $resourceShortName;
+
         return $this;
     }
 

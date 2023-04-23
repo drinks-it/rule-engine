@@ -1,7 +1,7 @@
 <?php
 /*
  * This file is part of Rule Engine Symfony Bundle.
- * © 2010-2022 DRINKS | Silverbogen AG
+ * © 2010-2023 DRINKS | Silverbogen AG
  */
 
 declare(strict_types=1);
@@ -58,7 +58,7 @@ class ArrayConditionAttribute extends AttributeCondition implements ArrayAttribu
             $value = [$value];
         }
 
-        if (is_scalar($value)) {
+        if (\is_scalar($value)) {
             return \in_array($value, $this->getValue());
         }
 

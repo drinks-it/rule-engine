@@ -6,11 +6,14 @@
     <services>
 
         <service id="DrinksIt\RuleEngineBundle\ApiPlatform\DataPersister\PlainRuleEntityDataPersister" class="DrinksIt\RuleEngineBundle\ApiPlatform\DataPersister\PlainRuleEntityDataPersister">
-            <argument type="service" id="rule_engine.serializer.actions_collection" />
-            <argument type="service" id="rule_engine.serializer.conditions_collection" />
-            <tag name="api_platform.data_persister" />
         </service>
         <service id="rule_engine.api_platform.plain_data_persister" alias="DrinksIt\RuleEngineBundle\ApiPlatform\DataPersister\PlainRuleEntityDataPersister" />
+
+        <service id="DrinksIt\RuleEngineBundle\ApiPlatform\Process\PlainRuleEntityProcess">
+            <argument type="service" id="rule_engine.serializer.actions_collection" />
+            <argument type="service" id="rule_engine.serializer.conditions_collection" />
+            <tag name="api_platform.state_processor" />
+        </service>
 
         <service id="DrinksIt\RuleEngineBundle\ApiPlatform\Schema\ActionSchemaFactory" class="DrinksIt\RuleEngineBundle\ApiPlatform\Schema\ActionSchemaFactory" />
         <service id="rule_engine.api_platform.json_schema.action" alias="DrinksIt\RuleEngineBundle\ApiPlatform\Schema\ActionSchemaFactory" />

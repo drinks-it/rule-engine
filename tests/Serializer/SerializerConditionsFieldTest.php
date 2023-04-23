@@ -1,7 +1,7 @@
 <?php
 /*
  * This file is part of Rule Engine Symfony Bundle.
- * © 2010-2022 DRINKS | Silverbogen AG
+ * © 2010-2023 DRINKS | Silverbogen AG
  */
 
 declare(strict_types=1);
@@ -93,7 +93,8 @@ class SerializerConditionsFieldTest extends TestCase
                             'type' => Condition::TYPE_ATTRIBUTE,
                             'field' => 'test',
                             'operator' => 'EQ',
-                            'value' => 2,
+                            'value' => 2.0,
+                            'resourceShortName' => null,
                         ],
                     ],
                 ],
@@ -121,6 +122,7 @@ class SerializerConditionsFieldTest extends TestCase
                             'field' => 'test',
                             'operator' => 'EQ',
                             'value' => 2,
+                            'resourceShortName' => null,
                         ],
                     ],
                 ],
@@ -141,6 +143,7 @@ class SerializerConditionsFieldTest extends TestCase
                     'field' => 'test',
                     'operator' => 'EQ',
                     'value' => 2,
+                    'resourceShortName' => null,
                 ],
             ],
             [],
@@ -160,6 +163,7 @@ class SerializerConditionsFieldTest extends TestCase
                     'field' => 'test',
                     'operator' => 'EQ',
                     'value' => 2,
+                    'resourceShortName' => null,
                 ],
             ],
             [
@@ -181,6 +185,7 @@ class SerializerConditionsFieldTest extends TestCase
                     'field' => 'test',
                     'operator' => 'EQ',
                     'value' => 2,
+                    'resourceShortName' => null,
                 ],
             ],
             [
@@ -204,6 +209,7 @@ class SerializerConditionsFieldTest extends TestCase
                     'field' => 'test',
                     'operator' => 'EQ',
                     'value' => 2,
+                    'resourceShortName' => null,
                 ],
             ],
             [
@@ -227,6 +233,7 @@ class SerializerConditionsFieldTest extends TestCase
                     'field' => 'test',
                     'operator' => 'EQ',
                     'value' => 2,
+                    'resourceShortName' => null,
                 ],
             ],
             [
