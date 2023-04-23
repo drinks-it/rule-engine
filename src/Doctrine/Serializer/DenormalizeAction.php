@@ -1,7 +1,7 @@
 <?php
 /*
  * This file is part of Rule Engine Symfony Bundle.
- * © 2010-2022 DRINKS | Silverbogen AG
+ * © 2010-2023 DRINKS | Silverbogen AG
  */
 
 declare(strict_types=1);
@@ -38,7 +38,7 @@ final class DenormalizeAction
     public function denormalizeAction(ActionInterface $action): array
     {
         return [
-            'class_action' => \get_class($action),
+            'class_action' => $action::class,
             'properties' => [
                 'type' => $action->getType(),
                 'object_resource' => $action->getResourceClass(),

@@ -1,7 +1,7 @@
 <?php
 /*
  * This file is part of Rule Engine Symfony Bundle.
- * © 2010-2022 DRINKS | Silverbogen AG
+ * © 2010-2023 DRINKS | Silverbogen AG
  */
 
 declare(strict_types=1);
@@ -24,34 +24,22 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 final class RuleEnginePropertiesNormalizer implements NormalizerInterface, SerializerAwareInterface, DenormalizerInterface
 {
-    private SerializerConditionsFieldInterface $serializerConditionsField;
-
-    private SerializerActionsFieldInterface $serializerActionsField;
-
-    /**
-     * @var NormalizerInterface|DenormalizerInterface
-     */
-    private $decorated;
-
-    private RuleEventListenerFactoryInterface $eventListenerFactory;
-
     public function __construct(
-        $decorated,
-        SerializerConditionsFieldInterface $serializerConditionsField,
-        SerializerActionsFieldInterface $serializerActionsField,
-        RuleEventListenerFactoryInterface $eventListenerFactory
+        /**
+         * @var NormalizerInterface|DenormalizerInterface|SerializerAwareInterface|null
+         */
+        private $decorated,
+        private SerializerConditionsFieldInterface $serializerConditionsField,
+        private SerializerActionsFieldInterface $serializerActionsField,
+        private RuleEventListenerFactoryInterface $eventListenerFactory
     ) {
-        $this->decorated = $decorated;
-        $this->serializerConditionsField = $serializerConditionsField;
-        $this->serializerActionsField = $serializerActionsField;
-        $this->eventListenerFactory = $eventListenerFactory;
     }
 
     /**
      * @param mixed $object
      * @throws ExceptionInterface
      */
-    public function normalize($object, string $format = null, array $context = []): mixed
+    public function normalize(mixed $object, string $format = null, array $context = []): mixed
     {
         if ($object instanceof Condition) {
             return $this->serializerConditionsField->encodeItemConditionToArray($object, $context);
@@ -80,7 +68,7 @@ final class RuleEnginePropertiesNormalizer implements NormalizerInterface, Seria
         return $this->decorated->normalize($object, $format, $context);
     }
 
-    public function supportsNormalization($data, string $format = null): bool
+    public function supportsNormalization(mixed $data, string $format = null, array $context = []): bool
     {
         if ($data instanceof Condition || $data instanceof CollectionConditionInterface) {
             return true;
@@ -111,7 +99,7 @@ final class RuleEnginePropertiesNormalizer implements NormalizerInterface, Seria
     /**
      * {@inheritDoc}
      */
-    public function denormalize($data, string $type, string $format = null, array $context = []): mixed
+    public function denormalize(mixed $data, string $type, string $format = null, array $context = []): mixed
     {
         if (TriggerEventColumn::class === $type) {
             foreach ($this->eventListenerFactory->create() as $eventMetaData) {
@@ -141,7 +129,7 @@ final class RuleEnginePropertiesNormalizer implements NormalizerInterface, Seria
     /**
      * {@inheritDoc}
      */
-    public function supportsDenormalization($data, string $type, string $format = null): bool
+    public function supportsDenormalization(mixed $data, string $type, string $format = null, array $context = []): bool
     {
         if (TriggerEventColumn::class === $type) {
             return true;

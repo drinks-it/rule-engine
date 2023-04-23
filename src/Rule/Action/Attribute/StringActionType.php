@@ -1,7 +1,7 @@
 <?php
 /*
  * This file is part of Rule Engine Symfony Bundle.
- * © 2010-2022 DRINKS | Silverbogen AG
+ * © 2010-2023 DRINKS | Silverbogen AG
  */
 
 declare(strict_types=1);
@@ -59,7 +59,7 @@ class StringActionType extends Action implements StringActionTypeInterface
         }
 
         if (!method_exists($objectToSet, $setMethodNameField)) {
-            throw new MethodDoesNotExistException(\get_class($objectToSet), $setMethodNameField);
+            throw new MethodDoesNotExistException($objectToSet::class, $setMethodNameField);
         }
 
         $resultSet = $this->actionsFields['pattern'];
@@ -67,7 +67,7 @@ class StringActionType extends Action implements StringActionTypeInterface
             $resultSet = str_replace($macro, $this->getValueFromObjectByMacros($objectEntity, $macro), $resultSet);
         }
 
-        $resultSet = $this->normalizeResult($resultSet, \get_class($objectToSet), $this->getFieldName());
+        $resultSet = $this->normalizeResult($resultSet, $objectToSet::class, $this->getFieldName());
 
         $objectToSet->{$setMethodNameField}($resultSet);
 

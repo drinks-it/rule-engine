@@ -1,7 +1,7 @@
 <?php
 /*
  * This file is part of Rule Engine Symfony Bundle.
- * © 2010-2022 DRINKS | Silverbogen AG
+ * © 2010-2023 DRINKS | Silverbogen AG
  */
 
 declare(strict_types=1);
@@ -32,7 +32,7 @@ final class DenormalizeCondition
         }
 
         return [
-            'class_collection' => \get_class($conditions),
+            'class_collection' => $conditions::class,
             'elements' => array_map(fn (Condition $condition) => $this->denormalizeElement($condition), $conditions->getValues() ?? []),
         ];
     }
@@ -57,7 +57,7 @@ final class DenormalizeCondition
     public function denormalizeAttributeType(AttributeConditionTypeInterface $attributeConditionType): array
     {
         return [
-            'class_condition' => \get_class($attributeConditionType),
+            'class_condition' => $attributeConditionType::class,
             'properties' => [
                 'class_resource' => $attributeConditionType->getClassResource(),
                 'resource_short_name' => $attributeConditionType->getResourceShortName(),

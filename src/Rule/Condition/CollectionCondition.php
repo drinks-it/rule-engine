@@ -1,7 +1,7 @@
 <?php
 /*
  * This file is part of Rule Engine Symfony Bundle.
- * © 2010-2022 DRINKS | Silverbogen AG
+ * © 2010-2023 DRINKS | Silverbogen AG
  */
 
 declare(strict_types=1);
@@ -33,7 +33,7 @@ class CollectionCondition extends ArrayCollection implements CollectionCondition
                 $resourceClass = $condition->getAttributeCondition()->getClassResource();
 
                 if (
-                    (\is_object($objectEntity) && \get_class($objectEntity) === $resourceClass)
+                    (\is_object($objectEntity) && $objectEntity::class === $resourceClass)
                     || \is_array($objectEntity)
                 ) {
                     $attributesResults[] = $this->checkAttributesConditions(
@@ -102,7 +102,7 @@ class CollectionCondition extends ArrayCollection implements CollectionCondition
             $methodName = StrEntity::getGetterNameMethod($fieldName);
 
             if (!method_exists($objectEntity, $methodName)) {
-                throw new MethodDoesNotExistException(\get_class($objectEntity), $methodName);
+                throw new MethodDoesNotExistException($objectEntity::class, $methodName);
             }
             $value = $objectEntity->{$methodName}();
         }

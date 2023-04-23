@@ -1,14 +1,15 @@
 <?php
 /*
  * This file is part of Rule Engine Symfony Bundle.
- * © 2010-2022 DRINKS | Silverbogen AG
+ * © 2010-2023 DRINKS | Silverbogen AG
  */
 
 declare(strict_types=1);
 
 namespace Tests\DrinksIt\RuleEngineBundle\ApiPlatform\DataPersister;
 
-use DrinksIt\RuleEngineBundle\ApiPlatform\DataPersister\PlainRuleEntityDataPersister;
+use ApiPlatform\Metadata\Operation;
+use DrinksIt\RuleEngineBundle\ApiPlatform\Process\PlainRuleEntityProcess;
 use DrinksIt\RuleEngineBundle\Rule\CollectionActionsInterface;
 use DrinksIt\RuleEngineBundle\Rule\CollectionConditionInterface;
 use DrinksIt\RuleEngineBundle\Rule\PlainFieldRuleEntityInterface;
@@ -18,7 +19,7 @@ use DrinksIt\RuleEngineBundle\Serializer\SerializerConditionsFieldInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
-class PlainRuleEntityDataPersisterTest extends TestCase
+class PlainRuleEntityProcessTest extends TestCase
 {
     /**
      *
@@ -28,7 +29,7 @@ class PlainRuleEntityDataPersisterTest extends TestCase
     public function testDataPersister($dataEntity): void
     {
         $context = [
-            'rule_entity_class_name' => \get_class($dataEntity),
+            'rule_entity_class_name' => $dataEntity::class,
             'rule_default_resource' => null,
         ];
 
@@ -49,21 +50,13 @@ class PlainRuleEntityDataPersisterTest extends TestCase
             $this->equalTo($context)
         )->willReturn($this->createMock(CollectionConditionInterface::class));
 
-        $plainRuleEntityDataPersister = new PlainRuleEntityDataPersister(
+        $plainRuleEntityDataPersister = new PlainRuleEntityProcess(
             $serializerAction,
             $this->createMock(SerializerConditionsFieldInterface::class)
         );
 
-        $this->assertIsBool($plainRuleEntityDataPersister->supports($dataEntity));
-
-        if (!$plainRuleEntityDataPersister->supports($dataEntity)) {
-            return;
-        }
-
         $dataEntity->expects($this->once())->method('clearPlains');
-        $this->assertEquals($dataEntity, $plainRuleEntityDataPersister->persist($dataEntity));
-        $this->assertEquals($dataEntity, $plainRuleEntityDataPersister->remove($dataEntity));
-        $this->assertTrue($plainRuleEntityDataPersister->resumable());
+        $this->assertEquals($dataEntity, $plainRuleEntityDataPersister->process($dataEntity, $this->createMock(Operation::class)));
     }
 
     public function providerPersists(): iterable
