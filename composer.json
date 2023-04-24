@@ -3,9 +3,9 @@
     "description": "Rule Engine Bundle is a (sub)system which allows end-user to run specified actions if they met specified criteria(conditions) on specified events.",
     "type": "symfony-bundle",
     "require": {
-        "php": "^8.0 || ^8.1 || ^8.2",
+        "php": "^8.1 || ^8.2",
         "langleyfoxall/math_eval": "^2.0",
-        "symfony/config": "^6.0 || ^6.1 || ^6.2",
+        "symfony/config": "^6.1 || ^6.2",
         "symfony/dependency-injection": "^6.0 || ^6.1 || ^6.2",
         "symfony/http-kernel": "^6.0 || ^6.1 || ^6.2",
         "symfony/serializer": "^6.0 || ^6.1 || ^6.2"
@@ -29,10 +29,7 @@
     "autoload-dev": {
         "psr-4": {
             "Tests\\DrinksIt\\RuleEngineBundle\\": "tests/"
-        },
-        "files": [
-            "polify-api-platform.php"
-        ]
+        }
     },
     "authors": [
         {
