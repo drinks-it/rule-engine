@@ -1,64 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/6.1/phpunit.xsd"
-         colors="true"
-         bootstrap="tests/bootstrap.php">
-    <php>
-        <ini name="error_reporting" value="-1" />
-        <env name="SHELL_VERBOSITY" value="-1" />
-        <env name="SYMFONY_DEPRECATIONS_HELPER" value="9999" />
-        <server name="TMP_ROOT_DIRECTORY" value="var" />
-    </php>
-    <testsuites>
-        <testsuite name="Bundle">
-            <file>tests/RuleEngineBundleTest.php</file>
-        </testsuite>
-        <testsuite name="DI">
-            <directory>tests/DependencyInjection</directory>
-        </testsuite>
-        <testsuite name="Doctrine">
-            <directory>tests/Doctrine</directory>
-        </testsuite>
-        <testsuite name="Mapping">
-            <directory>tests/Mapping</directory>
-        </testsuite>
-        <testsuite name="Metadata">
-            <directory>tests/Metadata</directory>
-        </testsuite>
-        <testsuite name="Rule_Condition_Attributes">
-            <directory>tests/Rule/Condition/Attribute</directory>
-        </testsuite>
-        <testsuite name="Rule_Action_Attributes">
-            <directory>tests/Rule/Action/Attribute</directory>
-        </testsuite>
-        <testsuite name="Rule">
-            <directory>tests/Rule</directory>
-            <exclude>tests/Rule/Condition/Attribute</exclude>
-            <exclude>tests/Rule/Action/Attribute</exclude>
-        </testsuite>
-        <testsuite name="Event">
-            <directory>tests/Event</directory>
-        </testsuite>
-        <testsuite name="Serializer">
-            <directory>tests/Serializer</directory>
-        </testsuite>
-        <testsuite name="Api Platform">
-            <directory>tests/ApiPlatform</directory>
-        </testsuite>
-        <testsuite name="Validator">
-            <directory>tests/Validator</directory>
-        </testsuite>
-    </testsuites>
-
-    <filter>
-        <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">src</directory>
-            <exclude>
-                <directory>src/Resources</directory>
-                <directory>src/ApiPlatform/Schema</directory>
-                <file>src/ApiPlatform/SchemaFactory.php</file>
-            </exclude>
-        </whitelist>
-    </filter>
-
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd" colors="true" bootstrap="tests/bootstrap.php">
+  <coverage processUncoveredFiles="true">
+    <include>
+      <directory suffix=".php">src</directory>
+    </include>
+    <exclude>
+      <directory>src/Resources</directory>
+      <directory>src/ApiPlatform/Schema</directory>
+      <file>src/ApiPlatform/SchemaFactory.php</file>
+    </exclude>
+  </coverage>
+  <php>
+    <ini name="error_reporting" value="-1"/>
+    <env name="SHELL_VERBOSITY" value="-1"/>
+    <env name="SYMFONY_DEPRECATIONS_HELPER" value="9999"/>
+    <server name="TMP_ROOT_DIRECTORY" value="var"/>
+  </php>
+  <testsuites>
+    <testsuite name="Bundle">
+      <file>tests/RuleEngineBundleTest.php</file>
+    </testsuite>
+    <testsuite name="DI">
+      <directory>tests/DependencyInjection</directory>
+    </testsuite>
+    <testsuite name="Doctrine">
+      <directory>tests/Doctrine</directory>
+    </testsuite>
+    <testsuite name="Mapping">
+      <directory>tests/Mapping</directory>
+    </testsuite>
+    <testsuite name="Metadata">
+      <directory>tests/Metadata</directory>
+    </testsuite>
+    <testsuite name="Rule_Condition_Attributes">
+      <directory>tests/Rule/Condition/Attribute</directory>
+    </testsuite>
+    <testsuite name="Rule_Action_Attributes">
+      <directory>tests/Rule/Action/Attribute</directory>
+    </testsuite>
+    <testsuite name="Rule">
+      <directory>tests/Rule</directory>
+      <exclude>tests/Rule/Condition/Attribute</exclude>
+      <exclude>tests/Rule/Action/Attribute</exclude>
+    </testsuite>
+    <testsuite name="Event">
+      <directory>tests/Event</directory>
+    </testsuite>
+    <testsuite name="Serializer">
+      <directory>tests/Serializer</directory>
+    </testsuite>
+    <testsuite name="Api Platform">
+      <directory>tests/ApiPlatform</directory>
+    </testsuite>
+    <testsuite name="Validator">
+      <directory>tests/Validator</directory>
+    </testsuite>
+  </testsuites>
 </phpunit>
