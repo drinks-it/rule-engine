@@ -8,8 +8,9 @@ declare(strict_types=1);
 
 namespace DrinksIt\RuleEngineBundle\ApiPlatform;
 
-use ApiPlatform\Core\JsonSchema\Schema;
-use ApiPlatform\Core\JsonSchema\SchemaFactoryInterface;
+use ApiPlatform\JsonSchema\Schema;
+use ApiPlatform\JsonSchema\SchemaFactoryInterface;
+use ApiPlatform\Metadata\Operation;
 use DrinksIt\RuleEngineBundle\ApiPlatform\Schema\ActionSchemaFactoryInterface;
 use DrinksIt\RuleEngineBundle\ApiPlatform\Schema\ConditionSchemaFactoryInterface;
 use DrinksIt\RuleEngineBundle\Rule\Action\ActionInterface;
@@ -35,17 +36,14 @@ final class SchemaFactory implements SchemaFactoryInterface
         ConditionSchemaFactoryInterface $conditionSchemaFactory,
         ActionSchemaFactoryInterface $actionSchemaFactory
     ) {
-        $this->decoder = $schemaFactory;
+        $this->decoder                = $schemaFactory;
         $this->conditionSchemaFactory = $conditionSchemaFactory;
-        $this->actionSchemaFactory = $actionSchemaFactory;
+        $this->actionSchemaFactory    = $actionSchemaFactory;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function buildSchema(string $className, string $format = 'json', string $type = Schema::TYPE_OUTPUT, ?string $operationType = null, ?string $operationName = null, ?Schema $schema = null, ?array $serializerContext = null, bool $forceCollection = false): Schema
+    public function buildSchema(string $className, string $format = 'json', string $type = Schema::TYPE_OUTPUT, ?Operation $operation = null, ?Schema $schema = null, ?array $serializerContext = null, bool $forceCollection = false): Schema
     {
-        $schemaBuild = $this->decoder->buildSchema($className, $format, $type, $operationType, $operationName, $schema, $serializerContext);
+        $schemaBuild = $this->decoder->buildSchema($className, $format, $type, $operation, $schema, $serializerContext);
 
         if (!\in_array($className, self::SCHEMAS_BUILDS)) {
             return $schemaBuild;
@@ -55,8 +53,7 @@ final class SchemaFactory implements SchemaFactoryInterface
             'className'         => $className,
             'format'            => $format,
             'type'              => $type,
-            'operationType'     => $operationType,
-            'operationName'     => $operationName,
+            'operation'         => $operation,
             'serializerContext' => $serializerContext,
             'forceCollection'   => $forceCollection,
         ];
@@ -77,7 +74,7 @@ final class SchemaFactory implements SchemaFactoryInterface
             case TriggerEventColumn::class:
                 $definitions = $schemaBuild->getDefinitions();
                 $definitions->offsetSet($schemaBuild->getRootDefinitionKey(), new \ArrayObject([
-                    'type' => 'string',
+                    'type'    => 'string',
                     'example' => 'TriggerClassName',
                 ]));
 

@@ -29,7 +29,6 @@ final class RuleEntityResourceFactory implements RuleEntityResourceFactoryInterf
     public function create(string $entityClass): ?ResourceRuleEntity
     {
         $annotationResource = $this->annotationExtractor->getRuleEntityResourceAnnotation($entityClass);
-
         if (!$annotationResource) {
             return null;
         }

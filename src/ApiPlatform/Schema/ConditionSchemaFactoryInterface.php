@@ -8,8 +8,8 @@ declare(strict_types=1);
 
 namespace DrinksIt\RuleEngineBundle\ApiPlatform\Schema;
 
-use ApiPlatform\Core\JsonSchema\Schema;
-use ApiPlatform\Core\JsonSchema\SchemaFactoryInterface;
+use ApiPlatform\JsonSchema\Schema;
+use ApiPlatform\JsonSchema\SchemaFactoryInterface;
 
 interface ConditionSchemaFactoryInterface
 {

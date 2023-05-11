@@ -22,7 +22,7 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\SerializerAwareInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 
-final class RuleEnginePropertiesNormalizer implements NormalizerInterface, SerializerAwareInterface, DenormalizerInterface
+final class RuleEnginePropertiesNormalizer implements DenormalizerInterface, NormalizerInterface, SerializerAwareInterface
 {
     public function __construct(
         /**
@@ -36,7 +36,6 @@ final class RuleEnginePropertiesNormalizer implements NormalizerInterface, Seria
     }
 
     /**
-     * @param mixed $object
      * @throws ExceptionInterface
      */
     public function normalize(mixed $object, string $format = null, array $context = []): mixed

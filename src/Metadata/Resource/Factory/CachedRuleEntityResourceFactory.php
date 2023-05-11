@@ -25,11 +25,13 @@ final class CachedRuleEntityResourceFactory implements RuleEntityResourceFactory
     public function __construct(?CacheItemPoolInterface $cacheItemPool, RuleEntityResourceFactoryInterface $decorated)
     {
         $this->cacheItemPool = $cacheItemPool;
-        $this->decorated = $decorated;
+        $this->decorated     = $decorated;
     }
+
     public function create(string $entityClass): ?ResourceRuleEntity
     {
-        $cacheKey = self::CACHE_KEY_PREFIX.md5($entityClass);
+        return $this->decorated->create($entityClass);
+        $cacheKey = self::CACHE_KEY_PREFIX.\md5($entityClass);
 
         return $this->getCached($cacheKey, fn () => $this->decorated->create($entityClass));
     }

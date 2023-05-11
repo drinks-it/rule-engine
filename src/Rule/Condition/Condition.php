@@ -41,7 +41,7 @@ final class Condition
      * @see TYPE_ALL
      * @see TYPE_ATTRIBUTE
      */
-    private string $type = self::TYPE_ANY;
+    private ?string $type = self::TYPE_ANY;
 
     /**
      * If ifType == IF_ATTRIBUTE.
@@ -51,13 +51,13 @@ final class Condition
     private ?CollectionConditionInterface $subConditions = null;
 
     public function __construct(
-        string $type,
-        int $priority,
+        string $type = self::TYPE_ANY,
+        int $priority = 1,
         AttributeConditionTypeInterface $attributeCondition = null,
         CollectionConditionInterface $subConditions = null,
         bool $result = null
     ) {
-        $this->type = $type;
+        $this->type     = $type;
         $this->priority = $priority;
 
         if ($attributeCondition instanceof AttributeConditionTypeInterface) {
@@ -103,9 +103,6 @@ final class Condition
         return $this->subConditions;
     }
 
-    /**
-     * @param AttributeConditionTypeInterface $attributeCondition
-     */
     public function setAttributeCondition(AttributeConditionTypeInterface $attributeCondition): self
     {
         $this->attributeCondition = $attributeCondition;
@@ -123,11 +120,7 @@ final class Condition
         return $this;
     }
 
-    /**
-     * @param bool $result
-     * @return Condition
-     */
-    public function setResult(bool $result): Condition
+    public function setResult(bool $result): self
     {
         $this->result = $result;
 
@@ -152,11 +145,11 @@ final class Condition
         }
 
         return [
-            'priority' => $this->getPriority(),
-            'type' => $this->getType(),
-            'result' => $this->isNotDefaultResult() ? null : $this->getResultBlock(),
+            'priority'            => $this->getPriority(),
+            'type'                => $this->getType(),
+            'result'              => $this->isNotDefaultResult() ? null : $this->getResultBlock(),
             'attribute_condition' => $attributeCondition,
-            'sub_conditions' => $subConditions,
+            'sub_conditions'      => $subConditions,
         ];
     }
 }

@@ -8,8 +8,8 @@ declare(strict_types=1);
 
 namespace DrinksIt\RuleEngineBundle\ApiPlatform\Schema;
 
-use ApiPlatform\Core\JsonSchema\Schema;
-use ApiPlatform\Core\JsonSchema\SchemaFactoryInterface;
+use ApiPlatform\JsonSchema\Schema;
+use ApiPlatform\JsonSchema\SchemaFactoryInterface;
 use DrinksIt\RuleEngineBundle\Rule\Condition\Condition;
 use DrinksIt\RuleEngineBundle\Rule\Condition\Types\BooleanAttributeConditionTypeInterface;
 use DrinksIt\RuleEngineBundle\Rule\Condition\Types\NumberAttributeConditionTypeInterface;
@@ -21,7 +21,7 @@ final class ConditionSchemaFactory implements ConditionSchemaFactoryInterface
     {
         if (isset($schemaContext['condition_attribute'])) {
             $definitionName = 'Attribute'.$schema->getRootDefinitionKey();
-            $ref = Schema::VERSION_OPENAPI === $schema->getVersion() ? '#/components/schemas/'.$definitionName : '#/definitions/'.$definitionName;
+            $ref            = Schema::VERSION_OPENAPI === $schema->getVersion() ? '#/components/schemas/'.$definitionName : '#/definitions/'.$definitionName;
 
             $newDefinitions = $schema->getDefinitions();
             unset($newDefinitions[$schema->getRootDefinitionKey()]);
@@ -31,7 +31,7 @@ final class ConditionSchemaFactory implements ConditionSchemaFactoryInterface
             $newDefinitions->offsetSet(
                 $definitionName,
                 new \ArrayObject([
-                    'type' => 'object',
+                    'type'     => 'object',
                     'required' => [
                         'type',
                         'field',
@@ -64,13 +64,12 @@ final class ConditionSchemaFactory implements ConditionSchemaFactoryInterface
                 $schemaContext['className'],
                 $schemaContext['format'],
                 $schemaContext['type'],
-                $schemaContext['operationType'],
-                $schemaContext['operationName'],
+                $schemaContext['operation'],
                 new Schema($schema->getVersion()),
                 $schemaContext['serializerContext'],
                 $schemaContext['forceCollection']
             ),
-            array_merge($schemaContext, ['condition_attribute' => true])
+            \array_merge($schemaContext, ['condition_attribute' => true])
         );
 
         $newDefinitions = $schema->getDefinitions();
@@ -88,7 +87,7 @@ final class ConditionSchemaFactory implements ConditionSchemaFactoryInterface
     private function makeSchemaForCondition($root, $subAttributes = null): \ArrayObject
     {
         return new \ArrayObject([
-            'type' => 'object',
+            'type'     => 'object',
             'required' => [
                 'type',
                 'exceptedResult',
@@ -96,22 +95,22 @@ final class ConditionSchemaFactory implements ConditionSchemaFactoryInterface
             ],
             'properties' => [
                 'type' => [
-                    'type' => 'string',
+                    'type'    => 'string',
                     'example' => Condition::TYPE_ALL,
-                    'enum' => [Condition::TYPE_ALL, Condition::TYPE_ANY],
+                    'enum'    => [Condition::TYPE_ALL, Condition::TYPE_ANY],
                 ],
                 'exceptedResult' => ['type' => 'boolean', 'example' => true],
-                'subConditions' => [
-                    'type' => 'array',
+                'subConditions'  => [
+                    'type'  => 'array',
                     'items' => [
                         'anyOf' => [
                             [
-                                '$ref' => $root,
-                                'description' => '$ref -> ' . $root,
-                                'example' => [
-                                    'type' => Condition::TYPE_ANY,
+                                '$ref'        => $root,
+                                'description' => '$ref -> '.$root,
+                                'example'     => [
+                                    'type'           => Condition::TYPE_ANY,
                                     'exceptedResult' => false,
-                                    'subConditions' => [
+                                    'subConditions'  => [
                                         [
                                             'type'      => Condition::TYPE_ATTRIBUTE,
                                             'field'     => 'tax',

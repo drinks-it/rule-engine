@@ -15,8 +15,9 @@ use DrinksIt\RuleEngineBundle\Mapping\RuleEntityResource;
 final class RuleEntityAttributeExtractor implements RuleEntityExtractorInterface
 {
     private RuleEntityExtractorInterface $decorated;
+
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function __construct(RuleEntityExtractorInterface $decorated)
     {
@@ -60,17 +61,17 @@ final class RuleEntityAttributeExtractor implements RuleEntityExtractorInterface
             return [];
         }
 
-        $class = new \ReflectionClass($classResource);
-        $properties = array_filter(
+        $class      = new \ReflectionClass($classResource);
+        $properties = \array_filter(
             $class->getProperties(),
-            fn (\ReflectionProperty $property) => !!$property->getAttributes(RuleEntityProperty::class)
+            fn (\ReflectionProperty $property) => (bool) $property->getAttributes(RuleEntityProperty::class)
         );
 
         if (!$properties) {
             return $this->decorated->getRuleEntityPropertiesNames($classResource);
         }
 
-        return array_map(fn (\ReflectionProperty $property) => $property->getName(), $properties);
+        return \array_map(fn (\ReflectionProperty $property) => $property->getName(), $properties);
     }
 
     public function getRuleEntityPropertyAnnotation(string $classResource, string $propertyName): ?RuleEntityProperty
@@ -83,7 +84,7 @@ final class RuleEntityAttributeExtractor implements RuleEntityExtractorInterface
             return null;
         }
 
-        $class = new \ReflectionClass($classResource);
+        $class    = new \ReflectionClass($classResource);
         $property = $class->getProperty($propertyName);
 
         $ruleProperty = $property->getAttributes(RuleEntityProperty::class);
@@ -107,8 +108,8 @@ final class RuleEntityAttributeExtractor implements RuleEntityExtractorInterface
             return $this->decorated->getRuleEntityClassNameFromRelationField($classResource, $propertyRelationName);
         }
 
-        $class = new \ReflectionClass($classResource);
-        $properties = array_filter(
+        $class      = new \ReflectionClass($classResource);
+        $properties = \array_filter(
             $class->getProperties(),
             fn (\ReflectionProperty $reflectionProperty) => $reflectionProperty->getName() === $propertyRelationName
         );
@@ -117,7 +118,7 @@ final class RuleEntityAttributeExtractor implements RuleEntityExtractorInterface
             return $this->decorated->getRuleEntityClassNameFromRelationField($classResource, $propertyRelationName);
         }
 
-        $propertyRelationReflection = array_pop($properties);
+        $propertyRelationReflection = \array_pop($properties);
 
         if (!$propertyRelationReflection instanceof \ReflectionProperty) {
             return $this->decorated->getRuleEntityClassNameFromRelationField($classResource, $propertyRelationName);
@@ -141,17 +142,17 @@ final class RuleEntityAttributeExtractor implements RuleEntityExtractorInterface
             return null;
         }
 
-        if (!property_exists($mappingRelation, 'targetEntity')) {
+        if (!\property_exists($mappingRelation, 'targetEntity')) {
             return null;
         }
 
-        if (!class_exists($mappingRelation->targetEntity)) {
-            $targetEntityClassName = $class->getNamespaceName() . '\\' . $mappingRelation->targetEntity;
+        if (!\class_exists($mappingRelation->targetEntity)) {
+            $targetEntityClassName = $class->getNamespaceName().'\\'.$mappingRelation->targetEntity;
         } else {
             $targetEntityClassName = $mappingRelation->targetEntity;
         }
 
-        if (!class_exists($targetEntityClassName)) {
+        if (!\class_exists($targetEntityClassName)) {
             return null;
         }
 

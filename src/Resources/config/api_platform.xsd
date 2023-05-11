@@ -5,11 +5,7 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
 
-        <service id="DrinksIt\RuleEngineBundle\ApiPlatform\DataPersister\PlainRuleEntityDataPersister" class="DrinksIt\RuleEngineBundle\ApiPlatform\DataPersister\PlainRuleEntityDataPersister">
-        </service>
-        <service id="rule_engine.api_platform.plain_data_persister" alias="DrinksIt\RuleEngineBundle\ApiPlatform\DataPersister\PlainRuleEntityDataPersister" />
-
-        <service id="DrinksIt\RuleEngineBundle\ApiPlatform\Process\PlainRuleEntityProcess">
+        <service id="DrinksIt\RuleEngineBundle\ApiPlatform\Process\PlainRuleEntityProcess" class="DrinksIt\RuleEngineBundle\ApiPlatform\Process\PlainRuleEntityProcess">
             <argument type="service" id="rule_engine.serializer.actions_collection" />
             <argument type="service" id="rule_engine.serializer.conditions_collection" />
             <tag name="api_platform.state_processor" />
