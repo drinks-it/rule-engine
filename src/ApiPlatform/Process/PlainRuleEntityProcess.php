@@ -24,7 +24,7 @@ final class PlainRuleEntityProcess implements ProcessorInterface
     ) {
     }
 
-    public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = [])
+    public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): PlainFieldRuleEntityInterface
     {
         if ($operation instanceof DeleteOperationInterface) {
             return $data;
