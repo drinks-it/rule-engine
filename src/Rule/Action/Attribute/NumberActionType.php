@@ -11,17 +11,21 @@ namespace DrinksIt\RuleEngineBundle\Rule\Action\Attribute;
 use DrinksIt\RuleEngineBundle\Doctrine\Helper\StrEntity;
 use DrinksIt\RuleEngineBundle\Rule\Action\Action;
 use DrinksIt\RuleEngineBundle\Rule\Action\ActionInterface;
+use DrinksIt\RuleEngineBundle\Rule\Action\ActionLoggerInterface;
 use DrinksIt\RuleEngineBundle\Rule\Action\Types\NumberActionTypeInterface;
 use DrinksIt\RuleEngineBundle\Rule\Condition\Exception\MethodDoesNotExistException;
 use DrinksIt\RuleEngineBundle\Rule\Exception\TypeArgumentRuleException;
 use MathParser\Exceptions\MathParserException;
+use Psr\Log\LoggerInterface;
 
-class NumberActionType extends Action implements NumberActionTypeInterface
+class NumberActionType extends Action implements NumberActionTypeInterface, ActionLoggerInterface
 {
     protected array $actionsFields = [
         'math' => null,
         'macros' => [],
     ];
+
+    private ?LoggerInterface $logger = null;
 
     public static function getType(): string
     {
@@ -79,9 +83,24 @@ class NumberActionType extends Action implements NumberActionTypeInterface
             }
         }
 
+        if ($this->logger) {
+            $this->logger->debug('Action number execute', [
+                'math' => $math,
+                'macros' => $macros,
+            ]);
+        }
+
         $value = $this->normalizeResult(math_eval($math), $objectToSet::class, $this->getFieldName());
 
         $objectToSet->{$methodSetField}($value);
+
+        if ($this->logger) {
+            $this->logger->debug('Action number execute result', [
+                'math' => $math,
+                'macros' => $macros,
+                'value' => $value,
+            ]);
+        }
 
         return $objectEntity;
     }
@@ -128,5 +147,10 @@ class NumberActionType extends Action implements NumberActionTypeInterface
         } catch (MathParserException $exception) {
             return false;
         }
+    }
+
+    public function setLogger(LoggerInterface $logger): void
+    {
+        $this->logger = $logger;
     }
 }

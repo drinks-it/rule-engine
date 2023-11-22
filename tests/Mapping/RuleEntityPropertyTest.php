@@ -22,6 +22,9 @@ class RuleEntityPropertyTest extends TestCase
 
     public function testParseAnnotation(): void
     {
+        if (!class_exists('Doctrine\Common\Annotations\AnnotationReader')) {
+            $this->markTestSkipped('Doctrine annotations not Doctrine\Common\Annotations\AnnotationReader');
+        }
         $this->loadResourceWithValidProperty(self::CLASS_NAME_ENTITY);
         $this->assertTrue(ClassHelper::exist(self::CLASS_NAME_ENTITY));
 

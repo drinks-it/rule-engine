@@ -148,4 +148,13 @@ final class RuleEnginePropertiesNormalizer implements DenormalizerInterface, Nor
 
         return false;
     }
+
+    public function getSupportedTypes(?string $format): array
+    {
+        if (method_exists($this->decorated, 'getSupportedTypes')) {
+            return $this->decorated->getSupportedTypes($format);
+        }
+
+        return [];
+    }
 }

@@ -17,7 +17,7 @@ class ApiPlatformService implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container): void
     {
-        if (\class_exists('ApiPlatform\Symfony\Bundle\ApiPlatformBundle')) {
+        if (class_exists('ApiPlatform\Symfony\Bundle\ApiPlatformBundle')) {
             $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../../Resources/config'));
             $loader->load('api_platform.xsd');
         }

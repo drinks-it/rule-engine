@@ -15,10 +15,13 @@ use DrinksIt\RuleEngineBundle\Rule\CollectionActionsInterface;
 use DrinksIt\RuleEngineBundle\Rule\Exception\ClassDoesNotImplementInterfaceRuleException;
 use DrinksIt\RuleEngineBundle\Rule\Exception\TypeArgumentRuleException;
 use DrinksIt\RuleEngineBundle\Serializer\NormalizerPropertyInterface;
+use Psr\Log\LoggerInterface;
 
-class CollectionActions extends ArrayCollection implements CollectionActionsInterface, ActionPropertyNormalizerInterface
+class CollectionActions extends ArrayCollection implements CollectionActionsInterface, ActionPropertyNormalizerInterface, ActionLoggerInterface
 {
     private ?NormalizerPropertyInterface $normalizerProperty = null;
+
+    private ?LoggerInterface $logger = null;
 
     public function execute($objectEntity): void
     {
@@ -33,6 +36,10 @@ class CollectionActions extends ArrayCollection implements CollectionActionsInte
 
             if ($action instanceof ActionPropertyNormalizerInterface && $this->normalizerProperty) {
                 $action->setNormalizer($this->normalizerProperty);
+            }
+
+            if ($action instanceof ActionLoggerInterface && $this->logger) {
+                $action->setLogger($this->logger);
             }
 
             $resourceClass = $action->getResourceClass();
@@ -60,5 +67,10 @@ class CollectionActions extends ArrayCollection implements CollectionActionsInte
         $this->normalizerProperty = $normalizerProperty;
 
         return $this;
+    }
+
+    public function setLogger(LoggerInterface $logger): void
+    {
+        $this->logger = $logger;
     }
 }

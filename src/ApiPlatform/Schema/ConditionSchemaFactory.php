@@ -69,7 +69,7 @@ final class ConditionSchemaFactory implements ConditionSchemaFactoryInterface
                 $schemaContext['serializerContext'],
                 $schemaContext['forceCollection']
             ),
-            \array_merge($schemaContext, ['condition_attribute' => true])
+            array_merge($schemaContext, ['condition_attribute' => true])
         );
 
         $newDefinitions = $schema->getDefinitions();

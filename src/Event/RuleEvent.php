@@ -11,6 +11,7 @@ namespace DrinksIt\RuleEngineBundle\Event;
 use DrinksIt\RuleEngineBundle\Doctrine\RuleEntityFinderInterface;
 use DrinksIt\RuleEngineBundle\Event\Exception\ItemObservedEntityNotObjectException;
 use DrinksIt\RuleEngineBundle\Event\Factory\RuleEventListenerFactoryInterface;
+use DrinksIt\RuleEngineBundle\Rule\Action\ActionLoggerInterface;
 use DrinksIt\RuleEngineBundle\Rule\ActionPropertyNormalizerInterface;
 use DrinksIt\RuleEngineBundle\Rule\ConditionPropertyNormalizerInterface;
 use DrinksIt\RuleEngineBundle\Serializer\NormalizerPropertyInterface;
@@ -80,6 +81,10 @@ final class RuleEvent
 
                 if ($actions instanceof ActionPropertyNormalizerInterface) {
                     $actions->setNormalizer($this->normalizerProperty);
+                }
+
+                if ($actions instanceof ActionLoggerInterface) {
+                    $actions->setLogger($this->logger);
                 }
 
                 $actions->execute($observedEntity);
