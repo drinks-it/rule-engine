@@ -26,6 +26,10 @@ class RuleEntityAnnotationExtractorTest extends TestCase
 
     public function testConstructEmptyReader(): void
     {
+        if (!class_exists('Doctrine\Common\Annotations\Reader')) {
+            $this->markTestSkipped('Doctrine annotations not Doctrine\Common\Annotations\Reader');
+        }
+
         $rule = new RuleEntityAnnotationExtractor();
 
         $this->assertInstanceOf(RuleEntityExtractorInterface::class, $rule);
@@ -46,6 +50,10 @@ class RuleEntityAnnotationExtractorTest extends TestCase
 
     public function testGetRuleEntityResourceAnnotation(): void
     {
+        if (!class_exists('Doctrine\Common\Annotations\Reader')) {
+            $this->markTestSkipped('Doctrine annotations not Doctrine\Common\Annotations\Reader');
+        }
+
         $className = 'EntityClassNameRuleEntityAnnotationExtractor';
 
         $mockReader = $this->createMock(Reader::class);
@@ -73,6 +81,10 @@ class RuleEntityAnnotationExtractorTest extends TestCase
 
     public function testGetRuleEntityPropertyAnnotation(): void
     {
+        if (!class_exists('Doctrine\Common\Annotations\Reader')) {
+            $this->markTestSkipped('Doctrine annotations not Doctrine\Common\Annotations\Reader');
+        }
+
         $className = 'EntityClassNameRuleEntityAnnotationExtractorProperty';
 
         $mockReader = $this->createMock(Reader::class);

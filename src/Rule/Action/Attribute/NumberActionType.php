@@ -151,6 +151,6 @@ class NumberActionType extends Action implements NumberActionTypeInterface, Acti
 
     public function setLogger(LoggerInterface $logger): void
     {
-       $this->logger = $logger;
+        $this->logger = $logger;
     }
 }

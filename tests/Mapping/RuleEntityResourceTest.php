@@ -28,6 +28,9 @@ class RuleEntityResourceTest extends TestCase
 
     public function testParseFromEntity(): void
     {
+        if (!class_exists('Doctrine\Common\Annotations\AnnotationReader')) {
+            $this->markTestSkipped('Doctrine annotations not Doctrine\Common\Annotations\AnnotationReader');
+        }
         $this->load(self::CLASS_NAME_ENTITY);
         $this->assertTrue(ClassHelper::exist(self::CLASS_NAME_ENTITY));
 
@@ -40,6 +43,9 @@ class RuleEntityResourceTest extends TestCase
 
     public function testRuleEntityResourceSupportOnlyClass(): void
     {
+        if (!class_exists('Doctrine\Common\Annotations\AnnotationException')) {
+            $this->markTestSkipped('Doctrine annotations not Doctrine\Common\Annotations\AnnotationException');
+        }
         $this->load(self::CLASS_NAME_ENTITY);
 
         $this->expectException(AnnotationException::class);
