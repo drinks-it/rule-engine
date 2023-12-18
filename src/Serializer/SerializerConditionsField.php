@@ -109,7 +109,9 @@ final class SerializerConditionsField implements SerializerConditionsFieldInterf
 
         foreach ($collectionCondition as $condition) {
             if (!$condition instanceof Condition) {
-                throw new \RuntimeException(sprintf('Element in `%s` collection is not `%s` type', \is_object($collectionCondition) ? $collectionCondition::class : \gettype($collectionCondition), Condition::class));
+                $className = \is_object($condition) ? $condition::class : \gettype($condition);
+
+                throw new \RuntimeException(sprintf('Element in `%s` collection is not `%s` type', $className, Condition::class));
             }
 
             $valuesReturn[] = $this->encodeItemConditionToArray($condition, $context);

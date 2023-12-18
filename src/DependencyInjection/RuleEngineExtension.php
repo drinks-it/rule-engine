@@ -45,6 +45,10 @@ class RuleEngineExtension extends Extension
         $loader->load('events.xsd');
         $loader->load('serializer.xsd');
         $loader->load('validator.xsd');
+
+        if (class_exists('ApiPlatform\Symfony\Bundle\ApiPlatformBundle')) {
+            $loader->load('api_platform.xsd');
+        }
     }
 
     public function getAlias(): string

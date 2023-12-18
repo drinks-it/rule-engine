@@ -21,10 +21,6 @@ use DrinksIt\RuleEngineBundle\Rule\TriggerEventColumn;
 use DrinksIt\RuleEngineBundle\Serializer\SerializerActionsFieldInterface;
 use DrinksIt\RuleEngineBundle\Serializer\SerializerConditionsFieldInterface;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\SerializerAwareInterface;
-use Symfony\Component\Serializer\SerializerInterface;
 
 class RuleEnginePropertiesNormalizerTest extends TestCase
 {
@@ -39,23 +35,7 @@ class RuleEnginePropertiesNormalizerTest extends TestCase
     {
         [$serializerConditions, $serializerActions, $ruleEventFactory] = $this->makeMocks();
 
-        $decoratedNormalizer = $this->createMock(NormalizerInterface::class);
-
-        $decoratedNormalizer->method('supportsNormalization')->willReturn($decoratedSupported);
-
-        if ($decoratedSupported) {
-            $decoratedNormalizer->expects($this->once())->method('normalize')
-                ->with(
-                    $this->equalTo($object),
-                    $this->equalTo(null),
-                    $this->isType('array')
-                )->willReturn([
-                    1,
-                ]);
-        }
-
         $ruleEngineNormalizer = new RuleEnginePropertiesNormalizer(
-            $decoratedNormalizer,
             $serializerConditions,
             $serializerActions,
             $ruleEventFactory
@@ -63,6 +43,10 @@ class RuleEnginePropertiesNormalizerTest extends TestCase
 
         $this->assertIsBool($ruleEngineNormalizer->supportsNormalization($object));
         $this->assertFalse($ruleEngineNormalizer->supportsDenormalization([], \stdClass::class));
+
+        if ($decoratedSupported) {
+            $this->expectException(\RuntimeException::class);
+        }
 
         $dataNormalize = $ruleEngineNormalizer->normalize($object);
 
@@ -90,7 +74,6 @@ class RuleEnginePropertiesNormalizerTest extends TestCase
         [$serializerConditions, $serializerActions, $ruleEventFactory] = $this->makeMocks();
 
         $ruleEngineNormalizer = new RuleEnginePropertiesNormalizer(
-            $this->createMock(DenormalizerInterface::class),
             $serializerConditions,
             $serializerActions,
             $ruleEventFactory
@@ -108,27 +91,11 @@ class RuleEnginePropertiesNormalizerTest extends TestCase
             return;
         }
 
+        if ($decoratedSupported) {
+            $this->expectException(\RuntimeException::class);
+        }
+
         $this->assertEmpty($ruleEngineNormalizer->normalize($object));
-    }
-
-    public function testSetSerializer(): void
-    {
-        [$serializerConditions, $serializerActions, $ruleEventFactory] = $this->makeMocks();
-
-        $serializerChecked = $this->createMock(SerializerInterface::class);
-
-        $decorated = $this->createMock(SerializerAwareInterface::class);
-        $decorated->expects($this->once())->method('setSerializer')->with(
-            $this->equalTo($serializerChecked)
-        );
-        $ruleEngineNormalizer = new RuleEnginePropertiesNormalizer(
-            $decorated,
-            $serializerConditions,
-            $serializerActions,
-            $ruleEventFactory
-        );
-
-        $ruleEngineNormalizer->setSerializer($serializerChecked);
     }
 
     /**
@@ -143,13 +110,6 @@ class RuleEnginePropertiesNormalizerTest extends TestCase
     {
         [$serializerConditions, $serializerActions, $ruleEventFactory] = $this->makeMocks();
 
-        $decorated = $this->createMock(DenormalizerInterface::class);
-
-        $decorated
-            ->expects($decoratedSupported ? $this->never() : $this->once())
-            ->method('supportsDenormalization')
-            ->willReturn($decoratedSupported);
-
         if ($type === TriggerEventColumn::class) {
             $ruleEventFactory->expects($this->once())->method('create')
                 ->willReturn([
@@ -163,7 +123,6 @@ class RuleEnginePropertiesNormalizerTest extends TestCase
         }
 
         $ruleEngineNormalizer = new RuleEnginePropertiesNormalizer(
-            $decorated,
             $serializerConditions,
             $serializerActions,
             $ruleEventFactory

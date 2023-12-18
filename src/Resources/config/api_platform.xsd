@@ -16,11 +16,12 @@
         <service id="DrinksIt\RuleEngineBundle\ApiPlatform\Schema\ActionSchemaFactoryInterface" alias="rule_engine.api_platform.json_schema.action" />
 
         <!-- Normalizer -->
-        <service id="DrinksIt\RuleEngineBundle\ApiPlatform\Serializer\RuleEnginePropertiesNormalizer" class="DrinksIt\RuleEngineBundle\ApiPlatform\Serializer\RuleEnginePropertiesNormalizer" decorates="api_platform.serializer.normalizer.item">
-            <argument type="service" id="DrinksIt\RuleEngineBundle\ApiPlatform\Serializer\RuleEnginePropertiesNormalizer.inner" />
+        <service id="DrinksIt\RuleEngineBundle\ApiPlatform\Serializer\RuleEnginePropertiesNormalizer" class="DrinksIt\RuleEngineBundle\ApiPlatform\Serializer\RuleEnginePropertiesNormalizer" public="false">
             <argument type="service" id="rule_engine.serializer.conditions_collection" />
             <argument type="service" id="rule_engine.serializer.actions_collection" />
             <argument type="service" id="rule_engine.events_follow_factory"/>
+            <!-- Run before serializer.normalizer.json_serializable -->
+            <tag name="serializer.normalizer" />
         </service>
 
         <service id="rule_engine.api_platform.serializer.normalizer.rule_properties" alias="DrinksIt\RuleEngineBundle\ApiPlatform\Serializer\RuleEnginePropertiesNormalizer"/>
