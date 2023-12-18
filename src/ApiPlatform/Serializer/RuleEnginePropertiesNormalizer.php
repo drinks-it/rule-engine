@@ -17,18 +17,13 @@ use DrinksIt\RuleEngineBundle\Rule\TriggerEventColumn;
 use DrinksIt\RuleEngineBundle\Serializer\SerializerActionsFieldInterface;
 use DrinksIt\RuleEngineBundle\Serializer\SerializerConditionsFieldInterface;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
+use Symfony\Component\Serializer\Normalizer\CacheableSupportsMethodInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\SerializerAwareInterface;
-use Symfony\Component\Serializer\SerializerInterface;
 
-final class RuleEnginePropertiesNormalizer implements DenormalizerInterface, NormalizerInterface, SerializerAwareInterface
+final class RuleEnginePropertiesNormalizer implements DenormalizerInterface, NormalizerInterface, CacheableSupportsMethodInterface
 {
     public function __construct(
-        /**
-         * @var NormalizerInterface|DenormalizerInterface|SerializerAwareInterface|null
-         */
-        private $decorated,
         private SerializerConditionsFieldInterface $serializerConditionsField,
         private SerializerActionsFieldInterface $serializerActionsField,
         private RuleEventListenerFactoryInterface $eventListenerFactory
@@ -60,11 +55,7 @@ final class RuleEnginePropertiesNormalizer implements DenormalizerInterface, Nor
             return $object->getEntityClassName();
         }
 
-        if (!$this->decorated instanceof NormalizerInterface) {
-            return null;
-        }
-
-        return $this->decorated->normalize($object, $format, $context);
+        throw new \RuntimeException('Not supported normalize object');
     }
 
     public function supportsNormalization(mixed $data, string $format = null, array $context = []): bool
@@ -81,18 +72,7 @@ final class RuleEnginePropertiesNormalizer implements DenormalizerInterface, Nor
             return true;
         }
 
-        if ($this->decorated instanceof NormalizerInterface) {
-            return $this->decorated->supportsNormalization($data, $format);
-        }
-
         return false;
-    }
-
-    public function setSerializer(SerializerInterface $serializer): void
-    {
-        if ($this->decorated instanceof SerializerAwareInterface) {
-            $this->decorated->setSerializer($serializer);
-        }
     }
 
     /**
@@ -118,10 +98,6 @@ final class RuleEnginePropertiesNormalizer implements DenormalizerInterface, Nor
             return $this->serializerConditionsField->decodeToConditionCollection($data);
         }
 
-        if ($this->decorated instanceof DenormalizerInterface) {
-            return $this->decorated->denormalize($data, $type, $format, $context);
-        }
-
         return null;
     }
 
@@ -142,19 +118,22 @@ final class RuleEnginePropertiesNormalizer implements DenormalizerInterface, Nor
             return true;
         }
 
-        if ($this->decorated instanceof DenormalizerInterface) {
-            return $this->decorated->supportsDenormalization($data, $type, $format);
-        }
-
         return false;
     }
 
     public function getSupportedTypes(?string $format): array
     {
-        if (method_exists($this->decorated, 'getSupportedTypes')) {
-            return $this->decorated->getSupportedTypes($format);
-        }
+        return [
+            Condition::class.'[]' => true,
+            CollectionActionsInterface::class => true,
+            CollectionConditionInterface::class => true,
+            ActionInterface::class.'[]' => true,
+            TriggerEventColumn::class => true,
+        ];
+    }
 
-        return [];
+    public function hasCacheableSupportsMethod(): bool
+    {
+        return false;
     }
 }
