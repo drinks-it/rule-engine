@@ -1,7 +1,8 @@
 <?php
+
 /*
  * This file is part of Rule Engine Symfony Bundle.
- * © 2010-2023 DRINKS | Silverbogen AG
+ * © 2010-2026 DRINKS | Silverbogen AG
  */
 
 declare(strict_types=1);
@@ -10,6 +11,7 @@ namespace DrinksIt\RuleEngineBundle\Doctrine\Types;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\ConversionException;
+use Doctrine\DBAL\Types\Exception\InvalidType;
 use DrinksIt\RuleEngineBundle\Doctrine\Serializer\DenormalizeCondition;
 use DrinksIt\RuleEngineBundle\Doctrine\Serializer\NormalizeCondition;
 use DrinksIt\RuleEngineBundle\Rule\CollectionConditionInterface;
@@ -39,7 +41,7 @@ final class ConditionsType extends RuleEngineType
     public function convertToDatabaseValue($value, AbstractPlatform $platform): mixed
     {
         if (!$value instanceof CollectionConditionInterface) {
-            throw ConversionException::conversionFailedInvalidType(
+            throw InvalidType::new(
                 $value,
                 CollectionConditionInterface::class,
                 [

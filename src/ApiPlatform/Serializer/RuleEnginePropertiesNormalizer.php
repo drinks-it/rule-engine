@@ -1,7 +1,8 @@
 <?php
+
 /*
  * This file is part of Rule Engine Symfony Bundle.
- * © 2010-2023 DRINKS | Silverbogen AG
+ * © 2010-2026 DRINKS | Silverbogen AG
  */
 
 declare(strict_types=1);
@@ -17,11 +18,10 @@ use DrinksIt\RuleEngineBundle\Rule\TriggerEventColumn;
 use DrinksIt\RuleEngineBundle\Serializer\SerializerActionsFieldInterface;
 use DrinksIt\RuleEngineBundle\Serializer\SerializerConditionsFieldInterface;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
-use Symfony\Component\Serializer\Normalizer\CacheableSupportsMethodInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
-final class RuleEnginePropertiesNormalizer implements DenormalizerInterface, NormalizerInterface, CacheableSupportsMethodInterface
+final class RuleEnginePropertiesNormalizer implements DenormalizerInterface, NormalizerInterface
 {
     public function __construct(
         private SerializerConditionsFieldInterface $serializerConditionsField,
@@ -33,7 +33,7 @@ final class RuleEnginePropertiesNormalizer implements DenormalizerInterface, Nor
     /**
      * @throws ExceptionInterface
      */
-    public function normalize(mixed $object, string $format = null, array $context = []): mixed
+    public function normalize(mixed $object, ?string $format = null, array $context = []): array|string|int|float|bool|\ArrayObject|null
     {
         if ($object instanceof Condition) {
             return $this->serializerConditionsField->encodeItemConditionToArray($object, $context);
@@ -58,7 +58,7 @@ final class RuleEnginePropertiesNormalizer implements DenormalizerInterface, Nor
         throw new \RuntimeException('Not supported normalize object');
     }
 
-    public function supportsNormalization(mixed $data, string $format = null, array $context = []): bool
+    public function supportsNormalization(mixed $data, ?string $format = null, array $context = []): bool
     {
         if ($data instanceof Condition || $data instanceof CollectionConditionInterface) {
             return true;
@@ -78,7 +78,7 @@ final class RuleEnginePropertiesNormalizer implements DenormalizerInterface, Nor
     /**
      * {@inheritDoc}
      */
-    public function denormalize(mixed $data, string $type, string $format = null, array $context = []): mixed
+    public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
         if (TriggerEventColumn::class === $type) {
             foreach ($this->eventListenerFactory->create() as $eventMetaData) {
@@ -104,7 +104,7 @@ final class RuleEnginePropertiesNormalizer implements DenormalizerInterface, Nor
     /**
      * {@inheritDoc}
      */
-    public function supportsDenormalization(mixed $data, string $type, string $format = null, array $context = []): bool
+    public function supportsDenormalization(mixed $data, string $type, ?string $format = null, array $context = []): bool
     {
         if (TriggerEventColumn::class === $type) {
             return true;
@@ -124,16 +124,13 @@ final class RuleEnginePropertiesNormalizer implements DenormalizerInterface, Nor
     public function getSupportedTypes(?string $format): array
     {
         return [
+            Condition::class => false,
+            ActionInterface::class => false,
             Condition::class.'[]' => true,
-            CollectionActionsInterface::class => true,
-            CollectionConditionInterface::class => true,
+            CollectionActionsInterface::class => false,
+            CollectionConditionInterface::class => false,
             ActionInterface::class.'[]' => true,
             TriggerEventColumn::class => true,
         ];
-    }
-
-    public function hasCacheableSupportsMethod(): bool
-    {
-        return false;
     }
 }

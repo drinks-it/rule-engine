@@ -67,6 +67,7 @@ return (new PhpCsFixer\Config())
         // Whitespace
         'array_indentation' => true,
         'compact_nullable_typehint' => true,
+        'nullable_type_declaration_for_default_null_value' => true,
         'method_chaining_indentation' => true,
         'blank_line_before_statement' => [
             'statements' => [

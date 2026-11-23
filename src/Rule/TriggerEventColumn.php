@@ -1,7 +1,8 @@
 <?php
+
 /*
  * This file is part of Rule Engine Symfony Bundle.
- * © 2010-2023 DRINKS | Silverbogen AG
+ * © 2010-2026 DRINKS | Silverbogen AG
  */
 
 declare(strict_types=1);
@@ -12,7 +13,7 @@ class TriggerEventColumn
 {
     private ?string $entityClassName;
 
-    public function __construct(string $entityClassName = null)
+    public function __construct(?string $entityClassName = null)
     {
         $this->entityClassName = $entityClassName;
     }

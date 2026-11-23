@@ -17,6 +17,9 @@
     <server name="TMP_ROOT_DIRECTORY" value="var"/>
   </php>
   <testsuites>
+    <testsuite name="Integration">
+      <directory>tests/Integration</directory>
+    </testsuite>
     <testsuite name="Bundle">
       <file>tests/RuleEngineBundleTest.php</file>
     </testsuite>

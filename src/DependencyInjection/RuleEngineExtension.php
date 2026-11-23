@@ -1,7 +1,8 @@
 <?php
+
 /*
  * This file is part of Rule Engine Symfony Bundle.
- * © 2010-2023 DRINKS | Silverbogen AG
+ * © 2010-2026 DRINKS | Silverbogen AG
  */
 
 declare(strict_types=1);
@@ -13,8 +14,8 @@ use DrinksIt\RuleEngineBundle\Event\RuleEventInterface;
 use DrinksIt\RuleEngineBundle\Serializer\Property\NormalizeFieldPropertyInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
-use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 class RuleEngineExtension extends Extension
 {
@@ -25,8 +26,6 @@ class RuleEngineExtension extends Extension
         $container->setParameter('rule_engine.collection_condition_class', $config['collection_condition_class']);
         $container->setParameter('rule_engine.collection_actions_class', $config['collection_actions_class']);
         $container->setParameter('rule_engine.mapping', $config['mapping'] ?? []);
-
-        $this->addAnnotatedClassesToCompile($container->getParameter('rule_engine.mapping'));
 
         $container->registerForAutoconfiguration(RuleEventInterface::class)
             ->addTag('rule_engine.tag.event');

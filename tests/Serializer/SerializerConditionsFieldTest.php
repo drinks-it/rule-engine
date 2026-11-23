@@ -1,7 +1,8 @@
 <?php
+
 /*
  * This file is part of Rule Engine Symfony Bundle.
- * © 2010-2023 DRINKS | Silverbogen AG
+ * © 2010-2026 DRINKS | Silverbogen AG
  */
 
 declare(strict_types=1);
@@ -249,7 +250,7 @@ class SerializerConditionsFieldTest extends TestCase
      * @see SerializerConditionsFieldInterface::encodeCollectionConditionToArray()
      * @see SerializerConditionsFieldInterface::encodeItemConditionToArray()
      */
-    public function testEncodeCollectionConditionToArray(iterable $conditions, array $context = [], string $exceptedException = null): void
+    public function testEncodeCollectionConditionToArray(iterable $conditions, array $context = [], ?string $exceptedException = null): void
     {
         $serializerConditionsField = $this->makeSerializerConditionsFieldInterface(function (MockObject $mockObject): void {
             $mockObject->method('create')->with($this->equalTo(\stdClass::class))
@@ -360,7 +361,7 @@ class SerializerConditionsFieldTest extends TestCase
         ];
     }
 
-    public function makeSerializerConditionsFieldInterface(callable $mockSet = null): SerializerConditionsFieldInterface
+    public function makeSerializerConditionsFieldInterface(?callable $mockSet = null): SerializerConditionsFieldInterface
     {
         $ruleEntityResource = $this->createMock(RuleEntityResourceFactoryInterface::class);
 
