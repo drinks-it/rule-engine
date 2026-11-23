@@ -1,7 +1,8 @@
 <?php
+
 /*
  * This file is part of Rule Engine Symfony Bundle.
- * © 2010-2023 DRINKS | Silverbogen AG
+ * © 2010-2026 DRINKS | Silverbogen AG
  */
 
 declare(strict_types=1);
@@ -28,8 +29,8 @@ class SerializerActionsTest extends TestCase
      */
     public function testSerialize(
         CollectionActionsInterface $actions,
-        string $exceptExceptionClass = null,
-        callable $modifyArrayDecoded = null
+        ?string $exceptExceptionClass = null,
+        ?callable $modifyArrayDecoded = null
     ): void {
         if ($exceptExceptionClass) {
             $this->expectException($exceptExceptionClass);

@@ -1,7 +1,8 @@
 <?php
+
 /*
  * This file is part of Rule Engine Symfony Bundle.
- * © 2010-2023 DRINKS | Silverbogen AG
+ * © 2010-2026 DRINKS | Silverbogen AG
  */
 
 declare(strict_types=1);
@@ -53,9 +54,9 @@ final class Condition
     public function __construct(
         string $type = self::TYPE_ANY,
         int $priority = 1,
-        AttributeConditionTypeInterface $attributeCondition = null,
-        CollectionConditionInterface $subConditions = null,
-        bool $result = null
+        ?AttributeConditionTypeInterface $attributeCondition = null,
+        ?CollectionConditionInterface $subConditions = null,
+        ?bool $result = null
     ) {
         $this->type     = $type;
         $this->priority = $priority;

@@ -1,7 +1,8 @@
 <?php
+
 /*
  * This file is part of Rule Engine Symfony Bundle.
- * © 2010-2023 DRINKS | Silverbogen AG
+ * © 2010-2026 DRINKS | Silverbogen AG
  */
 
 declare(strict_types=1);
@@ -17,7 +18,7 @@ final class RuleEntityAnnotationExtractor implements RuleEntityExtractorInterfac
 {
     private ?Reader $annotationReader;
 
-    public function __construct(Reader $annotationReader = null)
+    public function __construct(?Reader $annotationReader = null)
     {
         $this->annotationReader = $annotationReader;
     }

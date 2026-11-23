@@ -1,7 +1,8 @@
 <?php
+
 /*
  * This file is part of Rule Engine Symfony Bundle.
- * © 2010-2023 DRINKS | Silverbogen AG
+ * © 2010-2026 DRINKS | Silverbogen AG
  */
 
 declare(strict_types=1);
@@ -28,16 +29,7 @@ class RuleEngineExtensionTest extends TestCase
     public function testLoad(): void
     {
         $configs = [];
-        $this->containerBuilder->expects($this->any())->method('setParameter');
-        $this->containerBuilder->expects($this->once())->method('getParameter')
-            ->willReturnCallback(function ($name) {
-                if ($name === 'rule_engine.mapping') {
-                    return [];
-                }
-
-                return null;
-            });
-
+        $this->containerBuilder->expects($this->atLeastOnce())->method('setParameter');
         $mockChildDefinition = $this->createMock(ChildDefinition::class);
         $this->containerBuilder->expects($this->any())->method('registerForAutoconfiguration')
             ->with($this->isType('string'))->willReturn($mockChildDefinition);

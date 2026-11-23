@@ -1,7 +1,8 @@
 <?php
+
 /*
  * This file is part of Rule Engine Symfony Bundle.
- * © 2010-2023 DRINKS | Silverbogen AG
+ * © 2010-2026 DRINKS | Silverbogen AG
  */
 
 declare(strict_types=1);
@@ -26,7 +27,7 @@ class ArrayConditionAttributeTest extends TestCase
      * @dataProvider dataCasesArrayCondition
      * @dataProvider dataCasesBadScenario
      */
-    public function testMatchArrayConditions($operator, $valueSet, $valueMatch, bool $isEq = false, string $exceptionClass = null): void
+    public function testMatchArrayConditions($operator, $valueSet, $valueMatch, bool $isEq = false, ?string $exceptionClass = null): void
     {
         if ($exceptionClass) {
             $this->expectException($exceptionClass);

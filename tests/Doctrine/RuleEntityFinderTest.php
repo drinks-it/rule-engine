@@ -1,15 +1,16 @@
 <?php
+
 /*
  * This file is part of Rule Engine Symfony Bundle.
- * © 2010-2023 DRINKS | Silverbogen AG
+ * © 2010-2026 DRINKS | Silverbogen AG
  */
 
 declare(strict_types=1);
 
 namespace Tests\DrinksIt\RuleEngineBundle\Doctrine;
 
-use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\ClassMetadataFactory;
@@ -50,7 +51,7 @@ class RuleEntityFinderTest extends TestCase
         ];
 
         $ClassMetadataFactory->expects($this->once())->method('getAllMetadata')
-            ->willReturn($manageRegistry)->willReturn($metadataReturn);
+            ->willReturn($metadataReturn);
         $objectManager->expects($this->once())->method('getMetadataFactory')->willReturn($ClassMetadataFactory);
         $manageRegistry->expects($this->once())->method('getManager')->willReturn($objectManager);
 
@@ -71,7 +72,7 @@ class RuleEntityFinderTest extends TestCase
     {
         $manageRegistry = $this->makeManageRegistry();
         $manageRegistry->expects($this->once())->method('getRepository')
-            ->with($this->equalTo('ShortName'))->willReturn($manageRegistry);
+            ->with($this->equalTo('ShortName'))->willReturn($this->createMock(\Doctrine\Persistence\ObjectRepository::class));
 
         $ruleEntityFinder = new RuleEntityFinder($manageRegistry, []);
         $rules = $ruleEntityFinder->getRulesByEventName('EventClassName');
@@ -94,7 +95,7 @@ class RuleEntityFinderTest extends TestCase
         )->willReturnSelf();
         $builder->expects($this->once())->method('orderBy')->with($this->isType('string'), $this->isType('string'));
 
-        $query = $this->createMock(AbstractQuery::class);
+        $query = $this->createMock(Query::class);
         $query->expects($this->once())->method('getResult')->willReturn([
             $this->createMock(RuleEntityInterface::class),
         ]);
@@ -133,7 +134,7 @@ class RuleEntityFinderTest extends TestCase
         )->willReturnSelf();
         $builder->expects($this->once())->method('orderBy')->with($this->isType('string'), $this->isType('string'));
 
-        $query = $this->createMock(AbstractQuery::class);
+        $query = $this->createMock(Query::class);
         $query->expects($this->once())->method('getResult')->willReturn([
             $this->createMock(RuleEntityInterface::class),
         ]);

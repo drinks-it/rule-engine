@@ -1,7 +1,8 @@
 <?php
+
 /*
  * This file is part of Rule Engine Symfony Bundle.
- * © 2010-2023 DRINKS | Silverbogen AG
+ * © 2010-2026 DRINKS | Silverbogen AG
  */
 
 declare(strict_types=1);
@@ -43,7 +44,7 @@ final class SchemaFactory implements SchemaFactoryInterface
 
     public function buildSchema(string $className, string $format = 'json', string $type = Schema::TYPE_OUTPUT, ?Operation $operation = null, ?Schema $schema = null, ?array $serializerContext = null, bool $forceCollection = false): Schema
     {
-        $schemaBuild = $this->decoder->buildSchema($className, $format, $type, $operation, $schema, $serializerContext);
+        $schemaBuild = $this->decoder->buildSchema($className, $format, $type, $operation, $schema, $serializerContext, $forceCollection);
 
         if (!\in_array($className, self::SCHEMAS_BUILDS)) {
             return $schemaBuild;

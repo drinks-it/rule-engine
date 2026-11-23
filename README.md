@@ -1,3 +1,27 @@
+## Compatibility and upgrading
+
+This version targets PHP 8.2 or later, Symfony 7.4 LTS, Doctrine ORM 3 and DBAL 4.
+The optional API Platform integration supports API Platform 4.4:
+
+```shell
+composer require drinks-it/rule-engine api-platform/symfony:^4.4 --with-all-dependencies
+```
+
+This is a breaking upgrade for applications using Symfony 6, API Platform 3,
+Doctrine ORM 2 or DBAL 3. Upgrade those dependencies together. Existing rule
+payloads and custom Doctrine type names remain unchanged. Review generated
+Doctrine migrations after the DBAL upgrade, especially legacy SQL comment hints.
+
+Use PHP attributes for rule resource and property mappings on Symfony 7.4.
+Legacy docblock mapping remains available when `doctrine/annotations:^2.0` is
+installed and an `annotations.cached_reader` service implementing
+`Doctrine\Common\Annotations\Reader` is configured. Without that service,
+attribute mappings work without the annotations package.
+
+For development, run `composer install`, `composer test-unit` and `composer php-cs`.
+The test suite includes a Symfony kernel with API Platform, schema generation,
+serializer dispatch and SQLite round trips for the custom Doctrine types.
+
 ## Install
 
 ```shell

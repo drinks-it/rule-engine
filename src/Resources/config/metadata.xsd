@@ -14,7 +14,7 @@
         </service>
 
         <service id="rule_engine.metadata.name_collection_factory.cached" class="DrinksIt\RuleEngineBundle\Metadata\Resource\Factory\CachedCollectionRuleEntityResourceNameFactory" decorates="rule_engine.metadata.name_collection_factory" decoration-priority="-10" public="false">
-            <argument type="service" id="cache.annotations" />
+            <argument type="service" id="cache.system" />
             <argument type="service" id="rule_engine.metadata.name_collection_factory.cached.inner" />
         </service>
 
@@ -26,7 +26,7 @@
         </service>
 
         <service id="rule_engine.metadata.property_factory.cached" decorates="rule_engine.metadata.property_factory" decoration-priority="-10" public="false" class="DrinksIt\RuleEngineBundle\Metadata\Property\Factory\CachedRuleEntityPropertyFactory">
-            <argument type="service" id="cache.annotations" />
+            <argument type="service" id="cache.system" />
             <argument type="service" id="rule_engine.metadata.property_factory.cached.inner"/>
         </service>
 

@@ -1,7 +1,8 @@
 <?php
+
 /*
  * This file is part of Rule Engine Symfony Bundle.
- * © 2010-2023 DRINKS | Silverbogen AG
+ * © 2010-2026 DRINKS | Silverbogen AG
  */
 
 declare(strict_types=1);
@@ -24,10 +25,10 @@ final class PropertyRuleEntity
 
     public function __construct(
         string $name,
-        string $classNameAttributeConditionType = null,
-        string $classNameActionFieldType = null,
+        ?string $classNameAttributeConditionType = null,
+        ?string $classNameActionFieldType = null,
         array  $onlyEvents = [],
-        RuleEntityResource $entityResource = null
+        ?RuleEntityResource $entityResource = null
     ) {
         $this->name = $name;
         $this->classNameAttributeConditionType = $classNameAttributeConditionType;

@@ -1,7 +1,8 @@
 <?php
+
 /*
  * This file is part of Rule Engine Symfony Bundle.
- * © 2010-2023 DRINKS | Silverbogen AG
+ * © 2010-2026 DRINKS | Silverbogen AG
  */
 
 declare(strict_types=1);
@@ -36,7 +37,7 @@ class NumberConditionAttributeTest extends TestCase
         if ($exceptionClass) {
             $this->expectException($exceptionClass);
         } else {
-            $message = sprintf('%s: Case %s as %s', $operator, $valueSet, $valueMatch);
+            $message = \sprintf('%s: Case %s as %s', $operator, $valueSet, $valueMatch);
         }
         $numberCondition = new NumberConditionAttribute(\stdClass::class, 'anyFieldName');
         $this->assertInstanceOf(NumberAttributeConditionTypeInterface::class, $numberCondition);
