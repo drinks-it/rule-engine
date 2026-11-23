@@ -1,7 +1,8 @@
 <?php
+
 /*
  * This file is part of Rule Engine Symfony Bundle.
- * © 2010-2023 DRINKS | Silverbogen AG
+ * © 2010-2026 DRINKS | Silverbogen AG
  */
 
 declare(strict_types=1);
@@ -30,7 +31,7 @@ class BooleanConditionAttributeTest extends TestCase
         if ($exceptionClass) {
             $this->expectException($exceptionClass);
         } else {
-            $message = sprintf('Case %s as %s', $valueSet, $valueMatch);
+            $message = \sprintf('Case %s as %s', $valueSet, $valueMatch);
         }
 
         $booleanCondition = new BooleanConditionAttribute(\stdClass::class, 'anyFieldName');

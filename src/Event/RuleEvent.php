@@ -1,7 +1,8 @@
 <?php
+
 /*
  * This file is part of Rule Engine Symfony Bundle.
- * © 2010-2023 DRINKS | Silverbogen AG
+ * © 2010-2026 DRINKS | Silverbogen AG
  */
 
 declare(strict_types=1);
@@ -46,7 +47,7 @@ final class RuleEvent
         $clientRuleEvent = null;
         foreach ($this->eventListenerFactory->create() as $ruleEvent) {
             if ($ruleEvent['resource'] === $observerEntityEvent->getClassNameRuleEventInterface()) {
-                $this->logger->debug(sprintf('Find event `%s`', $ruleEvent['resource']));
+                $this->logger->debug(\sprintf('Find event `%s`', $ruleEvent['resource']));
                 $clientRuleEvent = $ruleEvent['event'];
 
                 break;
@@ -88,7 +89,7 @@ final class RuleEvent
                 }
 
                 $actions->execute($observedEntity);
-                $this->logger->debug(sprintf('Complete Rule (%s)', $ruleEntity->getName()));
+                $this->logger->debug(\sprintf('Complete Rule (%s)', $ruleEntity->getName()));
 
                 if ($ruleEntity->getStopRuleProcessing()) {
                     break;

@@ -1,7 +1,8 @@
 <?php
+
 /*
  * This file is part of Rule Engine Symfony Bundle.
- * © 2010-2023 DRINKS | Silverbogen AG
+ * © 2010-2026 DRINKS | Silverbogen AG
  */
 
 declare(strict_types=1);
@@ -24,7 +25,7 @@ trait AnnotationFixtures
         if (file_exists($this->tmpPathTmpEntityClass)) {
             unlink($this->tmpPathTmpEntityClass);
         }
-        $entityResource = sprintf(<<<'CODE'
+        $entityResource = \sprintf(<<<'CODE'
             <?php
             use DrinksIt\RuleEngineBundle\Mapping as RuleEngine;
             /**
@@ -55,7 +56,7 @@ trait AnnotationFixtures
             unlink($tmpPathTmpEntityClass);
         }
 
-        $entityResource = sprintf(<<<'CODE'
+        $entityResource = \sprintf(<<<'CODE'
             <?php
             use DrinksIt\RuleEngineBundle\Mapping as RuleEngine;
             use DrinksIt\RuleEngineBundle\Rule\Condition\Types\AttributeConditionTypeInterface;
