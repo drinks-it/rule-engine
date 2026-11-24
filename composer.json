@@ -65,6 +65,9 @@
         "php-cs": [
             "./vendor/bin/php-cs-fixer fix --diff --dry-run --config=.php-cs-fixer.dist.php --using-cache no"
         ],
+        "php-cs-fix": [
+            "./vendor/bin/php-cs-fixer fix --diff --config=.php-cs-fixer.dist.php --using-cache no"
+        ],
         "php-fix-files": [
             "find src -name \"*.php\" -exec ./vendor/bin/php-cs-fixer --config=.php-cs-fixer.dist.php fix  {} \\;",
             "find tests -name \"*.php\" -exec ./vendor/bin/php-cs-fixer --config=.php-cs-fixer.dist.php fix  {} \\;"
