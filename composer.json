@@ -21,11 +21,10 @@
         "symfony/validator": "7.4.*"
     },
     "require-dev": {
-        "api-platform/doctrine-orm": "^4.4",
-        "api-platform/symfony": "^4.4",
+        "api-platform/doctrine-orm": "^5.0",
+        "api-platform/symfony": "^5.0",
         "friendsofphp/php-cs-fixer": "^3.95",
-        "symfony/phpunit-bridge": "7.4.*",
-        "doctrine/annotations": "^2.0"
+        "symfony/phpunit-bridge": "7.4.*"
     },
     "license": "MIT",
     "autoload": {
@@ -78,13 +77,5 @@
             ".github/",
             "phpunit.xml.dist"
         ]
-    },
-    "suggest": {
-        "api-platform/symfony": "^4.4 for API Platform integration",
-        "doctrine/annotations": "^2.0 for legacy docblock mapping (configure an annotations.cached_reader service)"
-    },
-    "conflict": {
-        "api-platform/core": "<4.4 || >=5.0",
-        "api-platform/symfony": "<4.4 || >=5.0"
     }
 }

@@ -13,10 +13,8 @@ payloads and custom Doctrine type names remain unchanged. Review generated
 Doctrine migrations after the DBAL upgrade, especially legacy SQL comment hints.
 
 Use PHP attributes for rule resource and property mappings on Symfony 7.4.
-Legacy docblock mapping remains available when `doctrine/annotations:^2.0` is
-installed and an `annotations.cached_reader` service implementing
-`Doctrine\Common\Annotations\Reader` is configured. Without that service,
-attribute mappings work without the annotations package.
+Legacy docblock mappings are no longer supported. Convert them to PHP attributes
+(see [mapping examples](docs/mark_entity_resources.md)).
 
 For development, run `composer install`, `composer test-unit` and `composer php-cs`.
 The test suite includes a Symfony kernel with API Platform, schema generation,

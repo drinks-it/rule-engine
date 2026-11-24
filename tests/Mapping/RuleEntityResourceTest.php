@@ -9,15 +9,13 @@ declare(strict_types=1);
 
 namespace Tests\DrinksIt\RuleEngineBundle\Mapping;
 
-use Doctrine\Common\Annotations\AnnotationException;
-use Doctrine\Common\Annotations\AnnotationReader;
 use DrinksIt\RuleEngineBundle\Helper\ClassHelper;
 use DrinksIt\RuleEngineBundle\Mapping\RuleEntityResource;
 use PHPUnit\Framework\TestCase;
 
 class RuleEntityResourceTest extends TestCase
 {
-    use AnnotationFixtures {
+    use AttributeFixtures {
         loadResourceWithBrokeProperty as load;
     }
     private const CLASS_NAME_ENTITY = 'EntityTypeResource';
@@ -29,33 +27,25 @@ class RuleEntityResourceTest extends TestCase
 
     public function testParseFromEntity(): void
     {
-        if (!class_exists('Doctrine\Common\Annotations\AnnotationReader')) {
-            $this->markTestSkipped('Doctrine annotations not Doctrine\Common\Annotations\AnnotationReader');
-        }
         $this->load(self::CLASS_NAME_ENTITY);
         $this->assertTrue(ClassHelper::exist(self::CLASS_NAME_ENTITY));
 
         $reflection = new \ReflectionClass(self::CLASS_NAME_ENTITY);
-        $reader = new AnnotationReader();
-        $ruleEntityResource = $reader->getClassAnnotation($reflection, RuleEntityResource::class);
+        $ruleEntityResource = $reflection->getAttributes(RuleEntityResource::class)[0]->newInstance();
 
         $this->assertInstanceOf(RuleEntityResource::class, $ruleEntityResource);
     }
 
     public function testRuleEntityResourceSupportOnlyClass(): void
     {
-        if (!class_exists('Doctrine\Common\Annotations\AnnotationException')) {
-            $this->markTestSkipped('Doctrine annotations not Doctrine\Common\Annotations\AnnotationException');
-        }
         $this->load(self::CLASS_NAME_ENTITY);
 
-        $this->expectException(AnnotationException::class);
+        $this->expectException(\Error::class);
         $this->assertTrue(ClassHelper::exist(self::CLASS_NAME_ENTITY));
 
         $reflection = new \ReflectionClass(self::CLASS_NAME_ENTITY);
         $propertyReflection = $reflection->getProperty('test');
-        $reader = new AnnotationReader();
-        $ruleEntityResource = $reader->getPropertyAnnotation($propertyReflection, RuleEntityResource::class);
+        $ruleEntityResource = $propertyReflection->getAttributes(RuleEntityResource::class)[0]->newInstance();
 
         $this->assertInstanceOf(RuleEntityResource::class, $ruleEntityResource);
     }

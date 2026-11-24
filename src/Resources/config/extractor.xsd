@@ -8,15 +8,8 @@
         <!-- Interface Alias -->
         <service id="DrinksIt\RuleEngineBundle\Metadata\Extractor\RuleEntityExtractorInterface" alias="rule_engine.metadata.annotation_extractor" />
 
-        <!-- Service -->
-        <service id="rule_engine.metadata.annotation_extractor" class="DrinksIt\RuleEngineBundle\Metadata\Extractor\RuleEntityAnnotationExtractor">
-            <argument type="service" id="annotations.cached_reader" on-invalid="null" />
-        </service>
-
-        <!-- Extractor Attributes -->
-        <service id="rule_engine.metadata.attribute_extractor" class="DrinksIt\RuleEngineBundle\Metadata\Extractor\RuleEntityAttributeExtractor" decorates="rule_engine.metadata.annotation_extractor">
-            <argument type="service" id="rule_engine.metadata.attribute_extractor.inner" />
-        </service>
+        <service id="rule_engine.metadata.annotation_extractor" alias="rule_engine.metadata.attribute_extractor" />
+        <service id="rule_engine.metadata.attribute_extractor" class="DrinksIt\RuleEngineBundle\Metadata\Extractor\RuleEntityAttributeExtractor" />
     </services>
 
 </container>

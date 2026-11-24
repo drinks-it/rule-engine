@@ -11,7 +11,7 @@ namespace Tests\DrinksIt\RuleEngineBundle\Mapping;
 
 use DrinksIt\RuleEngineBundle\Helper\ClassHelper;
 
-trait AnnotationFixtures
+trait AttributeFixtures
 {
     private string $tmpPathTmpEntityClass = '';
 
@@ -28,13 +28,9 @@ trait AnnotationFixtures
         $entityResource = \sprintf(<<<'CODE'
             <?php
             use DrinksIt\RuleEngineBundle\Mapping as RuleEngine;
-            /**
-             * @RuleEngine\RuleEntityResource()
-             */
+            #[RuleEngine\RuleEntityResource]
              class %s {
-               /**
-                *  @RuleEngine\RuleEntityResource()
-                */
+               #[RuleEngine\RuleEntityResource]
                 private $test;
              }
             CODE, $className);
@@ -61,17 +57,12 @@ trait AnnotationFixtures
             use DrinksIt\RuleEngineBundle\Mapping as RuleEngine;
             use DrinksIt\RuleEngineBundle\Rule\Condition\Types\AttributeConditionTypeInterface;
             use DrinksIt\RuleEngineBundle\Rule\Action\ActionFiledInterface;
-            /**
-             * @RuleEngine\RuleEntityResource()
-             */
+            #[RuleEngine\RuleEntityResource]
             class %s {
-               /**
-                *  @RuleEngine\RuleEntityProperty(
-                *        condition=AttributeConditionTypeInterface::class,
-                *        action=ActionFiledInterface::class
-                *    )
-                * @var string
-                */
+               #[RuleEngine\RuleEntityProperty(
+                   condition: AttributeConditionTypeInterface::class,
+                   action: ActionFiledInterface::class
+               )]
                 private $%s;
             }
             CODE, $className, $propertyName);

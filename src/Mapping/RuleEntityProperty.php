@@ -9,14 +9,6 @@ declare(strict_types=1);
 
 namespace DrinksIt\RuleEngineBundle\Mapping;
 
-use Doctrine\Common\Annotations\Annotation\NamedArgumentConstructor;
-use Doctrine\Common\Annotations\Annotation\Target;
-
-/**
- * @Annotation
- * @Target({"PROPERTY"})
- * @NamedArgumentConstructor
- */
 #[\Attribute(\Attribute::TARGET_PROPERTY)]
 class RuleEntityProperty
 {
