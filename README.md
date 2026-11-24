@@ -1,52 +1,59 @@
-## Compatibility and upgrading
+# Rule Engine Bundle
 
-This version targets PHP 8.2 or later, Symfony 7.4 LTS, Doctrine ORM 3 and DBAL 4.
-The optional API Platform integration supports API Platform 4.4:
+A Symfony bundle for evaluating conditions and running actions on Doctrine entities
+when an application event occurs. It provides rule metadata, condition and action
+collections, Symfony Serializer and Validator integration, custom Doctrine types,
+and optional API Platform schema integration.
 
-```shell
-composer require drinks-it/rule-engine api-platform/symfony:^4.4 --with-all-dependencies
-```
+## Requirements
 
-This is a breaking upgrade for applications using Symfony 6, API Platform 3,
-Doctrine ORM 2 or DBAL 3. Upgrade those dependencies together. Existing rule
-payloads and custom Doctrine type names remain unchanged. Review generated
-Doctrine migrations after the DBAL upgrade, especially legacy SQL comment hints.
+The current `composer.json` declares:
 
-Use PHP attributes for rule resource and property mappings on Symfony 7.4.
-Legacy docblock mappings are no longer supported. Convert them to PHP attributes
-(see [mapping examples](docs/mark_entity_resources.md)).
+| Dependency | Constraint |
+| --- | --- |
+| PHP | `^8.2` |
+| Symfony components | `7.4.*` |
+| Doctrine ORM | `^3.3` |
+| Doctrine DBAL | `^4.3` |
+| DoctrineBundle | `^2.18` |
+| Doctrine Collections | `^2.3` |
 
-For development, run `composer install`, `composer test-unit` and `composer php-cs`.
-The test suite includes a Symfony kernel with API Platform, schema generation,
-serializer dispatch and SQLite round trips for the custom Doctrine types.
+The development dependencies target API Platform `^5.0` (`api-platform/symfony`
+and `api-platform/doctrine-orm`). API Platform is optional for applications using
+the bundle. Rule mappings use native PHP attributes; `doctrine/annotations` is
+not required and docblock mappings are no longer read.
 
-## Install
+## Installation
 
 ```shell
 composer require drinks-it/rule-engine
 ```
 
-#### depends
-```shell
-composer require drinks-it/rule-engine --with-dependencies 
-```
-
-## Bundle add
-
-`config/bundles.php`
+Register the bundle in `config/bundles.php` alongside FrameworkBundle and
+DoctrineBundle:
 
 ```php
-<?php
-
 return [
-    // ... another bundles
-    DrinksIt\RuleEngineBundle\RuleEngineBundle::class => ['all' => true]
+    // Other application bundles...
+    DrinksIt\RuleEngineBundle\RuleEngineBundle::class => ['all' => true],
 ];
 ```
 
-# rule-engine configuration
+Enable Symfony Serializer and Validator in the host application:
 
 ```yaml
+# config/packages/framework.yaml
+framework:
+    serializer: { enabled: true }
+    validation: { enabled: true }
+```
+
+## Doctrine configuration
+
+Register the types used to store rule conditions, actions, and trigger events:
+
+```yaml
+# config/packages/doctrine.yaml
 doctrine:
     dbal:
         types:
@@ -55,16 +62,105 @@ doctrine:
             rule-engine-event: DrinksIt\RuleEngineBundle\Doctrine\Types\TriggerEventType
 ```
 
-### make entity
+Use these same names in your entity column mappings. The application supplies its
+rule entity implementing `DrinksIt\RuleEngineBundle\Rule\RuleEntityInterface`,
+its Doctrine mappings, and database migrations. This bundle does not provide a
+`make:rule-engine` command.
 
-```shell
-php bin/console make:rule-engine [Optional Name]
-php bin/console make:migration
-php bin/console doctrine:migrations:migrate
+## Entity mappings
+
+Mark Doctrine entities with `RuleEntityResource` and expose their properties to
+conditions and actions with `RuleEntityProperty`. For example, add these
+attributes to an existing mapped entity and property:
+
+```php
+use DrinksIt\RuleEngineBundle\Mapping\RuleEntityProperty;
+use DrinksIt\RuleEngineBundle\Mapping\RuleEntityResource;
+use DrinksIt\RuleEngineBundle\Rule\Action\Attribute\StringActionType;
+use DrinksIt\RuleEngineBundle\Rule\Condition\Attribute\StringConditionAttribute;
+
+#[RuleEntityResource]
+class Product
+{
+    #[RuleEntityProperty(
+        condition: StringConditionAttribute::class,
+        action: StringActionType::class,
+    )]
+    private string $name = '';
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+}
 ```
 
+The example shows the rule attributes only; retain your Doctrine entity, ID, and
+column attributes. `RuleEntityResource` accepts an `events` array to restrict
+applicable events. `RuleEntityProperty` accepts `condition`, `action`,
+`onlyEvents`, and `relationObject` arguments.
 
-* [Mark Entity Resource](docs/mark_entity_resources.md)
-* [How get marked rules entity?](docs/how_get_marked_rule_entity.md)
-* [How create new rule?](docs/how_create_new_rule.md)
-* [How call event?](docs/Event.md)
+See [entity mapping examples](docs/mark_entity_resources.md) and
+[accessing rule metadata](docs/how_get_marked_rule_entity.md).
+
+## Events and rules
+
+Implement `DrinksIt\RuleEngineBundle\Event\RuleEventInterface` for an application
+rule event. With Symfony service autoconfiguration enabled, these services receive
+the `rule_engine.tag.event` tag automatically.
+
+Dispatch an `ObserverEntityEventInterface` implementation through Symfony's event
+dispatcher using `RuleEvent::EVENT`. The observer supplies the entities to process
+and the rule event class. See the [event workflow](docs/Event.md) and
+[rule creation examples](docs/how_create_new_rule.md). The application provides
+its own endpoints and persistence logic.
+
+## Optional API Platform integration
+
+Install the packages targeted by the current development configuration:
+
+```shell
+composer require api-platform/symfony:^5.0 api-platform/doctrine-orm:^5.0
+```
+
+Register `ApiPlatform\Symfony\Bundle\ApiPlatformBundle` in the host application.
+The rule engine loads its API Platform services when that bundle class is
+available, adding property normalization and JSON schema decoration for rules.
+See the [condition schema](docs/ConditionsJsonSchema.md) and
+[action schema](docs/ActionJsonSchema.md) documentation.
+
+## Upgrading
+
+Applications upgrading from Symfony 6, Doctrine ORM 2, or DBAL 3 must update their
+dependencies to the constraints above. Review generated Doctrine migrations,
+including changes to legacy SQL comment hints.
+
+Convert `@RuleEntityResource` and `@RuleEntityProperty` docblocks to PHP attributes.
+The legacy `RuleEntityAnnotationExtractor` and annotation reader integration have
+been removed. Custom extractor integrations should use
+`RuleEntityExtractorInterface`; the default implementation is
+`RuleEntityAttributeExtractor`.
+
+## Development
+
+```shell
+composer install
+vendor/bin/simple-phpunit install
+composer test-unit
+composer php-cs
+```
+
+Use `composer php-cs-fix` to apply code style fixes. The integration tests require
+`pdo_sqlite`; the coverage command requires a coverage driver such as Xdebug.
+The suite covers mappings, conditions, actions, serialization, validation, and
+bundle boot with API Platform, including schema generation and SQLite round trips
+for custom Doctrine types.
+
+## License
+
+MIT.
